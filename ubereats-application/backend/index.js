@@ -1,135 +1,49 @@
-const express = require("express");
-const mysql = require("mysql");
-const cors = require("cors");
+//import express module 
+var express = require('express');
+//create  an express app
+var app = express();
+//require express middleware body-parser
+var bodyParser = require('body-parser');
+//require express session
+var session = require('express-session');
+//require cookie parser
+var cookieParser = require('cookie-parser');
+//import cors
+const cors = require('cors');
 
-const bodyParser = require("body-parser");
-const cookieParser = require("cookie-parser");
-const session = require("express-session");
-
-const bcrypt = require("bcrypt");
-const saltRounds = 10;
-
-const app = express();
-
-app.use(express.json());
-app.use(
-  cors({
-    origin: ["http://localhost:3000"],
-    methods: ["GET", "POST"],
-    credentials: true,
-  })
-);
+app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(bodyParser.urlencoded({ extended: true }));
 
-/*app.use(
-  session({
-    key: "userId",
-    secret: "subscribe",
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      expires: 60 * 60 * 24,
-    },
-  })
-);*/
+app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 
-const db = mysql.createConnection({
-  user: "admin",
-  host: "sql-database-1.cxibvgtjdpev.us-east-2.rds.amazonaws.com",
-  password:"shradha123",
-  database: "uber_eats",
-  port:3306,
+app.use(function (req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,POST,PUT,DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers');
+  res.setHeader('Cache-Control', 'no-cache');
+  next();
 });
 
-app.post("/custRegister", (req, res) => {
-  const custName = req.body.custName;
-  const custEmail = req.body.custEmail;
-  const custPassword = req.body.custPassword;
+//use express session to maintain session data
+app.use(session({
+  secret              : 'cmpe273_kafka_passport_mongo',
+  resave              : false, // Forces the session to be saved back to the session store, even if the session was never modified during the request
+  saveUninitialized   : false, // Force to save uninitialized session to db. A session is uninitialized when it is new but not modified.
+  duration            : 60 * 60 * 1000,    // Overall duration of Session : 30 minutes : 1800 seconds
+  activeDuration      :  5 * 60 * 1000
+}));
+
+app.use(express.static('./public'));
 
 
-  bcrypt.hash(custPassword, saltRounds, (err, hash) => {
-    if (err) {
-      console.log(err);
-    }
+const signup = require("./routes/signup");
+app.use("/signup", signup);
 
-    db.query(
-      "INSERT INTO uber_eats.customer (cust_name, email_id, pwd) VALUES (?,?,?)",
-      [custName, custEmail, hash],
-      (err, result) => {
-        console.log(err);
-      }
-    );
-  });
+
+const port = process.env.PORT || 3001;
+var server = app.listen(port, () => {
+  console.log(`Server listening on port ${port}`);
 });
 
-app.post("/restoRegister", (req, res) => {
-    const restoName = req.body.restoName;
-    const restoEmail = req.body.restoEmail;
-    const restoPassword = req.body.restoPassword;
-    const restoLocation = req.body.restoLocation;
-  
-  
-    bcrypt.hash(restoPassword, saltRounds, (err, hash) => {
-      if (err) {
-        console.log(err);
-      }
-  
-      db.query(
-        "INSERT INTO uber_eats.restaurant (resto_name, email_id, pwd, location) VALUES (?,?,?,?)",
-        [restoName, restoEmail, hash, restoLocation],
-        (err, result) => {
-          console.log(err);
-        }
-      );
-    });
-});
-
-/*app.get("/login", (req, res) => {
-  if (req.session.user) {
-    res.send({ loggedIn: true, user: req.session.user });
-  } else {
-    res.send({ loggedIn: false });
-  }
-});*/
-
-app.post("/login", (req, res) => {
-  console.log("Inside login page");  
- 
-  const username = req.body.custEmail;
-  const password = req.body.custPassword;
-  
-  console.log(req.body.custEmail);
-  console.log(req.body.custPassword);
-
-  db.query(
-    "SELECT * FROM uber_eats.customer WHERE email_id = ?;",
-    username,
-    (err, result) => {
-      if (err) {
-        res.send({ err: err });
-      }
-      console.log("Result from DB", result);
-      if (result.length > 0) {
-        bcrypt.compare(password, result[0].pwd, (error, response) => {
-          if (response) {
-            console.log("login successfull");  
-            req.session.user = result;
-            console.log(req.session.user);
-            res.send(result);
-          } else {
-            alert("Invalid username and password!");  
-            console.log("login not successful!");  
-            res.send({ message: "Wrong username/password combination!" });
-          }
-        });
-      } else {
-        res.send({ message: "User doesn't exist" });
-      }
-    }
-  );
-}); 
-
-app.listen(3001, () => {
-  console.log("running server");
-});
+module.exports = app;
