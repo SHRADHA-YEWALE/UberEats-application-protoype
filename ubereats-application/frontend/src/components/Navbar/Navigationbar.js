@@ -1,5 +1,5 @@
 import React , { useState }  from 'react'
-import UbLogo from '../../assets/ubereats.png';
+import UbLogo from '../../assets/uberEatsLogo.png';
 import { Link } from 'react-router-dom';
 import ReorderIcon from "@material-ui/icons/Reorder";
 import './Navbar.css';
@@ -12,14 +12,14 @@ function Navigationbar() {
     return (
     <div className = "navbar">
         <div className = "leftSide" id={openLinks ? "open" : "close"}>
-            <img src= {UbLogo} /> 
+            <img width= "800" height = "100" src= { UbLogo }  /> 
             <div className="hiddenLinks">
-            <Link to="/login"> Login </Link> 
+            <Link to="/customerLogin"> Login </Link> 
             <Link to="/customerSignup"> Signup </Link>
             </div>
         </div>    
         <div className = "rightSide">
-            <Link to="/login"> Login </Link> 
+            <Link to="/customerLogin"> Login </Link> 
             <Link to="/customerSignup"> Signup </Link>
         </div>    
     </div>

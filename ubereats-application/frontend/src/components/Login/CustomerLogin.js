@@ -6,16 +6,18 @@ import { connect } from 'react-redux';
 import NavigationBar from '../Navbar/Navigationbar.js';
 import Landing from '../Landing/Landing.js';
 import '../Signup/Signup.css';
+import './Login.css'
 import { customerLogin } from '../../actions/customerLogin';
 
 
 class CustomerLogin extends Component {
-    //call the constructor method
     constructor(props) {
-        //Call the constrictor of Super class i.e The Component
         super(props);
-        //maintain the state required for this component
-        this.state = {};
+        this.state = {
+            
+        };
+        this.onChange = this.onChange.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
     }
 
     onChange = (e) => {
@@ -24,7 +26,7 @@ class CustomerLogin extends Component {
         })
     }
 
-    //submit Login handler to send a request to the node backend
+
     onSubmit = (e) => {
         e.preventDefault();
         const data = {
@@ -40,10 +42,17 @@ class CustomerLogin extends Component {
     }
 
     render() {
-        console.log(this.props);
+        //console.log(this.props);
         let redirectVar = null;
         let message = ""
-        if(this.props.user === "NO_USER" && this.state.loginFlag){
+        if(this.props.user && this.props.user.user_id){
+            console.log("Success");
+            localStorage.setItem("email_id", this.props.user.email_id);
+            localStorage.setItem("user_id", this.props.user.user_id);
+            localStorage.setItem("name", this.props.user.name);
+            redirectVar = <Redirect to="/home" />
+        }
+        else if(this.props.user === "NO_USER" && this.state.loginFlag){
             message = "User not find with the provided email id";
         }
         else if(this.props.user === "INCORRECT_PASSWORD" && this.state.loginFlag){
@@ -52,15 +61,14 @@ class CustomerLogin extends Component {
   
         console.log(this.props);
         return (
-            <div>
+            <div className= "loginBackGroundLayer">
                 {redirectVar}
                     <div> <NavigationBar /> </div>
-                    <div> <Landing /></div>
-                    <br/><br/><br/><br/>
+                    <br/><br/>
                   
                    
                     <div className="container"> 
-                    <h2><u>Customer Signup</u></h2> <br/>
+                    <h2><u>Customer Login</u></h2> <br/>
                                 <form onSubmit={this.onSubmit}>
                                     <table>
                                     <tr>
@@ -78,10 +86,10 @@ class CustomerLogin extends Component {
                                     </table>
                                     <div style={{ color: "#ff0000" }}>{message}</div><br />
                                     <button type="submit" className="btn-primary"><center>Login</center></button><br /><br />
-                                    <div><Link to='/restaurantSignup'>Login as Restaurant Owner</Link></div><br />
+                                    <div><Link to='/restaurantLogin'>Login as Restaurant Owner</Link></div><br />
                                                                       
                                 </form>
-                    </div>    
+                    </div> <br/> <br/>   
                     </div>
             
         )
@@ -89,13 +97,12 @@ class CustomerLogin extends Component {
 }
 
 CustomerLogin.propTypes = {
-    userLogin: PropTypes.func.isRequired,
+    customerLogin: PropTypes.func.isRequired,
     user: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => { 
-    return ({
-    user: state.login.user
-})};
+    return {user: state.login.user}
+};
 
 export default connect(mapStateToProps, { customerLogin })(CustomerLogin);

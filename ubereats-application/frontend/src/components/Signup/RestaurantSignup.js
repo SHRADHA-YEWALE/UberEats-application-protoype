@@ -46,23 +46,23 @@ class RestaurantSignup extends Component {
         let redirectVar = null;
         let message = "";
         //Get the username from local or session storage.
-        /*if (localStorage.getItem("user_id")) {
+        if (localStorage.getItem("user_id")) {
             redirectVar = <Redirect to="/Home" />
-        }*/
+        }
         if (this.props.user === "USER_ADDED" && this.state.signedUp) {
             console.log("User successfully login");
-            alert("You have registered successfully, Please Login!");
-            redirectVar = <Redirect to="/Login" />
+            alert("You have registered successfully. Please Login!");
+            redirectVar = <Redirect to="/restaurantLogin" />
         }
         else if(this.props.user === "USER_EXISTS" && this.state.signedUp){
             message = "Username is already registered"
         }
         return (
-            <div>
+            <div className= "backGroundLayer">
                 {redirectVar}
                     <div> <NavigationBar /> </div>
-                    <div> <Landing /></div>
-                    <br/><br/><br/><br/>
+                 
+                    <br/><br/>
                   
                    
                     <div className="container"> 
@@ -99,7 +99,7 @@ class RestaurantSignup extends Component {
                                     <div><Link to='/customerSignup'>Signup as Customer</Link></div><br />
                                                                       
                                 </form>
-                    </div>    
+                    </div>  <br/> <br/>  
                     </div>
             
         )

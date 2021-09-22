@@ -40,6 +40,9 @@ app.use(express.static('./public'));
 const signup = require("./routes/signup");
 app.use("/signup", signup);
 
+const login = require("./routes/login");
+app.use("/login", login);
+
 
 const port = process.env.PORT || 3001;
 var server = app.listen(port, () => {
