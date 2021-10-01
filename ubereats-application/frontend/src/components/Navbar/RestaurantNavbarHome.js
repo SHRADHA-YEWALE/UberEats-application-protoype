@@ -1,35 +1,40 @@
-import React , { useState }  from 'react'
-import UbLogo from '../../assets/uberEatsLogo.png';
+import React , { useState, Component }  from 'react'
 import { Link } from 'react-router-dom';
-import ReorderIcon from "@material-ui/icons/Reorder";
 import './Navbar.css';
+import { connect } from 'react-redux';
+import { userLogout } from '../../actions/customerLogin.js';
 
 
-function RestaurantNavbarHome() {
+class RestaurantNavbarHome extends Component {
 
-    const [openLinks, setOpenLinks] = useState(false);
-    const toggleNavbar = () => {
-        setOpenLinks(!openLinks);
-      };
-    return (
-    <div className = "navbar">
-        <div className = "leftSide" id={openLinks ? "open" : "close"}>
-        <label className="ubLogo"><b>Uber</b></label> <label className="eatsLogo"><b>Eats</b></label> 
-            <div className="hiddenLinks">
-            <Link to="/menu"> Menu </Link>
-            <Link to="/restaurantProfile"> Orders </Link>     
-            <Link to="/restaurantProfile">Update Profile </Link> 
-            <Link to="/signup"> Signout </Link>
-            </div>
-        </div>    
-        <div className = "rightSide">
-            <Link to="/menu"> Menu </Link>
-            <Link to="/restaurantProfile"> Orders </Link>
-            <Link to="/restaurantProfile"> Update Profile </Link> 
-            <Link to="/signup"> SignOut </Link>
-        </div>    
-    </div>
-);
+    constructor(props){
+        super(props);
+        this.handleLogout = this.handleLogout.bind(this);
+    }
+
+    
+    //handle logout to destroy the cookie
+    handleLogout = () => {
+        window.localStorage.clear();
+        this.props.userLogout();
+    };
+    render() {  
+       
+       
+        return (
+        <div className = "navbar">
+            <div className = "leftSide">
+                <label className="ubLogo"><b>Uber</b></label> <label className="eatsLogo"><b>Eats</b></label> 
+            </div>    
+            <div className = "rightSide">
+                <Link to="/menu"> Menu </Link>
+                <Link to="/orders"> Orders </Link>
+                <Link to="/restaurantProfile"> Update Profile </Link> 
+                <Link to="/restaurantLogin" onClick={this.handleLogout}> SignOut </Link>     
+            </div>    
+        </div>
+        );
+    }  
 }
 
-export default RestaurantNavbarHome;
+export default connect(null, { userLogout })(RestaurantNavbarHome);

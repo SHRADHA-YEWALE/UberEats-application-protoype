@@ -35,7 +35,9 @@ class RestaurantProfile extends Component {
                 address: user.address || this.state.address,
                 phone_number: user.phone_number || this.state.phone_number,
                 timings : user.timings || this.state.timings,
-                res_image: user.res_image || this.state.res_image
+                res_image: user.res_image || this.state.res_image,
+                zipcode: user.zipcode || this.state.zipcode,
+                delivery: user.delivery || this.state.delivery
             };
             console.log("Restaurant name"+userData.name);
             console.log("Restaurant address"+userData.address);
@@ -107,7 +109,7 @@ class RestaurantProfile extends Component {
 
                     <center>
                                     <Card style={{ width: '18rem' }}>
-                                        <Card.Img style={{ width: '2em' }} variant="top" src={resImageSrc} />
+                                        <Card.Img style={{ width: '10em' }} variant="top" src={resImageSrc} />
                                         <Card.Body>
                                             <Card.Title><h3>{res_title}</h3></Card.Title>
                                         </Card.Body>
@@ -126,13 +128,14 @@ class RestaurantProfile extends Component {
                 
                         <Form onSubmit={this.onUpdate} >
                            
-                                <Form.Group as={Row} className="mb-3"  controlId="name">
+                                <Form.Group as={Row} className="mb-3"  controlId="name" >
                                     <Form.Label column sm="3" className="inputLabel"> Restaurant Name</Form.Label>
                                     <Col sm="10">
                                         <Form.Control name="name"
                                             type="text"
                                             onChange={this.onChange}
                                             value={this.state.name}
+                                            style={{ width: "80%" }}
                                             pattern="^[A-Za-z0-9 ]+$"
                                             required={true} />
                                     </Col> 
@@ -147,7 +150,7 @@ class RestaurantProfile extends Component {
                                             name="description"
                                             onChange={this.onChange}
                                             value={this.state.description}
-                                            pattern="^[A-Za-z0-9 ,-]+$"
+                                            style={{ width: "80%" }}
                                             required={true} />
                                         </Col>    
                                     </Form.Group>
@@ -160,7 +163,8 @@ class RestaurantProfile extends Component {
                                     <Form.Control type="email"
                                         name="email_id"
                                         value={this.state.email_id}
-                                        disabled />
+                                        style={{ width: "80%" }}
+                                         />
                                     </Col>    
                                 </Form.Group>
                         
@@ -172,7 +176,8 @@ class RestaurantProfile extends Component {
                                     <Form.Control type="password"
                                         name="password"
                                         onChange={this.onChange}
-                                        placeholder="New Password" />
+                                        placeholder="New Password" 
+                                        style={{ width: "80%" }}/>
                                     </Col>    
                                 </Form.Group>
                             
@@ -185,14 +190,27 @@ class RestaurantProfile extends Component {
                                         name="address"
                                         onChange={this.onChange}
                                         value={this.state.address}
-                                        pattern="^[A-Za-z0-9 ,-]+$"
+                                        style={{ width: "80%" }}
                                         required={true} />
                                     </Col>    
                                 </Form.Group>
                            
                             <br/>
                             
-                                <Form.Group as={Row} className="mb-3" controlId="formGridZip">
+                                <Form.Group as={Row} className="mb-3" controlId="formGridZipcode">
+                                        <Form.Label column sm="3" className="inputLabel">Zipcode</Form.Label>
+                                        <Col sm="10">
+                                        <Form.Control type="text"
+                                            name="zipcode"
+                                            onChange={this.onChange}
+                                            value={this.state.zipcode}
+                                            style={{ width: "80%" }}
+                                            />
+                                        </Col>    
+                                    </Form.Group>
+                            
+                                <br/>
+                                <Form.Group as={Row} className="mb-3" controlId="formGridPhone">
                                     <Form.Label column sm="3" className="inputLabel">Phone Number</Form.Label>
                                     <Col sm="10">
                                     <Form.Control type="text"
@@ -200,13 +218,14 @@ class RestaurantProfile extends Component {
                                         onChange={this.onChange}
                                         value={this.state.phone_number}
                                         required={true}
+                                        style={{ width: "80%" }}
                                         pattern="^[0-9]+$"
                                     />
                                     </Col>
                                 </Form.Group>
                            
                             <br/>
-                                <Form.Group as={Row} className="mb-3" controlId="formGridZip">
+                                <Form.Group as={Row} className="mb-3" controlId="formGridTiming">
                                     <Form.Label column sm="3" className="inputLabel">Timings</Form.Label>
                                     <Col sm="10">
                                     <Form.Control type="textarea"
@@ -215,12 +234,22 @@ class RestaurantProfile extends Component {
                                         value={this.state.timings}
                                         rows = "30"
                                         cols = "40"
+                                        style={{ width: "80%" }}
                                         required={true}
                                     />
                                     </Col>
                                 </Form.Group>
                            
                             <br/>
+                                <Form.Group as={Row} className="mb-3" controlId="formGridDelivery">
+                                <Form.Label column sm="3" className="inputLabel">Mode of Delivery</Form.Label>
+                                <select name="delivery"  onChange={this.onChange} value={this.state.delivery}>
+                                        <option>Mode of Delivery</option>
+                                        <option value="D">Delivery</option>
+                                        <option value="P" selected>Pickup</option>
+                                </select>
+                                </Form.Group>
+                            <br/>            
                             <div class ="buttonDiv">
                             <ButtonGroup aria-label="Third group">
                                 <Button type="submit" variant="success">Update Profile</Button>

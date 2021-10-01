@@ -1,22 +1,18 @@
 import React , { useState, Component }  from 'react'
-import UbLogo from '../../assets/uberEatsLogo.png';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
 import { connect } from 'react-redux';
-import { Navbar, Nav, Dropdown } from 'react-bootstrap';
 import { userLogout } from '../../actions/customerLogin.js';
 
 
 class CustomerNavbarHome extends Component {
+    constructor(props){
+        super(props);
+        this.handleLogout = this.handleLogout.bind(this);
+    }
 
-    constructor() {
-        super();
-        this.state = {
-          name: localStorage.getItem("name")
-        }
-      }
     
-      //handle logout to destroy the cookie
+    //handle logout to destroy the cookie
     handleLogout = () => {
         window.localStorage.clear();
         this.props.userLogout();
@@ -33,7 +29,7 @@ class CustomerNavbarHome extends Component {
             <div className = "rightSide">
                 <Link to="/customerHome"> Home </Link> 
                 <Link to="/customerProfile"> Profile </Link>
-                <Link to="/customerLogin"> Logout </Link>
+                <Link to="/customerLogin" onClick={this.handleLogout}> Logout </Link>
                 
             </div>    
         </div>

@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import NavigationBar from '../Navbar/RestaurantNavbarHome.js';
 import { Container, Col, Row, Form, Button, ButtonGroup, Card } from 'react-bootstrap';
-import axios from 'axios';
 import endPointObj from '../../endPointUrl.js';
 
 class RestaurantHome extends Component {
@@ -42,7 +41,11 @@ class RestaurantHome extends Component {
 
   render() {
       var resImageSrc, res_title;
+      let redirectVar = null;  
 
+      if(!localStorage.getItem("user_id")) {
+            redirectVar = <Redirect to= "/customerLogin"/>
+       }
       if (this.state) {
           resImageSrc = endPointObj.url + '/images/restaurant/' + this.state.res_image;
           res_title = this.state.name;
@@ -50,6 +53,7 @@ class RestaurantHome extends Component {
 
       return (
           <div className= "restoHomeBackGroundLayer">
+                  { redirectVar }
                   <div> <NavigationBar /> </div>
                   
                   <div className="restaurantHomeContainer"> 

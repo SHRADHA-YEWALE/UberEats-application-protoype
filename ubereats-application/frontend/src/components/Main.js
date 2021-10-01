@@ -12,6 +12,7 @@ import CustomerProfile from './profile/CustomerProfile.js';
 import RestaurantProfile from './profile/RestaurantProfile';
 import Menu from './Menu/Menu.js';
 import EditMenuItems from './Menu/EditMenuItems.js';
+import Restaurant from './Restaurant/Restaurant'
 
 
 
@@ -30,6 +31,7 @@ class Main extends Component {
                 <Route path="/custNavBarHome" component={CustomerNavigationBarHome} />
                 <Route path="/restoNavBarHome" component={RestoNavigationBarHome} />
                 <Route path="/menu" component={Menu} />
+                <Route path="/restaurant" component={Restaurant} />
                 
 
             </div>

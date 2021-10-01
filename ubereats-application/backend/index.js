@@ -58,6 +58,10 @@ app.use("/menu", menuitems);
 const menusections = require("./routes/menusections");
 app.use("/menu", menusections); 
 
+const restaurant = require("./routes/restaurant");
+app.use("/restaurant", restaurant); 
+
+
 const port = process.env.PORT || 3001;
 var server = app.listen(port, () => {
   console.log(`Server listening on port ${port}`);

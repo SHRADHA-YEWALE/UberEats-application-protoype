@@ -51,7 +51,7 @@ router.get('/customer/:user_id', (req, res) => {
         res.cookie('cookie', "admin", { maxAge: 90000000, httpOnly: false, path: '/' });
         req.session.user = req.body.email_id;
         let userObject = { user_id: result[0].resto_id, name: result[0].resto_name, description: result[0].resto_description, email_id: result[0].email_id, pwd: result[0].pwd, address: result[0].location, phone_number: result[0].phone_number,
-        timings: result[0].timings, res_image: result[0].res_image};
+        timings: result[0].timings, res_image: result[0].res_image, zipcode: result[0].zipcode, delivery: result[0].delivery};
         res.writeHead(200, {
           'Content-Type': 'text/plain'
         })
@@ -115,10 +115,12 @@ router.get('/customer/:user_id', (req, res) => {
     if(req.body.password && req.body.password !== "")
     {
       var hashedPassword = "'" + passwordHash.generate(req.body.password) + "'";
-      sql = `UPDATE uber_eats.restaurant set resto_name = '${req.body.name}', pwd = ${hashedPassword}, location = '${req.body.address}', phone_number = '${req.body.phone_number}', resto_description = '${req.body.description}', timings = '${req.body.timings}' where resto_id = '${req.body.user_id}' `;
+      sql = `UPDATE uber_eats.restaurant set resto_name = '${req.body.name}', pwd = ${hashedPassword}, location = '${req.body.address}', phone_number = '${req.body.phone_number}', resto_description = '${req.body.description}', timings = '${req.body.timings}' ,
+      zipcode = '${req.body.zipcode}', delivery = '${req.body.delivery}'  where resto_id = '${req.body.user_id}' `;
     }
     else{
-      sql = `UPDATE uber_eats.restaurant set resto_name = '${req.body.name}', location = '${req.body.address}', phone_number = '${req.body.phone_number}', resto_description = '${req.body.description}', timings = '${req.body.timings}' where resto_id = '${req.body.user_id}' `;
+      sql = `UPDATE uber_eats.restaurant set resto_name = '${req.body.name}', location = '${req.body.address}', phone_number = '${req.body.phone_number}', resto_description = '${req.body.description}', timings = '${req.body.timings}' ,
+      zipcode = '${req.body.zipcode}', delivery = '${req.body.delivery}' where resto_id = '${req.body.user_id}' `;
     }
     
     pool.query(sql, (err, result) => {
