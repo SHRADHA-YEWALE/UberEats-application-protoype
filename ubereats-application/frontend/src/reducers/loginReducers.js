@@ -4,6 +4,7 @@ import { USER_LOGIN, USER_LOGOUT } from '../actions/userTypes';
      user: {}
  };
 
+ //Updates the central state of redux
  export default function(state = initialState, action){
     switch(action.type){
         case USER_LOGIN:
@@ -17,3 +18,4 @@ import { USER_LOGIN, USER_LOGOUT } from '../actions/userTypes';
             return state;
     }
  };
+ 

@@ -3,10 +3,9 @@ import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import NavigationBar from '../Navbar/Navigationbar.js';
-import Landing from '../Landing/Landing.js';
+import NavigationBar from '../Navbar/Navbar';
 import '../Signup/Signup.css';
-import './Login.css'
+import './Login.css';
 import { customerLogin } from '../../actions/customerLogin';
 
 
@@ -34,6 +33,7 @@ class CustomerLogin extends Component {
             password: this.state.password
         }
 
+        //Calling backend funtion by sending props to reducer.
         this.props.customerLogin(data);
 
         this.setState({
@@ -50,15 +50,9 @@ class CustomerLogin extends Component {
             localStorage.setItem("email_id", this.props.user.email_id);
             localStorage.setItem("user_id", this.props.user.user_id);
             localStorage.setItem("name", this.props.user.name);
-            redirectVar = <Redirect to="/home" />
+            redirectVar = <Redirect to="/customerHome" />
         }
-        else if(this.props.user === "NO_USER" && this.state.loginFlag){
-            message = "User not find with the provided email id";
-        }
-        else if(this.props.user === "INCORRECT_PASSWORD" && this.state.loginFlag){
-            message = "Invalid Password! Please enter correct password.";
-        }
-  
+          
         console.log(this.props);
         return (
             <div className= "loginBackGroundLayer">
@@ -86,7 +80,7 @@ class CustomerLogin extends Component {
                                     </table>
                                     <div style={{ color: "#ff0000" }}>{message}</div><br />
                                     <button type="submit" className="btn-primary"><center>Login</center></button><br /><br />
-                                    <div><Link to='/restaurantLogin'>Login as Restaurant Owner</Link></div><br />
+                                    <div><Link to='/restaurantLogin' className="signupLinkClass"><b>Login as Restaurant Owner</b></Link></div><br />
                                                                       
                                 </form>
                     </div> <br/> <br/>   
@@ -101,6 +95,7 @@ CustomerLogin.propTypes = {
     user: PropTypes.object.isRequired
 }
 
+//Connects a redux state to the props of a react component.
 const mapStateToProps = state => { 
     return {user: state.login.user}
 };

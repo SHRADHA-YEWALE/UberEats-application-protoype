@@ -3,6 +3,8 @@ import endPointObj from '../endPointUrl.js';
 import axios from "axios";
 
 export const customerLogin = (loginData) => dispatch => {
+
+    //It will dispatch the action to login reducer.
     axios.defaults.withCredentials = true;
     axios.post(endPointObj.url + '/login/customer', loginData)
         .then(response => dispatch({
@@ -19,3 +21,4 @@ export const customerLogin = (loginData) => dispatch => {
         });
 }
 
+export const userLogout = () => dispatch => dispatch({type: USER_LOGOUT});

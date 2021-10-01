@@ -1,9 +1,9 @@
 import React , { useState }  from 'react'
-import UbLogo from '../../assets/uberEatsLogo.png';
 import { Link } from 'react-router-dom';
-import ReorderIcon from "@material-ui/icons/Reorder";
 import './Navbar.css';
-function Navigationbar() {
+
+
+function Navbar() {
 
     const [openLinks, setOpenLinks] = useState(false);
     const toggleNavbar = () => {
@@ -12,7 +12,7 @@ function Navigationbar() {
     return (
     <div className = "navbar">
         <div className = "leftSide" id={openLinks ? "open" : "close"}>
-            <img width= "800" height = "100" src= { UbLogo }  /> 
+        <label className="ubLogo"><b>Uber</b></label> <label className="eatsLogo"><b>Eats</b></label> 
             <div className="hiddenLinks">
             <Link to="/customerLogin"> Login </Link> 
             <Link to="/customerSignup"> Signup </Link>
@@ -23,7 +23,7 @@ function Navigationbar() {
             <Link to="/customerSignup"> Signup </Link>
         </div>    
     </div>
-    );
+);
 }
 
-export default Navigationbar;
+export default Navbar;

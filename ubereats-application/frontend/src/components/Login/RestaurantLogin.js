@@ -3,8 +3,7 @@ import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import NavigationBar from '../Navbar/Navigationbar.js';
-import Landing from '../Landing/Landing.js';
+import NavigationBar from '../Navbar/Navbar.js';
 import '../Signup/Signup.css';
 import './Login.css'
 import { restaurantLogin } from '../../actions/restaurantLogin';
@@ -50,7 +49,7 @@ class RestaurantLogin extends Component {
             localStorage.setItem("email_id", this.props.user.email_id);
             localStorage.setItem("user_id", this.props.user.user_id);
             localStorage.setItem("name", this.props.user.name);
-            redirectVar = <Redirect to="/home" />
+            redirectVar = <Redirect to="/restaurantHome" />
         }
         else if(this.props.user === "NO_USER" && this.state.loginFlag){
             message = "User not find with the provided email id";
@@ -86,7 +85,7 @@ class RestaurantLogin extends Component {
                                     </table>
                                     <div style={{ color: "#ff0000" }}>{message}</div><br />
                                     <button type="submit" className="btn-primary"><center>Login</center></button><br /><br />
-                                    <div><Link to='/customerLogin'>Login as Customer</Link></div><br />
+                                    <div><Link to='/customerLogin' className="signupLinkClass"><b>Login as Customer</b></Link></div><br />
                                                                       
                                 </form>
                     </div> <br/> <br/>   

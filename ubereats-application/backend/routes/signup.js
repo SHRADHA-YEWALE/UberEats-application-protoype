@@ -5,9 +5,9 @@ const pool = require('../sqlpool.js');
 
 router.post('/customer', (req, res) => {
     var hashedPassword = passwordHash.generate(req.body.password);
-    let sql = "INSERT INTO uber_eats.customer (cust_name, email_id, pwd) VALUES (?,?,?)"
+    let sql = "INSERT INTO uber_eats.customer (cust_name, email_id, pwd, country, dob) VALUES (?,?,?,?,?)";
   
-    pool.query(sql, [req.body.name, req.body.email_id, hashedPassword],(err, result) => {
+    pool.query(sql, [req.body.name, req.body.email_id, hashedPassword, req.body.country, req.body.dob],(err, result) => {
       console.log("result from db", result);
       if (err) {
         res.writeHead(500, {

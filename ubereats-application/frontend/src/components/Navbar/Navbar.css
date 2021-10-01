@@ -70,6 +70,7 @@
   @media only screen and (max-width: 900px) {
     .navbar .rightSide a {
       width: 70px;
+     
     }
     .navbar .leftSide {
       padding-left: 50px;
@@ -99,5 +100,15 @@
     .hiddenLinks {
       display: none;
     }
+  }
+
+  .ubLogo {
+    font-size: 40px;
+    color: #ffffff;
+  }
+
+  .eatsLogo {
+    font-size: 40px;
+    color: #08f508;
   }
   

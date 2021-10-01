@@ -5,8 +5,8 @@ import { restaurantSignup } from '../../actions/signupRoleActions';
 import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 import { Row, Col } from 'react-bootstrap';
-import NavigationBar from '../Navbar/Navigationbar.js';
-import Landing from '../Landing/Landing.js';
+import NavigationBar from '../Navbar/Navbar';
+import Landing from '../Landing/CustomerHome.js';
 import './Signup.css';
 
 class RestaurantSignup extends Component {
@@ -30,7 +30,7 @@ class RestaurantSignup extends Component {
             name: this.state.name,
             email_id: this.state.email_id,
             password: this.state.password,
-            location: this.state.location
+            location: this.state.location,
         }
 
         this.props.restaurantSignup(restoData);
@@ -46,9 +46,6 @@ class RestaurantSignup extends Component {
         let redirectVar = null;
         let message = "";
         //Get the username from local or session storage.
-        if (localStorage.getItem("user_id")) {
-            redirectVar = <Redirect to="/Home" />
-        }
         if (this.props.user === "USER_ADDED" && this.state.signedUp) {
             console.log("User successfully login");
             alert("You have registered successfully. Please Login!");
@@ -61,10 +58,8 @@ class RestaurantSignup extends Component {
             <div className= "backGroundLayer">
                 {redirectVar}
                     <div> <NavigationBar /> </div>
-                 
-                    <br/><br/>
-                  
-                   
+                
+                     
                     <div className="container"> 
                     <div><h2><u>Restaurant Signup</u></h2></div> <br/>
                                 <form onSubmit={this.onSubmit}>
@@ -96,10 +91,10 @@ class RestaurantSignup extends Component {
                                     </table>
                                     <div style={{ color: "#ff0000" }}>{message}</div><br />
                                     <button type="submit" className="btn-primary"><center>Signup</center></button><br /><br />
-                                    <div><Link to='/customerSignup'>Signup as Customer</Link></div><br />
+                                    <div><Link to='/customerSignup' className="signupLinkClass"><b>Signup as Customer</b></Link></div><br />
                                                                       
                                 </form>
-                    </div>  <br/> <br/>  
+                    </div>  <br/> 
                     </div>
             
         )

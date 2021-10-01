@@ -43,6 +43,20 @@ app.use("/signup", signup);
 const login = require("./routes/login");
 app.use("/login", login);
 
+const profile = require("./routes/profile");
+app.use("/profile", profile);
+
+const upload = require("./routes/uploads");
+app.use("/uploads", upload);
+
+const images = require("./routes/images");
+app.use("/images", images);
+
+const menuitems = require("./routes/menuitems");
+app.use("/menu", menuitems);
+
+const menusections = require("./routes/menusections");
+app.use("/menu", menusections); 
 
 const port = process.env.PORT || 3001;
 var server = app.listen(port, () => {
