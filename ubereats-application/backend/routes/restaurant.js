@@ -10,7 +10,7 @@ router.get('/restaurantsearch/:search_input', (req, res) => {
   
     
     let sql = `SELECT DISTINCT 
-    r.resto_id, r.resto_name, r.resto_description, r.res_cuisine, r.res_image, r.location, r.phone_number, r.email_id, r.zipcode
+    r.resto_id, r.resto_name, r.resto_description, r.res_cuisine, r.res_image, r.location, r.phone_number, r.email_id, r.zipcode, r.timings
     FROM uber_eats.restaurant r
     LEFT OUTER JOIN menu_items mi
     ON mi.resto_id = r.resto_id
@@ -51,7 +51,7 @@ router.get('/restaurantsearch/:search_input', (req, res) => {
 
     if (deliverySearch && deliverySearch !== "") {
       sql = `SELECT DISTINCT 
-      r.resto_id, r.resto_name, r.resto_description, r.res_cuisine, r.res_image, r.location, r.phone_number, r.email_id, r.zipcode
+      r.resto_id, r.resto_name, r.resto_description, r.res_cuisine, r.res_image, r.location, r.phone_number, r.email_id, r.zipcode, r.timings
       FROM uber_eats.restaurant r
       LEFT OUTER JOIN menu_items mi
       ON mi.resto_id = r.resto_id
@@ -65,7 +65,7 @@ router.get('/restaurantsearch/:search_input', (req, res) => {
       AND r.delivery = '${deliverySearch}' `;
     } else {
       sql = `SELECT DISTINCT 
-      r.resto_id, r.resto_name, r.resto_description, r.res_cuisine, r.res_image, r.location, r.phone_number, r.email_id, r.zipcode
+      r.resto_id, r.resto_name, r.resto_description, r.res_cuisine, r.res_image, r.location, r.phone_number, r.email_id, r.zipcode, r.timings
       FROM uber_eats.restaurant r
       LEFT OUTER JOIN menu_items mi
       ON mi.resto_id = r.resto_id

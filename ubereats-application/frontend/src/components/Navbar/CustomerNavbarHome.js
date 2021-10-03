@@ -29,6 +29,8 @@ class CustomerNavbarHome extends Component {
             <div className = "rightSide">
                 <Link to="/customerHome"> Home </Link> 
                 <Link to="/customerProfile"> Profile </Link>
+                <Link to="/orders"> Orders </Link>
+                <Link to="/cart"> Cart </Link>
                 <Link to="/customerLogin" onClick={this.handleLogout}> Logout </Link>
                 
             </div>    

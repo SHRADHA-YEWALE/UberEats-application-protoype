@@ -25,6 +25,7 @@ class CustomerHome extends Component {
             .then(response => {
                 var cuisines = [];
                 if (response.data) {
+                    console.log("resto data", response.data);
                     if (response.data[0].search_result === 'NO_RECORD') {
                         this.setState({
                             noRecord: true,

@@ -97,7 +97,7 @@ class Restaurant extends Component {
             resImageSrc = endPointObj.url + "/images/restaurant/" + restaurant.res_image;
             resName = restaurant.resto_name;
             restoEmail = restaurant.email_id;
-            resZIP = restaurant.res_zip_code;
+            resZIP = restaurant.zipcode;
             resAddress = restaurant.location;
             resPhone = restaurant.phone_number;
             resCuisine = restaurant.res_cuisine;
@@ -127,17 +127,13 @@ class Restaurant extends Component {
                             <Card.Text style={{ width: "20rem" }}><h4>Contact: <Link>{restoEmail}</Link> | {resPhone}</h4></Card.Text>
                             <br />
                             <Card.Text style={{ width: "17rem" }}><h4>About us: {restoDescription}</h4></Card.Text>
-                            <Card.Text style={{ width: "17rem" }}><h4>Timings: <br/> {resTiming}</h4></Card.Text>
+                            <Card.Text style={{ width: "17rem" }}><h4>Timings: {resTiming}</h4></Card.Text>
                         </Card.Body>
                     </Row>
                 </Card>
                 <div className = "restoMenuDisplay">
                     {renderOutput}
                 </div>
-                <center>
-                    <Button href="/home" className= "restoSearchButton">Home</Button>&nbsp;&nbsp;
-                    <Button variant="success" name="goToCart" href="/cart" className= "restoSearchButton">Go To Cart</Button>
-                </center>
                 <br/>
             </div>
         )
