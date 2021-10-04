@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 import Navigationbar from '../Navbar/CustomerNavbarHome';
 import axios from 'axios';
 import deleteIcon from "../../assets/icons/delete.jpg";
+import cartIcon from "../../assets/cartPageImage.jpg";
+import "./cart.css";
 
 class Cart extends Component {
     constructor(props) {
@@ -149,8 +151,8 @@ class Cart extends Component {
 
         if (this.state && this.state.cart_items.length === 0) {
             message =
-                [<center><Alert variant="warning">You haven't added any items to your cart. Please add your favorite items.</Alert><br />
-                    <Button href="/Customerhome">Home</Button></center>
+                [<center><Alert variant="warning">You haven't added any items to your cart. Please add the items to cart you want to buy.</Alert><br />
+                    <Button href="/Customerhome"><b>Go to Home</b></Button></center>
                 ]
         }
         else {
@@ -242,15 +244,24 @@ class Cart extends Component {
             <div>
                 {redirectVar}
                 <Navigationbar /><br />
-                <Container>
-                    <h3>Your Cart</h3><br />
-                    <center>
-                        {message}
-                        {restaurantDetails}
-                        {cartTable}
-                        <br /><br />
-                    </center>
-                </Container>
+                <table>
+                    <tr>
+                        <td><img src={cartIcon} width="400" height="400" /></td> &nbsp; &nbsp; &nbsp;
+                        <td> &nbsp; &nbsp; &nbsp;</td>&nbsp; &nbsp; &nbsp;
+                        <td> &nbsp; &nbsp; &nbsp;</td>&nbsp; &nbsp; &nbsp;
+                        <td>
+                            <Container className="cartContainer">
+                                <h3>Your Cart</h3><br />
+                                <center>
+                                    {message}
+                                    {restaurantDetails}
+                                    {cartTable}
+                                    <br /><br />
+                                </center>
+                            </Container>
+                        </td>
+                    </tr>
+                </table>
 
             </div>
         )
