@@ -31,6 +31,7 @@ class Restaurant extends Component {
         if (this.props.location.state) {
             axios.get(endPointObj.url + "/menu/sections/" + this.props.location.state.resto_id)
                 .then(response => {
+                    console.log("Restaurant FE:",response);
                     if (response.data[0]) {
                         this.setState({
                             menu_sections: response.data
@@ -49,6 +50,7 @@ class Restaurant extends Component {
         if (this.props.location.state) {
             axios.get(endPointObj.url + "/menu/items/" + this.props.location.state.resto_id)
                 .then(response => {
+                    console.log("get menu items FE:", response);
                     if (response.data[0]) {
                         this.setState({
                             menu_items: response.data
@@ -90,7 +92,7 @@ class Restaurant extends Component {
             restaurant = this.props.location.state;
 
         if (!localStorage.getItem("user_id") || !this.props.location.state) {
-            redirectVar = <Redirect to="/home" />
+            redirectVar = <Redirect to="/CustomerLogin" />
         }
 
         if (restaurant) {
@@ -127,13 +129,14 @@ class Restaurant extends Component {
                             <Card.Text style={{ width: "20rem" }}><h4>Contact: <Link>{restoEmail}</Link> | {resPhone}</h4></Card.Text>
                             <br />
                             <Card.Text style={{ width: "17rem" }}><h4>About us: {restoDescription}</h4></Card.Text>
-                            <Card.Text style={{ width: "17rem" }}><h4>Timings: {resTiming}</h4></Card.Text>
+                            <Card.Text style={{ width: "17rem" }}><h4>Timings: <br/> {resTiming}</h4></Card.Text>
                         </Card.Body>
                     </Row>
                 </Card>
                 <div className = "restoMenuDisplay">
                     {renderOutput}
                 </div>
+
                 <br/>
             </div>
         )

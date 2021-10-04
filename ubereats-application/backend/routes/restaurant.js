@@ -98,5 +98,28 @@ router.get('/restaurantsearch/:search_input', (req, res) => {
     });
   });
 
+  router.get('/:res_id', (req, res) => {
+
+    let sql = "SELECT * FROM uber_eats.restaurant WHERE resto_id = ?";
+    pool.query(sql, req.params.res_id, (err, result) => {
+      if (err) {
+        res.writeHead(500, {
+          'Content-Type': 'text/plain'
+        });
+        res.end("Database Error", err);
+      }
+      if (result && result.length > 0 ) {
+        let restoObject = { user_id: result[0].resto_id, name: result[0].resto_name, description: result[0].resto_description, email_id: result[0].email_id, pwd: result[0].pwd, address: result[0].location, phone_number: result[0].phone_number,
+          timings: result[0].timings, res_image: result[0].res_image, zipcode: result[0].zipcode, delivery: result[0].delivery};
+  
+        res.writeHead(200, {
+          'Content-Type': 'text/plain'
+        });
+        console.log(restoObject);
+        res.end(JSON.stringify(restoObject));
+      }
+    });
+  });
+
   module.exports = router;
 

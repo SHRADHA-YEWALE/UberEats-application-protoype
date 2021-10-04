@@ -1,5 +1,7 @@
+import { AddAlertRounded } from "@material-ui/icons";
 import React, { Component } from "react";
 import { Card, Modal, Button, Col, Row } from "react-bootstrap";
+import axios from 'axios';
 import endPointObj from '../../endPointUrl.js';
 import '../Landing/Landing.css';
 import './Restaurant.css'
@@ -51,9 +53,30 @@ class ItemCard extends Component {
     let index = cartItems.findIndex((cartItem => cartItem.item_id === item_id));
     if (index === -1) {
       cartItems.push({ item_id: item_id, item_quantity: this.state.item_quantity || 1, item_price: this.props.menu_item.item_price, 
-        item_name: this.props.menu_item.item_name, item_description: this.props.menu_item.item_description });
-      localStorage.setItem("cart_res_id", this.props.menu_item.res_id);
+        item_name: this.props.menu_item.item_name, item_description: this.props.menu_item.item_description, resto_id: this.props.menu_item.resto_id});
+      localStorage.setItem("cart_res_id", this.props.menu_item.resto_id);
       localStorage.setItem("cart_items", JSON.stringify(cartItems));
+      
+      let data = {
+        item_id: item_id,
+        item_quantity: this.state.item_quantity || 1,
+        user_id: localStorage.getItem("user_id"),
+        resto_id: this.props.menu_item.resto_id
+      }
+      axios.post(endPointObj.url + "/cart/item", data)
+                .then(response => {
+                    alert("Item successfully added to cart!");
+                    if (response.data[0]) {
+                        this.setState({
+                            menu_items: response.data
+                        });
+                    }
+                })
+                .catch(err => {
+                    if (err.response && err.response.data) {
+                        console.log(err.response.data);
+                    }
+                });
       this.setState({
         showModal: false,
         item_quantity: 1
@@ -69,16 +92,33 @@ class ItemCard extends Component {
       cartItems.push(...JSON.parse(localStorage.getItem("cart_items")));
     }
 
-    let index = cartItems.findIndex((cartItem => cartItem.item_id === item_id));
-    if(index !== -1){
-      e.target.textContent = "Add to Cart";
-      e.target.className = "btn btn-primary";
-      cartItems.splice(index, 1);
-      localStorage.setItem("cart_items", JSON.stringify(cartItems));
-      this.setState({
-        item_quantity: null
-      });
+    let data = {
+      item_id: cartItems.map(item => item.item_id),
+      user_id: localStorage.getItem("user_id")
     }
+    axios.post(endPointObj.url + "/cart/cartItemdelete", data)
+          .then(response => {
+              alert("Item successfully removed from cart");
+              let index = cartItems.findIndex((cartItem => cartItem.item_id === item_id));
+              if(index !== -1){
+                console.log("change remove cart text");
+                e.target.textContent = "Add to Cart";
+                e.target.className = "btn btn-primary";
+                cartItems.splice(index, 1);
+                localStorage.setItem("cart_items", JSON.stringify(cartItems));
+              }
+              this.setState({
+                  item_quantity: null,
+                  cartItems: cartItems,
+                  message: response.data
+              });
+          })
+          .catch(error => {
+              if (error.response && error.response.data) {
+                  console.log(error.response.data);
+              }
+          })
+    
   };
 
 

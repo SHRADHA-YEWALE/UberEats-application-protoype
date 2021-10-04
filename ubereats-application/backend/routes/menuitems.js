@@ -19,7 +19,8 @@ router.get('/items/:resto_id', (req, res) => {
       if (result && result.length > 0) {
         console.log("Successfully fetched the items for the restaurant:", result);
         let itemObject = { item_id: result[0].item_id, item_name: result[0].item_name, item_description: result[0].item_description, 
-        item_price: result[0].item_price, item_image: result[0].item_image, menu_section_id: result[0].menu_section_id, menu_section_name: result[0].menu_section_name};
+        item_price: result[0].item_price, item_image: result[0].item_image, menu_section_id: result[0].menu_section_id, menu_section_name: result[0].menu_section_name,
+        resto_id: result[0].resto_id};
         res.writeHead(200, {
           'Content-Type': 'text/plain'
         });
