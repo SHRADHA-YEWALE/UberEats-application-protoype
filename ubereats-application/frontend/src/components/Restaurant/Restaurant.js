@@ -7,6 +7,7 @@ import NavigationBar from '../Navbar/CustomerNavbarHome.js';
 import endPointObj from '../../endPointUrl.js';
 import { Link } from "react-router-dom";
 import '../Landing/Landing.css';
+import './Restaurant.css';
 
 
 class Restaurant extends Component {
@@ -75,7 +76,7 @@ class Restaurant extends Component {
                 section = <h4>{menu_section.menu_section_name}</h4>;
                 itemsRender.push(section);
                 for (var i = 0; i < items.length; i++) {
-                    item = <ItemCard menu_item={items[i]} />;
+                    item = <Col md={6}><ItemCard menu_item={items[i]} /></Col>;
                     itemsRender.push(item);
                 }
             }
@@ -113,26 +114,27 @@ class Restaurant extends Component {
             }
         }
         return (
-            <div>
+            <div style={{paddingLeft:"0em", paddingRight:"-30em"}}>
                 {redirectVar}
                 <NavigationBar />
 
-                <Card bg="info" text="white" style={{ width: "70rem", height: "15rem", margin: "2%" }}>
+                <Card style={{ width: "95%", height: "20rem", margin: "2%", backgroundColor: "#ffffff", paddingRight:"0em" }}>
                     <Row>
-                        <Col>
-                            <Card.Img style={{ width: "18rem", height: "15rem" }} src={resImageSrc} />
+                        <Col md={7}>
+                            <Card.Img style={{ width: "50rem", height: "20rem" }} src={resImageSrc} />
                         </Col>
-                        <Card.Body>
+                        <Col>
+                        <Card.Body md={4}>
                             <Card.Title><h1>{resName}</h1></Card.Title>
-                            <br />
-                            <Card.Text style={{ width: "17rem" }}><h4>Location: {resAddress} | {resZIP} </h4></Card.Text>
-                            <Card.Text style={{ width: "20rem" }}><h4>Contact: <Link>{restoEmail}</Link> | {resPhone}</h4></Card.Text>
-                            <br />
-                            <Card.Text style={{ width: "17rem" }}><h4>About us: {restoDescription}</h4></Card.Text>
-                            <Card.Text style={{ width: "17rem" }}><h4>Timings: <br/> {resTiming}</h4></Card.Text>
+                            <Col md={2}><Card.Text style={{ width: "17rem", color:"#000000" }}><b>Location:</b> {resAddress} | {resZIP}</Card.Text></Col>
+                            <Col md={2}><Card.Text style={{ width: "20rem", color:"#000000"  }}><b>Contact:</b> <Link>{restoEmail}</Link> | {resPhone}</Card.Text></Col>
+                            <Col md={2}><Card.Text style={{ width: "17rem", color:"#000000"  }}><b>About us:</b> {restoDescription}</Card.Text></Col>
+                            <Col md={2}><Card.Text style={{ width: "17rem",color:"#000000"  }}><b>Timings:</b> <br/> {resTiming}</Card.Text></Col>
                         </Card.Body>
+                        </Col>
                     </Row>
                 </Card>
+
                 <div className = "restoMenuDisplay">
                     {renderOutput}
                 </div>

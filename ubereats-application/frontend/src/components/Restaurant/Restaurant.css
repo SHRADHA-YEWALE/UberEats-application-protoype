@@ -15,7 +15,7 @@
   }
   
   .Modal-content {
-    background-color: #f8f1f1;
+    background-color: #030303;
     margin: 1em auto;
     padding: 1em;
     border-radius: 4px;
@@ -50,4 +50,10 @@
 
   .addToCartButton {
       background-color: #000;
+  }
+
+  .restoMenuDisplay {
+
+    margin: 4em auto;
+    margin-left: 15em;
   }

@@ -10,15 +10,14 @@ class RestaurantCard extends Component {
     var resData = this.props.restaurant;
     let imageSrc = endPointObj.url + "/images/restaurant/" + this.props.restaurant.res_image;
     return (
-      <Card bg="white" style={{ width: "50rem", margin: "5%" }}>
+      <Card bg="white" style={{ width: "20rem", margin: "5%" }}>
       <Link to={{pathname: '/restaurant', state: resData}}>
       <Card bg="white" style={{ width: "18rem", margin: "5%" }}>
         
         <Card.Body>
           <Card.Title style={{ fontSize: "2rem", margin: "5%", color: "#1d6e04" }}><b>{this.props.restaurant.resto_name}</b></Card.Title>
           <Card.Img
-          variant="top"
-          style={{ width: "18rem" }}
+          style={{ width: "15rem", height: "10em", margin: "5%" }}
           src={imageSrc}
         />
           <Card.Text>{this.props.restaurant.res_cuisine}</Card.Text>

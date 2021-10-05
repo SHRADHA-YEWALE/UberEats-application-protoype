@@ -21,14 +21,14 @@
 }
 
 .custHomeRestoSearch {
-  margin: 8em auto;
-  margin-top: -20em;
+  margin: 1em auto;
+  margin-top: -4em;
   width: 30em;
 
 }
 
 .searchInputField {
-  width: 20em;
+  width: 50em;
   height: 3em;
 }
 
@@ -36,6 +36,8 @@
   background: #020202;
   color: #fffdfd;
   width: 8em;
+  padding-left: 0em;
+  padding-top: -2em;
 }
 
  h1{
@@ -46,8 +48,3 @@
 
 }
 
-.restoMenuDisplay {
-
-  margin: -15em auto;
-  margin-left: 40em;
-}

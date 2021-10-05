@@ -76,6 +76,7 @@ class CustomerProfile extends Component {
                                     <Form.Label column sm="3" className="inputLabel">Name</Form.Label>
                                     <Col sm="10">
                                         <Form.Control name="name"
+                                            style={{ width: '90%'}}
                                             type="text"
                                             onChange={this.onChange}
                                             value={this.state.name}
@@ -84,48 +85,48 @@ class CustomerProfile extends Component {
                                     </Col> 
                                 </Form.Group>
                           
-                            <br/>
                          
                                 <Form.Group as={Row} className="mb-3" controlId="email_id">
                                     <Form.Label column sm="3" className="inputLabel">Email</Form.Label>
                                     <Col sm="10">
                                     <Form.Control type="email"
+                                       style={{ width: '90%'}}
                                         name="email_id"
                                         value={this.state.email_id}/>
                                     </Col>    
                                 </Form.Group>
                         
-                            <br/>
-                          
+                           
                                 <Form.Group as={Row} className="mb-3" controlId="RB.password">
                                     <Form.Label column sm="3" className="inputLabel">Password</Form.Label>
                                     <Col sm="10">
                                     <Form.Control type="password"
                                         name="password"
+                                        style={{ width: '90%'}}
                                         onChange={this.onChange}
                                         placeholder="New Password" />
                                     </Col>    
                                 </Form.Group>
                             
-                            <br/>
+                        
                                 <Form.Group as={Row} className="mb-3" controlId="RB.password">
                                         <Form.Label column sm="3" className="inputLabel">Date Of Birth</Form.Label>
                                         <Col sm="10">
                                         <Form.Control type="date"
                                             name="dob"
+                                            style={{ width: '90%'}}
                                             value={this.state.dob}
                                             onChange={this.onChange}
                                              />
                                         </Col>    
                                     </Form.Group>
-                            
-                            <br/>
                            
                                 <Form.Group as={Row} className="mb-3" controlId="formGridCity">
                                     <Form.Label column sm="3" className="inputLabel">Address</Form.Label>
                                     <Col sm="10">
                                     <Form.Control type="text"
                                         name="address"
+                                        style={{ width: '90%'}}
                                         onChange={this.onChange}
                                         value={this.state.address}
                                         pattern="^[A-Za-z0-9 ,-]+$"
@@ -133,9 +134,9 @@ class CustomerProfile extends Component {
                                     </Col>    
                                 </Form.Group>
                            
-                            <br/>
+                       
                             <Form.Group as={Row} className="mb-3" controlId="formGridCountry">
-                            <Form.Label column sm="3" className="inputLabel">Country</Form.Label>
+                            <Form.Label column sm="3" className="inputLabel">Country</Form.Label><br />
                             <select name="country"  onChange={this.onChange} value={this.state.country}>
                                     <option>select country</option>
                                     <option value="AF">Afghanistan</option>
@@ -392,14 +393,14 @@ class CustomerProfile extends Component {
                                     <option value="ZW">Zimbabwe</option>
                                 </select>
                             </Form.Group>
-                               
-                            <br/>  
+                                
                             
                                 <Form.Group as={Row} className="mb-3" controlId="formGridZip">
                                     <Form.Label column sm="3" className="inputLabel">Phone Number</Form.Label>
                                     <Col sm="10">
                                     <Form.Control type="text"
                                         name="phone_number"
+                                        style={{ width: '90%'}}
                                         onChange={this.onChange}
                                         value={this.state.phone_number}
                                         required={true}
@@ -408,7 +409,6 @@ class CustomerProfile extends Component {
                                     </Col>
                                 </Form.Group>
                            
-                            <br/>
                             <div class ="buttonDiv">
                             <ButtonGroup aria-label="Third group">
                                 <Button type="submit" variant="success">Update Details</Button>

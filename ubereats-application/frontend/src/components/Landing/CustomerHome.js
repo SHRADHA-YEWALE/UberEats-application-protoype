@@ -128,7 +128,7 @@ class CustomerHome extends Component {
         if (this.state && this.state.displayRestaurants) {
             restaurantCards = this.state.displayRestaurants.map(restaurant => {
                 return (
-                    <Col sm={3}>
+                    <Col md={6}>
                         <RestaurantCard restaurant={restaurant} />
                     </Col>
                 );
@@ -163,31 +163,32 @@ class CustomerHome extends Component {
                     <table>
                     <tr>  
                     <td>
-                    <div className="custHomeRestoSearch">    
-                    <h3>Search for the Restaurants for delicious food.</h3>
+                    <div className="custHomeRestoSearch"><br/><br/> 
+                    <h4>Search for the Restaurants for delicious food.</h4><br/><br/>
                     <form onSubmit={this.onSearch}>
-                        <InputGroup style={{ width: '100%', height: '100%'}} size="lg">
+                        <InputGroup style={{ width: '90%', height: '100%', paddingTop: '0em'}} size="lg">
                             <FormControl
+                                style={{ width: '90%', height: '100%'}}
                                 placeholder="Search Food, Restaurant, location"
                                 aria-label="Search Restaurants"
                                 aria-describedby="basic-addon2"
                                 name="search_input"
                                 className = "searchInputField"
                                 onChange={this.onChange}
-                            /> <br />
-                             <FormLabel><h3>Mode of delivery</h3></FormLabel>
-                             
+                            /> <br /><br /><br/><br/>
+                             <FormLabel><h4>Mode of delivery:</h4></FormLabel>
+                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                              <input type="radio" id="pickup" name="pickup" value="P" />
-                             <FormLabel for="pickup">Pickup</FormLabel>
-                             
+                             <FormLabel for="pickup"><h5>Pickup</h5></FormLabel>
+                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                              <input type="radio" id="delivery" name="delivery" value="D"  />
-                             <FormLabel for="pickup">Delivery</FormLabel>
-                             <br /> <br />
-                            
-                            <Button variant="primary" type="submit" className="restoSearchButton">Search</Button>
+                             <FormLabel for="pickup"><h5>Delivery</h5></FormLabel>
+                             <br/>
+                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <center><Button variant="primary" type="submit" className="restoSearchButton"><h5><b>Search</b></h5></Button></center>
                           
                             
-                        </InputGroup>
+                        </InputGroup> 
                     </form>
                     </div>
                     </td>
@@ -197,7 +198,7 @@ class CustomerHome extends Component {
                     </div>
                     <br /><br />
                     {noRecordMessage}
-                    <Row>{restaurantCards}</Row>
+                    <Row md="6">{restaurantCards}</Row>
                     </td></tr> </table>
                 </center>
             </div>
