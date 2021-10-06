@@ -180,7 +180,7 @@ class EditMenuItems extends Component {
                     <Col xs={6} md={4}>
                         <center>
                             <br /><br />
-                            <Card style={{ width: '18rem' }}>
+                            <Card style={{ width: '20rem' }}>
                                 <Card.Img variant="top" src={imageSrc} />
                             </Card>
                             <form onSubmit={this.onUpload}><br /><br /><br />

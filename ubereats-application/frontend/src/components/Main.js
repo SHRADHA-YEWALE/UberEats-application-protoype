@@ -13,7 +13,8 @@ import RestaurantProfile from './profile/RestaurantProfile';
 import Menu from './Menu/Menu.js';
 import EditMenuItems from './Menu/EditMenuItems.js';
 import Restaurant from './Restaurant/Restaurant.js';
-import Cart from './Cart/Cart.js'
+import Cart from './Cart/Cart.js';
+import ConfirmOrder from './Cart/ConfirmOrder';
 
 
 
@@ -34,6 +35,7 @@ class Main extends Component {
                 <Route path="/menu" component={Menu} />
                 <Route path="/restaurant" component={Restaurant} />
                 <Route path="/cart" component={Cart} />
+                <Route path="/order/confirm" component={ConfirmOrder} />
 
             </div>
         );

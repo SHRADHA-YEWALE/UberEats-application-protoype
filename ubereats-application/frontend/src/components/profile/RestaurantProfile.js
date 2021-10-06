@@ -108,12 +108,10 @@ class RestaurantProfile extends Component {
                     <div className="restaurantProfileContainer"> 
 
                     <center>
-                                    <Card style={{ width: '18rem' }}>
-                                        <Card.Img style={{ width: '10em' }} variant="top" src={resImageSrc} />
-                                        <Card.Body>
-                                            <Card.Title><h3>{res_title}</h3></Card.Title>
-                                        </Card.Body>
+                                    <Card style={{ width: '20rem' }}>
+                                        <Card.Img style={{ width: '20em' }} variant="top" src={resImageSrc} />
                                     </Card>
+                                    <br/>
                                     <form onSubmit={this.onResUpload}>
                                         <div class="custom-file" style={{ width: "80%" }}>
                                             <input type="file" class="custom-file-input" name="res_file" accept="image/*" onChange={this.onResImageChange} required/>
@@ -140,8 +138,6 @@ class RestaurantProfile extends Component {
                                             required={true} />
                                     </Col> 
                                 </Form.Group>
-                          
-                            <br/>
 
                                 <Form.Group as={Row} className="mb-3" controlId="formGridCity">
                                         <Form.Label column sm="3" className="inputLabel">Description</Form.Label>
@@ -155,8 +151,6 @@ class RestaurantProfile extends Component {
                                         </Col>    
                                     </Form.Group>
                            
-                            <br/>
-                         
                                 <Form.Group as={Row} className="mb-3" controlId="email_id">
                                     <Form.Label column sm="3" className="inputLabel">Email</Form.Label>
                                     <Col sm="10">
@@ -167,8 +161,6 @@ class RestaurantProfile extends Component {
                                          />
                                     </Col>    
                                 </Form.Group>
-                        
-                            <br/>
                           
                                 <Form.Group as={Row} className="mb-3" controlId="RB.password">
                                     <Form.Label column sm="3" className="inputLabel">Password</Form.Label>
@@ -180,8 +172,6 @@ class RestaurantProfile extends Component {
                                         style={{ width: "80%" }}/>
                                     </Col>    
                                 </Form.Group>
-                            
-                            <br/>
                            
                                 <Form.Group as={Row} className="mb-3" controlId="formGridCity">
                                     <Form.Label column sm="3" className="inputLabel">Address</Form.Label>
@@ -194,8 +184,6 @@ class RestaurantProfile extends Component {
                                         required={true} />
                                     </Col>    
                                 </Form.Group>
-                           
-                            <br/>
                             
                                 <Form.Group as={Row} className="mb-3" controlId="formGridZipcode">
                                         <Form.Label column sm="3" className="inputLabel">Zipcode</Form.Label>
@@ -209,7 +197,6 @@ class RestaurantProfile extends Component {
                                         </Col>    
                                     </Form.Group>
                             
-                                <br/>
                                 <Form.Group as={Row} className="mb-3" controlId="formGridPhone">
                                     <Form.Label column sm="3" className="inputLabel">Phone Number</Form.Label>
                                     <Col sm="10">
@@ -224,7 +211,6 @@ class RestaurantProfile extends Component {
                                     </Col>
                                 </Form.Group>
                            
-                            <br/>
                                 <Form.Group as={Row} className="mb-3" controlId="formGridTiming">
                                     <Form.Label column sm="3" className="inputLabel">Timings</Form.Label>
                                     <Col sm="10">
@@ -240,7 +226,6 @@ class RestaurantProfile extends Component {
                                     </Col>
                                 </Form.Group>
                            
-                            <br/>
                                 <Form.Group as={Row} className="mb-3" controlId="formGridDelivery">
                                 <Form.Label column sm="3" className="inputLabel">Mode of Delivery</Form.Label>
                                 <select name="delivery"  onChange={this.onChange} value={this.state.delivery}>
@@ -249,7 +234,7 @@ class RestaurantProfile extends Component {
                                         <option value="P" selected>Pickup</option>
                                 </select>
                                 </Form.Group>
-                            <br/>            
+          
                             <div class ="buttonDiv">
                             <ButtonGroup aria-label="Third group">
                                 <Button type="submit" variant="success">Update Profile</Button>

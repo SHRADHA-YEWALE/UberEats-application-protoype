@@ -27,7 +27,7 @@ class ItemCard extends Component {
               <Link to={{ pathname: "/menu/item/update", state: { item_id: this.props.menu_item.item_id } }}>   
                 <Button variant="link" name={this.props.menu_item.item_id} className="edit-menu-btn-primary">Edit</Button>&nbsp;
                 </Link>
-                <Button variant="link" onClick={this.props.deleteItem} name={this.props.menu_item.item_id} className="delete-menu-btn-primary">Delete</Button>    
+                <Button variant="link" onClick={this.props.deleteItem} name={this.props.menu_item.item_id} className="edit-menu-btn-primary">Delete</Button>    
             </Col>
           </Row>
         </Card>

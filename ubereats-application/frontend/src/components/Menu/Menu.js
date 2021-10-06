@@ -48,9 +48,9 @@ class Menu extends Component {
                           title="Menu"
                           menuVariant="dark"
                           style={{ paddingLeft: "38em" }}> Menu
-                          <NavDropdown.Item eventKey="1" as={NavLink} to="/menu/view">View Menu</NavDropdown.Item>
-                          <NavDropdown.Item eventKey="2" as={NavLink} to="/menu/section">Menu Sections</NavDropdown.Item>
-                          <NavDropdown.Item eventKey="3" as={NavLink} to="/menu/item">Add Menu Items</NavDropdown.Item>
+                          <NavDropdown.Item eventKey="1" as={NavLink} style={{ color: "#000000" }} to="/menu/view">View Menu</NavDropdown.Item>
+                          <NavDropdown.Item eventKey="2" as={NavLink} style={{ color: "#000000" }} to="/menu/section">Menu Sections</NavDropdown.Item>
+                          <NavDropdown.Item eventKey="3" as={NavLink} style={{ color: "#000000" }} to="/menu/item">Add Menu Items</NavDropdown.Item>
                         </NavDropdown>
                       </Nav>
                     </Navbar.Collapse>

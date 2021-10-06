@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container, Alert } from "react-bootstrap";
+import { Container, Alert, Button, Col, Row } from "react-bootstrap";
 import axios from "axios";
 import ItemCard from "./ItemCard";
 import endPointObj from '../../endPointUrl.js';
@@ -59,7 +59,7 @@ class MenuView extends Component {
                 itemsRender.push(section);
                 for (var i = 0; i < items.length; i++) {
             
-                    item = <ItemCard menu_item={items[i]} deleteItem={this.deleteItem}/>;
+                    item =  <Col md={6}><ItemCard menu_item={items[i]} deleteItem={this.deleteItem}/></Col>;
                     itemsRender.push(item);
                 }
             }

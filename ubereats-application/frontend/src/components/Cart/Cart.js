@@ -55,6 +55,7 @@ class Cart extends Component {
             axios.get(endPointObj.url + "/restaurant/" + res_id)
                 .then(response => {
                     if (response.data) {
+                        console.log("Hey there", response.data);
                         this.setState({
                             restaurant: response.data,
                         });
@@ -157,8 +158,8 @@ class Cart extends Component {
         }
         else {
             restaurantDetails = (
-                <Card style={{ width: "60rem", margin: "2%" }}>
-                    <ListGroup className="list-group-flush">
+                <Card style={{ width: "20rem", margin: "1%" }}>
+                    <ListGroup>
                         <ListGroupItem><h3>{resName}</h3></ListGroupItem>
                         <ListGroupItem>{resAddress} | {resZIP}</ListGroupItem>
                     </ListGroup>
@@ -232,7 +233,7 @@ class Cart extends Component {
                         </tbody>
                     </Table>
                     <Button variant="warning" onClick={this.clearCart}>Clear Cart</Button> &nbsp; &nbsp;
-                    <Button variant="primary" href="/home">Save for Later</Button> &nbsp; &nbsp;
+                    <Button variant="primary" href="/customerHome">Save for Later</Button> &nbsp; &nbsp;
                     <Link to={{pathname: "/order/confirm", state: confirmDetails}}>
                         <Button variant="success">Proceed to Checkout</Button>
                     </Link>
@@ -254,7 +255,6 @@ class Cart extends Component {
                                 <h3>Your Cart</h3><br />
                                 <center>
                                     {message}
-                                    {restaurantDetails}
                                     {cartTable}
                                     <br /><br />
                                 </center>
