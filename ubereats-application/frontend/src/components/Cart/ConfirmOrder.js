@@ -46,7 +46,7 @@ class ConfirmOrder extends Component {
 
         let data = {
             user_id: localStorage.getItem("user_id"),
-            res_id: this.state.restaurant.res_id,
+            res_id: this.state.restaurant.user_id,
             order_status: 'ORDER_PLACED',
             sub_total: this.state.sub_total,
             discount: (this.state.discount * this.state.sub_total / 100).toFixed(2),
@@ -58,12 +58,14 @@ class ConfirmOrder extends Component {
 
         axios.post(endPointObj.url +"/cart/placeorder", data)
             .then(response => {
-                if (response.data.status === "ORDER_PLACED") {
+                console.log("put order response", response);
+                if (response.data) {
                     localStorage.removeItem("cart_items");
                     localStorage.removeItem("cart_res_id");
                     this.setState({
-                        message: response.data.status
+                        message: response.data
                     });
+                    alert("Your order Successfully placed!");
                 }
             })
             .catch(error => {
@@ -136,7 +138,7 @@ class ConfirmOrder extends Component {
                             </Table>
                             <center>
                                 <Button variant="success" onClick={this.placeOrder}>Confirm Order</Button>&nbsp; &nbsp;
-                                <Button variant="secondary" href="/home">Cancel</Button>
+                                <Button variant="secondary" href="/customerHome">Cancel</Button>
                             </center>
                             <br />
                         </Card.Body>

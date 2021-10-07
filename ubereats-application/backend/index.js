@@ -64,6 +64,8 @@ app.use("/restaurant", restaurant);
 const cart = require("./routes/cart");
 app.use("/cart", cart); 
 
+const orders = require("./routes/orders");
+app.use("/orders", orders);
 
 const port = process.env.PORT || 3001;
 var server = app.listen(port, () => {

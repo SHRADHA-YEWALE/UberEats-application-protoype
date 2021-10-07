@@ -73,4 +73,35 @@ router.post('/item', (req, res) => {
     });
   });
 
+  router.post('/placeorder', (req, res) => {
+    const currentDate = new Date();
+    const timestamp = currentDate.getTime();
+    let sql = `insert into uber_eats.orders(user_id, resto_id, order_status, sub_total, tax, delivery, discount, total_price, order_date) 
+    values(${req.body.user_id}, ${req.body.res_id}, '${req.body.order_status}',${req.body.sub_total}, ${req.body.tax}, 
+     ${req.body.delivery}, ${req.body.discount}, ${req.body.total}, ${timestamp})`;
+    pool.query(sql, (err, result) => {
+      if (err) {
+        console.log(err);
+        res.writeHead(500, {
+          'Content-Type': 'text/plain'
+        });
+        res.end("Database Error", err);
+      }
+      if (result && result.affectedRows > 0) {
+
+        //order details
+        res.writeHead(200, {
+          'Content-Type': 'text/plain'
+        });
+        res.end('ORDER_PLACED');
+      }
+      else {
+        res.writeHead(500, {
+          'Content-Type': 'text/plain'
+        });
+        res.end('ORDER_NOT_PLACED');
+      }
+    });
+  });
+
   module.exports = router;

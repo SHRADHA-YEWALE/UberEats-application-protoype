@@ -15,7 +15,9 @@ import EditMenuItems from './Menu/EditMenuItems.js';
 import Restaurant from './Restaurant/Restaurant.js';
 import Cart from './Cart/Cart.js';
 import ConfirmOrder from './Cart/ConfirmOrder';
-
+import CustomerOrders from './Orders/CustomerOrders.js';
+import OrderBillView from './Orders/OrderBillView';
+import OrderItemsView from './Orders/OrderItemsView';
 
 
 class Main extends Component {
@@ -35,7 +37,10 @@ class Main extends Component {
                 <Route path="/menu" component={Menu} />
                 <Route path="/restaurant" component={Restaurant} />
                 <Route path="/cart" component={Cart} />
+                <Route exact path="/orders" component={CustomerOrders} />
                 <Route path="/order/confirm" component={ConfirmOrder} />
+                <Route path="/orders/billing" component={OrderBillView} />
+                <Route path="/orders/details" component={OrderItemsView} />
 
             </div>
         );
