@@ -59,14 +59,15 @@ class RestaurantHome extends Component {
                   <div className="restaurantHomeContainer"> 
 
                   <center>
-                        <Card style={{ width: '18rem' }}>
-                            <Card.Img style={{ width: '15em', height: '10em'}} variant="top" src={resImageSrc} />
+                        <Card style={{ width: '18rem', height: '10em' }}>
+                            <Card.Img style={{ width: '18em', height: '10em'}} variant="top" src={resImageSrc} />
                             <Card.Body>
-                                <Card.Title><h1>{res_title}</h1></Card.Title>
+                                
                             </Card.Body>
                         </Card>
                                 
                   </center>
+                  <br/>
                 
                   <div className="profileLabel"><b><u>PROFILE</u></b></div><br/>
                 

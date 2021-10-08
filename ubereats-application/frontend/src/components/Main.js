@@ -18,6 +18,8 @@ import ConfirmOrder from './Cart/ConfirmOrder';
 import CustomerOrders from './Orders/CustomerOrders.js';
 import OrderBillView from './Orders/OrderBillView';
 import OrderItemsView from './Orders/OrderItemsView';
+import OrderHistory from './Orders/OrderHistory';
+import RestaurantOrderHistory from './Orders/RestaurantOrderHistory';
 
 
 class Main extends Component {
@@ -41,6 +43,9 @@ class Main extends Component {
                 <Route path="/order/confirm" component={ConfirmOrder} />
                 <Route path="/orders/billing" component={OrderBillView} />
                 <Route path="/orders/details" component={OrderItemsView} />
+                <Route path="/orders/history" component={OrderHistory} />
+                <Route path="/orders/orderHistory" component={RestaurantOrderHistory} />
+
 
             </div>
         );

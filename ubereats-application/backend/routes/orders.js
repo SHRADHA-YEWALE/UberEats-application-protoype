@@ -68,4 +68,67 @@ router.get('/orderitems/:order_id', (req, res) => {
     });
   });
 
+  router.get('/completedorders/restaurant/:user_id', (req, res) => {
+    console.log("inside restaurant order history", req.params.user_id);
+    let sql = `SELECT 
+    o.order_id, o.resto_id, r.resto_name, r.location, u.cust_name, u.address, u.phone_number, r.zipcode, o.order_status,
+    o.sub_total, o.tax, o.delivery, o.discount, o.total_price
+    FROM uber_eats.orders o
+    JOIN restaurant r
+    ON r.resto_id = o.resto_id
+    JOIN customer u
+    ON u.cust_id = o.user_id
+    WHERE o.resto_id = '${req.params.user_id}' `;
+    pool.query(sql, (err, result) => {
+      if (err) {
+        res.writeHead(500, {
+          'Content-Type': 'text/plain'
+        });
+        res.end("Database Error",err);
+      }
+      if (result && result.length > 0) {
+        res.writeHead(200, {
+          'Content-Type': 'text/plain'
+        });
+        res.end(JSON.stringify(result));
+      }
+      else {
+        res.writeHead(200, {
+          'Content-Type': 'text/plain'
+        });
+        res.end("NO_ORDERS");
+      }
+    });
+  });
+
+  router.post('/updateStatus', (req, res) => {
+    console.log("Inside update restaurant data", req.body.order_id);
+    
+    sql = `UPDATE uber_eats.orders set order_status = '${req.body.order_status}' where order_id = '${req.body.order_id}' `;
+       
+    pool.query(sql, (err, result) => {
+      console.log(result);
+      if (err) {
+        console.log(err);
+        res.writeHead(500, {
+          'Content-Type': 'text/plain'
+        });
+        res.end("Error in Data");
+      }
+      if (result) {
+        console.log("Order status updated successfully!");
+        res.writeHead(200, {
+          'Content-Type': 'text/plain'
+        });
+        res.end('ORDER_STATUS_UPDATED');
+      }
+      else if (result && result.length > 0 && result.status === 'NO_RECORD') {
+        res.writeHead(401, {
+          'Content-Type': 'text/plain'
+        });
+        res.end(result[0][0].status);
+      }
+    });
+  });
+
 module.exports = router;

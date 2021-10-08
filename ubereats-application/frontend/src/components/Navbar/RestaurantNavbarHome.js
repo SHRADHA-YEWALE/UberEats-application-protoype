@@ -28,7 +28,7 @@ class RestaurantNavbarHome extends Component {
             </div>    
             <div className = "rightSide">
                 <Link to="/menu"> Menu </Link>
-                <Link to="/orders"> Orders </Link>
+                <Link to="/orders/orderHistory"> Orders </Link>
                 <Link to="/restaurantProfile"> Update Profile </Link> 
                 <Link to="/restaurantLogin" onClick={this.handleLogout}> SignOut </Link>     
             </div>    
