@@ -27,6 +27,7 @@ class RestaurantNavbarHome extends Component {
                 <label className="ubLogo"><b>Uber</b></label> <label className="eatsLogo"><b>Eats</b></label> 
             </div>    
             <div className = "rightSide">
+            <Link to="/restaurantHome"> Home </Link> 
                 <Link to="/menu"> Menu </Link>
                 <Link to="/orders/orderHistory"> Orders </Link>
                 <Link to="/restaurantProfile"> Update Profile </Link> 

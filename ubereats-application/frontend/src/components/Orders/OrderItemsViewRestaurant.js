@@ -1,18 +1,21 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router';
-import { Button, Container, Table, Card } from "react-bootstrap";
-import Navigationbar from '../Navbar/CustomerNavbarHome.js';
+import { Button, Container, Table, Card, Form, Row } from "react-bootstrap";
+import Navigationbar from '../Navbar/RestaurantNavbarHome';
 import axios from 'axios';
 import endPointObj from '../../endPointUrl.js';
 
-class OrderItemsView extends Component {
+class OrderItemsViewRestaurant extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
             order_details: {},
-            order_items: {}
+            order_items: {},
+            o_status:""
         };
+        this.onChange = this.onChange.bind(this);
+        this.onUpdate = this.onUpdate.bind(this);
     }
 
     componentWillMount() {
@@ -27,7 +30,8 @@ class OrderItemsView extends Component {
                     if (response.data) {
                         console.log("order item view", response.data);
                         this.setState({
-                            order_items: response.data
+                            order_items: response.data,
+                            order_status: response.data.order_status
                         });
                     }
                 })
@@ -36,6 +40,38 @@ class OrderItemsView extends Component {
                 });
         }
     }
+
+    onChange = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value, 
+            o_status: e.target.value
+        });
+        console.log("order_status", this.state.order_status);
+    };
+
+    onUpdate = (e) => {
+        e.preventDefault();
+
+        const data = {
+            order_status : this.state.o_status,
+            order_id : this.state.order_id
+        }
+    
+        axios.post(endPointObj.url + '/orders/updateStatus', data)
+            .then(response => {
+                this.setState({
+                    message: response.data.status
+                });
+            })
+            .catch(err => {
+                if (err.response && err.response.data) {
+                    this.setState({
+                        message: err.response.data
+                    });
+                }
+            });
+    };
+
 
     render() {
         let order_details;
@@ -47,10 +83,12 @@ class OrderItemsView extends Component {
         if (!localStorage.getItem("user_id") || !this.props.location.state) {
             redirectVar = <Redirect to="/" />;
         }
-        console.log(this.props);
+       
         if (this.state && this.state.order_details && this.state.order_items) {
             order_details = this.state.order_details;
             items = this.state.order_items;
+            this.state.order_id = order_details.order_id;
+            this.state.o_status = order_details.order_status;
             if (items.length > 0) {
                 items.forEach(item => {
                     let itemRow = (
@@ -95,9 +133,11 @@ class OrderItemsView extends Component {
                                         </tr>
                                     </tbody>
                                 </Table>
+                                
                                 <Button variant="secondary" href={this.state.prevPath}>Back</Button>
                             </Card.Body>
                         </Card>
+
                     </center>
                 );
             return (
@@ -106,6 +146,16 @@ class OrderItemsView extends Component {
                     {redirectVar}
                     <Container className="justify-content">
                         {itemsCard}
+                        <form onSubmit={this.onUpdate}>
+                        <select name="o_status"  onChange={this.onChange} style={{ width: '10em', height: '2em'}}>
+                            <option value="ORDER RECEIVED">ORDER RECEIVED</option>
+                            <option value="PREPARING">PREPARING</option>
+                            <option value="PICKUP READY">PICKUP READY</option>
+                            <option value="DELIVERED">DELIVERED</option>
+                            <option value="ORDER_CANCELLED">ORDER_CANCELLED</option>
+                        </select>
+                        <Button type="submit" variant="success">Update Order Status</Button>
+                        </form>
                     </Container>
                 </div>
             );
@@ -113,4 +163,4 @@ class OrderItemsView extends Component {
     }
 }
 
-export default OrderItemsView;
+export default OrderItemsViewRestaurant;

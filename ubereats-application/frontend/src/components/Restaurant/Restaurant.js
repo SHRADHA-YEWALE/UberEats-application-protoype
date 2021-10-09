@@ -93,6 +93,7 @@ class Restaurant extends Component {
             restaurant = this.props.location.state;
 
         if (!localStorage.getItem("user_id") || !this.props.location.state) {
+            alert("Please login to explore the food at your favourite restaurant");
             redirectVar = <Redirect to="/CustomerLogin" />
         }
 

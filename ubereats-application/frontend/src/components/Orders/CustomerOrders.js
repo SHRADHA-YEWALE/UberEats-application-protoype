@@ -90,7 +90,7 @@ class CustomerOrders extends Component {
             if (orders.length > 0) {
                 orderCards = orders.map(order => {
                     return (
-                        <Card style={{ width: "60rem", margin: "2%" }}>
+                        <Card style={{ width: "50rem", margin: "2%" }}>
                             <Card.Body>
                                 <Row>
                                     <Col>
@@ -123,7 +123,7 @@ class CustomerOrders extends Component {
             <div>
                 {redirectVar}
                 <Navigationbar /><br />
-                <Container className="justify-content">
+                <Container className="customerOrder">
                     <h3>Your Pending Orders</h3><br />
                     {message}
                     {orderCards}

@@ -78,10 +78,7 @@ class OrderBillView extends Component {
                                             <td colSpan="4">Contact Number:</td>
                                             <td>{order_details.phone_number}</td>
                                         </tr>
-                                        <tr>
-                                            <td colSpan="4">Payment Date:</td>
-                                            <td>{order_details.order_date}</td>
-                                        </tr>
+                                    
                                     </tbody>
                                 </Table>
                                 <Button variant="secondary" href={this.state.prevPath}>Back</Button>

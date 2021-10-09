@@ -46,3 +46,9 @@
 
 }
 
+.LandingBackgoundLayer {
+  background-image: url(../../assets/LandingBackground.jpg); opacity: 1;
+  background-size: 100%;
+  padding-top: 2em;
+}
+

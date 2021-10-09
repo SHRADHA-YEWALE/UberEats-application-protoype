@@ -47,6 +47,9 @@ router.get('/restaurantsearch/:search_input', (req, res) => {
     let search_input = req.body.searchInput;
     let search_string = "%".concat(search_input,"%");
     let deliverySearch = req.body.delivery;
+    let categorySearch = req.body.category;
+    console.log("Helossss", categorySearch);
+    console.log("Byess", deliverySearch);
     let sql ;
 
     if (deliverySearch && deliverySearch !== "") {
@@ -61,7 +64,7 @@ router.get('/restaurantsearch/:search_input', (req, res) => {
       OR mi.item_description LIKE '${search_string}'
       OR r.resto_name LIKE '${search_string}'
       OR r.res_cuisine LIKE '${search_string}'
-      OR ms.menu_section_name LIKE '${search_string}')
+      OR ms.menu_section_name = '${categorySearch}')
       AND r.delivery = '${deliverySearch}' `;
     } else {
       sql = `SELECT DISTINCT 
@@ -75,7 +78,7 @@ router.get('/restaurantsearch/:search_input', (req, res) => {
       OR mi.item_description LIKE '${search_string}'
       OR r.resto_name LIKE '${search_string}'
       OR r.res_cuisine LIKE '${search_string}'
-      OR ms.menu_section_name LIKE '${search_string}' `; 
+      OR ms.menu_section_name LIKE '${categorySearch}' `; 
     }
 
     pool.query(sql, (err, result) => {

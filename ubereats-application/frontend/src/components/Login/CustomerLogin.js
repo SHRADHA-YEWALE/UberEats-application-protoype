@@ -45,6 +45,9 @@ class CustomerLogin extends Component {
         //console.log(this.props);
         let redirectVar = null;
         let message = ""
+        if (!localStorage.getItem("user_id")) {
+            redirectVar = <Redirect to="/customerLogin" />
+        }
         if(this.props.user && this.props.user.user_id){
             console.log("Success");
             localStorage.setItem("email_id", this.props.user.email_id);

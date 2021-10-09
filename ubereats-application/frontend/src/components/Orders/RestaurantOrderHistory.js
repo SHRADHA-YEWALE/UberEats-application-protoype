@@ -22,11 +22,12 @@ class RestaurantOrderHistory extends Component {
 
     onUpdate = (e) => {
         e.preventDefault();
-        
-        let data = {
-            status : this.order_status,
+
+        const data = {
+            order_status : this.order_status,
             order_id : this.order_id
         }
+    
         axios.post(endPointObj.url + '/orders/updateStatus', data)
             .then(response => {
                 this.setState({
@@ -84,7 +85,7 @@ class RestaurantOrderHistory extends Component {
                                         <Card.Text>{order.order_date}</Card.Text>
                                     </Col>
                                     <Col align="center">
-                                        <Link to={{ pathname: "/orders/details", state: {order_details: order, prevPath: "/orders/history"} }}>
+                                        <Link to={{ pathname: "restaurant/orders/details", state: {order_details: order} }}>
                                             <Button variant="link">Order Details</Button>
                                         </Link>
                                         <Link to={{ pathname: "/orders/billing", state: {order_details: order, prevPath: "/orders/history"} }}>
@@ -92,13 +93,26 @@ class RestaurantOrderHistory extends Component {
                                         </Link>
                                     </Col>
                                     <Col align="center">
-                                        <form onSubmit={this.onUpdate}>
-                                            <div style={{ width: "80%" }}>
-                                                <input type="text" name="order_status" value={this.state.order_status} onChange={this.onChange} required/>
-                                                <label>Order Status</label>
-                                            </div><br/>
-                                            <Button type="submit" variant="primary" className="submit-resto-btn-primary">Update Status</Button>
-                                        </form>
+                                        <br />
+                                        <b>Order Status</b><br/>
+                                        {order.order_status}
+                                        <br />
+                                        <Form onSubmit={this.onUpdate}>
+                                        <Form.Group as={Row} className="mb-3"  controlId="name">
+                                     
+                                        <Form.Control type="text"
+                                        name="order_status"
+                                        onChange={this.onChange}
+                                        rows = "30"
+                                        cols = "40"
+                                        style={{ width: "80%" }}
+                                        />
+                                        </Form.Group> 
+
+                                  
+                                    <Button type="submit" variant="success">Update Order Status</Button>
+                                    <br />
+                                    </Form>
                                         <br />
                                     </Col>
                                 </Row>

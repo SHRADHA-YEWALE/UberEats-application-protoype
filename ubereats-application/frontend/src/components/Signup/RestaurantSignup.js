@@ -46,6 +46,9 @@ class RestaurantSignup extends Component {
         let redirectVar = null;
         let message = "";
         //Get the username from local or session storage.
+        if (!localStorage.getItem("user_id")) {
+            redirectVar = <Redirect to="/restaurantSignup" />
+        }
         if (this.props.user === "USER_ADDED" && this.state.signedUp) {
             console.log("User successfully login");
             alert("You have registered successfully. Please Login!");

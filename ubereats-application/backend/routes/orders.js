@@ -39,25 +39,25 @@ router.get('/pendingorders/:user_id', (req, res) => {
 });
 
 router.get('/orderitems/:order_id', (req, res) => {
-
+    console.log("inside orderitems", req.params.order_id);
     let sql = `SELECT 
-    o.order_id, o.item_id, o.item_quantity, mi.item_name, mi.item_price, mi.item_description
-    FROM order_details o
+    o.order_id, o.item_id, o.quantity, mi.item_name, mi.item_price, mi.item_description
+    FROM uber_eats.orders o
     JOIN menu_items mi
     ON mi.item_id = o.item_id
-    WHERE o.order_id = '${req.params.order_id}'`;
+    WHERE o.order_id = '${req.params.order_id}' `;
     pool.query(sql, (err, result) => {
       if (err) {
         res.writeHead(500, {
           'Content-Type': 'text/plain'
         });
-        res.end("Database Error");
+        res.end("Database Error", err);
       }
-      if (result && result.length > 0 && result[0][0]) {
+      if (result && result.length > 0) {
         res.writeHead(200, {
           'Content-Type': 'text/plain'
         });
-        res.end(JSON.stringify(result[0]));
+        res.end(JSON.stringify(result));
       }
       else {
         res.writeHead(500, {
@@ -102,7 +102,7 @@ router.get('/orderitems/:order_id', (req, res) => {
   });
 
   router.post('/updateStatus', (req, res) => {
-    console.log("Inside update restaurant data", req.body.order_id);
+    console.log("Inside update restaurant data", req.body.order_id, req.body.order_status);
     
     sql = `UPDATE uber_eats.orders set order_status = '${req.body.order_status}' where order_id = '${req.body.order_id}' `;
        
@@ -127,6 +127,25 @@ router.get('/orderitems/:order_id', (req, res) => {
           'Content-Type': 'text/plain'
         });
         res.end(result[0][0].status);
+      }
+    });
+  });
+
+  router.post('/cancelorder', (req, res) => {
+    let sql = `UPDATE uber_eats.orders SET order_status = 'ORDER_CANCELLED' WHERE order_id = ${req.body.order_id};`;
+    pool.query(sql, (err, result) => {
+      if (err) {
+        res.writeHead(500, {
+          'Content-Type': 'text/plain'
+        });
+        res.end("Database Error");
+      }
+      if (result) {
+        res.writeHead(200, {
+          'Content-Type': 'text/plain'
+        });
+        console.log("Order cancelled");
+        res.end("ORDER_CANCELLED");
       }
     });
   });

@@ -1,18 +1,17 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import endPointObj from '../../endPointUrl.js';
-import RestaurantCard from "./RestaurantCard";
-import { InputGroup, FormControl, Button, Form, Dropdown, Alert, Col, Row, FormLabel } from 'react-bootstrap';
-import NavigationBar from '../Navbar/CustomerNavbarHome.js';
+import endPointObj from '../endPointUrl.js';
+import RestaurantCard from "./Landing/RestaurantCard";
+import { InputGroup, FormControl, Button, DropdownButton, Dropdown, Alert, Col, Row, Form } from 'react-bootstrap';
+import NavigationBar from './Navbar/Navbar.js';
 import {Redirect} from 'react-router';
-import './Landing.css';
+import './Landing/Landing.css';
 
-class CustomerHome extends Component {
+class LandingPage extends Component {
     constructor(props) {
         super(props);
         this.setState({
             search_input: "",
-            food_category:"",
             noRecord: false
         });
 
@@ -21,37 +20,6 @@ class CustomerHome extends Component {
         this.onCuisineSelect = this.onCuisineSelect.bind(this);
     }
 
-    componentDidMount() {
-        axios.get(endPointObj.url + "/restaurant/restaurantsearch/_")
-            .then(response => {
-                var cuisines = [];
-                if (response.data) {
-                    console.log("resto data", response.data);
-                    if (response.data[0].search_result === 'NO_RECORD') {
-                        this.setState({
-                            noRecord: true,
-                            search_input: ""
-                        });
-                    }
-                    else {
-                        for (var i = 0; i < response.data.length; i++) {
-                            if(!cuisines.includes(response.data[i].res_cuisine))
-                            cuisines.push(response.data[i].res_cuisine)
-                        }
-                        this.setState({
-                            restaurantList: response.data,
-                            displayRestaurants: response.data,
-                            cuisineList: cuisines
-                        });
-                    }
-                }
-            })
-            .catch(error => {
-                if (error.response && error.response.data) {
-                    console.log(error.response.data);
-                }
-            })
-    }
 
     onChange = (e) => {
         this.setState({
@@ -67,8 +35,7 @@ class CustomerHome extends Component {
             var searchInput = typeof this.state.search_input === "undefined" || this.state.search_input === "" ? "_" : this.state.search_input;
             let data = {
                 searchInput : searchInput,
-                delivery : this.state.delivery,
-                category: this.state.food_category
+                delivery : this.state.delivery
             }
             axios.post(endPointObj.url + "/restaurant/restaurantDeliverySearch", data)
                 .then(response => {
@@ -116,8 +83,7 @@ class CustomerHome extends Component {
         let redirectVar = null;  
 
         if(!localStorage.getItem("user_id")) {
-            alert("BYE");
-            redirectVar = <Redirect to= "/customerLogin"/>
+            redirectVar = <Redirect to= "/"/>
         }
         if (this.state && this.state.cuisineList) {
             cuisineDropdown = this.state.cuisineList.map(cuisine => {
@@ -159,14 +125,12 @@ class CustomerHome extends Component {
             <div>
                 {redirectVar}
                 <div> <NavigationBar /> </div>
+                <div className="LandingBackgoundLayer">
                 <center><br /><br />
-                    
+                    <h1 style={{ color: '#ffffff'}}>Welcome to UberEats</h1>
                     <br />
-                    <table>
-                    <tr>  
-                    <td>
-                    <div className="custHomeRestoSearch"><br/><br/> 
-                    <h4>Search for the Restaurants for delicious food.</h4><br/><br/>
+                    <div><br/><br/> 
+                    <h4 style={{ color: '#ffffff'}}><i>Search for the Restaurants for delicious food.</i></h4><br/><br/>
                     <Form onSubmit={this.onSearch}>
                         <InputGroup style={{ width: '90%', height: '100%', paddingTop: '0em'}} size="lg">
                             <FormControl
@@ -177,42 +141,26 @@ class CustomerHome extends Component {
                                 name="search_input"
                                 className = "searchInputField"
                                 onChange={this.onChange}
-                            /> <br /><br /><br/><br/>
-                             <FormLabel><h4>Mode of delivery:</h4></FormLabel>
-                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                             <input type="radio" id="pickup" name="delivery" value="P" onChange={this.onChange} />
-                             <FormLabel for="pickup"><h5>Pickup</h5></FormLabel>
-                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                             <input type="radio" id="delivery" name="delivery" value="D" onChange={this.onChange} />
-                             <FormLabel for="pickup"><h5>Delivery</h5></FormLabel>
-                             <br/>
-                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                             <FormLabel><h4>Food Category:</h4></FormLabel>
-                             <select name="food_category"  onChange={this.onChange} style={{ width: '10em', height: '2em'}}>
-                                <option value="veg">Veg</option>
-                                <option value="non-veg">Non-veg</option>
-                                <option value="vegan">Vegan</option>
-                            </select>
-                            <br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            />
+                           
                             <center><Button variant="primary" type="submit" className="restoSearchButton"><h5><b>Search</b></h5></Button></center>
-                          
                             
                         </InputGroup> 
                     </Form>
                     </div>
-                    </td>
-                    <td>
-                    <div className="welcomeTitle">
-                    <h1>Welcome to UberEats</h1>
-                    </div>
+                    
                     <br /><br />
                     {noRecordMessage}
                     <Row md="6">{restaurantCards}</Row>
-                    </td></tr> </table>
+                    <br /><br /><br /><br /><br /><br /><br /><br /><br />
+                    
+                    
+                  
                 </center>
+                </div>
             </div>
         )
     }
 }
 
-export default CustomerHome;
+export default LandingPage;

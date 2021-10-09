@@ -87,8 +87,8 @@ class Cart extends Component {
         let cart_items = this.state.cart_items;
         
         let data = {
-            item_id: cart_items.map(item => item.item_id),
-            user_id: cart_items.map(item => item.user_id)
+            item_id: parseInt(e.target.name),
+            user_id: localStorage.getItem("user_id")
         }
         axios.post(endPointObj.url + "/cart/cartItemdelete", data)
                 .then(response => {

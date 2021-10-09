@@ -20,12 +20,15 @@ import OrderBillView from './Orders/OrderBillView';
 import OrderItemsView from './Orders/OrderItemsView';
 import OrderHistory from './Orders/OrderHistory';
 import RestaurantOrderHistory from './Orders/RestaurantOrderHistory';
+import OrderItemsRestaurantView from './Orders/OrderItemsViewRestaurant';
+import LandingPage from './LandingPage.js';
 
 
 class Main extends Component {
     render() {
         return (
             <div>
+                <Route exact path="/" component={LandingPage} />
                 <Route path="/customerSignup" component={CustomerSignup} />
                 <Route path="/restaurantSignup" component={RestaurantSignup} />
                 <Route path="/customerLogin" component={CustomerLogin} />
@@ -43,9 +46,9 @@ class Main extends Component {
                 <Route path="/order/confirm" component={ConfirmOrder} />
                 <Route path="/orders/billing" component={OrderBillView} />
                 <Route path="/orders/details" component={OrderItemsView} />
+                <Route path="/orders/restaurant/orders/details" component={OrderItemsRestaurantView} />
                 <Route path="/orders/history" component={OrderHistory} />
                 <Route path="/orders/orderHistory" component={RestaurantOrderHistory} />
-
 
             </div>
         );
