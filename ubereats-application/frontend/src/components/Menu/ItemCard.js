@@ -31,6 +31,7 @@ class ItemCard extends Component {
             </Col>
           </Row>
         </Card>
+        <br/>
         </div>
     );
   }

@@ -190,7 +190,7 @@ class CustomerHome extends Component {
                              <FormLabel><h4>Food Category:</h4></FormLabel>
                              <select name="food_category"  onChange={this.onChange} style={{ width: '10em', height: '2em'}}>
                                 <option value="veg">Veg</option>
-                                <option value="non-veg">Non-veg</option>
+                                <option value="nonveg">Non-veg</option>
                                 <option value="vegan">Vegan</option>
                             </select>
                             <br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

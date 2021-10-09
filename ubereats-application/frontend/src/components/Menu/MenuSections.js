@@ -138,10 +138,10 @@ class MenuSections extends Component {
                 <h3>Add New Section</h3><br />
                 <Form onSubmit={this.onSubmit}>
                     <Form.Group as={Row} controlId="menu_section_name">
-                        <Form.Label column sm="2">
+                        <Form.Label>
                             Section Name:
                         </Form.Label>
-                        <Col sm="4">
+                        <Col>
                             <Form.Control
                                 style={{ width: "15rem" }}
                                 type="text"
@@ -152,7 +152,7 @@ class MenuSections extends Component {
                                 required
                             />
                         </Col>
-                        <br/>
+                        <br/><br/>
                         <Col sm ="6">
                             <Button type="sumbit" className="menu-section-btn-primary">Add Section</Button>
                         </Col>

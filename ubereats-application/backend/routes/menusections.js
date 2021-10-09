@@ -24,7 +24,7 @@ router.get('/sections/:resto_id', (req, res) => {
   });
 
   router.get('/sectionitem/:menu_section_id', (req, res) => {
-    let sql = `CALL Menu_Sections_Record_get(${req.params.menu_section_id});`;
+    let sql = `select *from uber_eats.menu_sections where menu_section_id = '${req.params.menu_section_id}' `;
     pool.query(sql, (err, result) => {
       if (err) {
         res.writeHead(500, {
@@ -32,11 +32,11 @@ router.get('/sections/:resto_id', (req, res) => {
         });
         res.end("Database Error");
       }
-      if (result && result.length > 0 && result[0][0]) {
+      if (result && result.length > 0)  {
         res.writeHead(200, {
           'Content-Type': 'text/plain'
         });
-        res.end(JSON.stringify(result[0][0]));
+        res.end(JSON.stringify(result));
       }
     });
   });
@@ -44,7 +44,6 @@ router.get('/sections/:resto_id', (req, res) => {
   router.post('/sections', (req, res) => {
     console.log("Inside Add new menu section db call");
     let sql = "INSERT INTO uber_eats.menu_sections(menu_section_name, resto_id)VALUES(?, ?)";
-    console.log("hi");
     pool.query(sql, [req.body.menu_section_name, req.body.user_id], (err, result) => {
       console.log("result",result);
       if (err) {
@@ -71,7 +70,7 @@ router.get('/sections/:resto_id', (req, res) => {
   });
 
   router.post('/sectionsupdate', (req, res) => {
-    let sql = `CALL Menu_Sections_update(NULL, ${req.body.user_id}, ${req.body.menu_section_id}, '${req.body.menu_section_name}');`;
+    let sql = `update uber_eats.menu_sections set menu_section_name = '${req.body.menu_section_name}' where menu_section_id = '${req.body.menu_section_id}' `;
     pool.query(sql, (err, result) => {
       if (err) {
         console.log(err);
@@ -80,17 +79,17 @@ router.get('/sections/:resto_id', (req, res) => {
         });
         res.end("Database Error");
       }
-      if (result && result.length > 0 && result[0][0].status === 'SECTION_UPDATED') {
+      if (result) {
         res.writeHead(200, {
           'Content-Type': 'text/plain'
         });
-        res.end(JSON.stringify(result[0][0]));
+        res.end('SECTION_UPDATED');
       }
-      else if (result && result.length > 0 && result[0][0].status === 'SECTION_EXISTS') {
+      else {
         res.writeHead(500, {
           'Content-Type': 'text/plain'
         });
-        res.end(result[0][0].status);
+        res.end('SECTION_EXISTS');
       }
     });
   });

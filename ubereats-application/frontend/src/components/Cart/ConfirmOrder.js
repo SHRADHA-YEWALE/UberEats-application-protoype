@@ -24,6 +24,7 @@ class ConfirmOrder extends Component {
                 sub_total: this.props.location.state.subTotal,
                 total: this.props.location.state.total
             });
+            
         }
     };
 
@@ -53,7 +54,7 @@ class ConfirmOrder extends Component {
             delivery: this.state.delivery,
             tax: (this.state.tax * this.state.sub_total / 100).toFixed(2),
             total: this.state.total,
-            cart_items: this.state.cart_items
+            cart_items: this.state.cart_items,
         }
 
         axios.post(endPointObj.url +"/cart/placeorder", data)

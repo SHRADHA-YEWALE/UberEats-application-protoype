@@ -129,7 +129,7 @@ router.get('/items/:resto_id', (req, res) => {
         });
         res.end("Database Error");
       }
-      if (result && result.length > 0) {
+      if (result && result.affectedRows > 0) {
         console.log("Item deleted successfully.");
         res.writeHead(200, {
           'Content-Type': 'text/plain'

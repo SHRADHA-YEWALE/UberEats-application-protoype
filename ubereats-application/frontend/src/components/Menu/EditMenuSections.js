@@ -19,7 +19,7 @@ class EditMenuSections extends Component {
         this.setState({
             menu_section_id: menu_section_id
         });
-        axios.get(endPointObj + '/menu/sectionitem/'+ menu_section_id)
+        axios.get(endPointObj.url + '/menu/sectionitem/'+ menu_section_id)
             .then(response => {
                 if (response.data.status === "NO_RECORD"){
                     this.setState({
@@ -53,11 +53,11 @@ class EditMenuSections extends Component {
             menu_section_name: this.state.menu_section_name
         };
 
-        axios.post(endPointObj + '/menu/sectionsupdate', data)
+        axios.post(endPointObj.url + '/menu/sectionsupdate', data)
             .then(response => {
                 if (response.data) {
                     this.setState({
-                        message: response.data.status
+                        message: response.data
                     });
                 }
             })
@@ -78,6 +78,7 @@ class EditMenuSections extends Component {
         if (this.state.message === "SECTION_EXISTS") {
             message = <Alert variant="warning">A section with name {this.state.menu_section_name} already exists</Alert>;
         } else if(this.state.message === "SECTION_UPDATED" || this.state.noRecordFlag) {
+            message = <Alert variant="warning">Section updates successfully!</Alert>;
             redirectVar = <Redirect to="/menu/section" />;
         }
 
@@ -96,7 +97,7 @@ class EditMenuSections extends Component {
                             <Form.Label column sm="2">
                                 Section Name:
                             </Form.Label>
-                            <Col sm="4">
+                            <Col sm="6">
                                 <Form.Control
                                     style={{ width: "15rem" }}
                                     type="text"
@@ -106,9 +107,9 @@ class EditMenuSections extends Component {
                                     pattern="^[A-Za-z ]+$"
                                     required
                                 />
-                            </Col>
-                            <Col sm="6">
-                                <Button variant="success" type="sumbit">Update</Button>&nbsp;
+                            </Col><br/><br/>
+                            <Col sm="4">
+                                <Button variant="success" type="sumbit">Update</Button><br/><br/>
                                 <Button variant="warning" href="/menu/section">Cancel</Button>
                             </Col>
                         </Form.Group>

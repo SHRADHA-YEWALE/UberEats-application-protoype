@@ -99,9 +99,9 @@ class MenuView extends Component {
             section,
             renderOutput = [];
 
-        if (this.state.message === "ITEM_DELETED") {
+        /*if (this.state.message === "ITEM_DELETED") {
             message = <Alert variant="warning">Item deleted successfully!</Alert>;
-        }
+        }*/
 
         if (this.state && this.state.menu_sections && this.state.menu_sections.length > 0) {
             for (var i = 0; i < this.state.menu_sections.length; i++) {
@@ -110,7 +110,7 @@ class MenuView extends Component {
             }
         }
         return (
-            <Container className="justify-content">
+            <Container className="menuViewContainer">
                 <br />
                 <h3>Menu</h3>
                 {message}
