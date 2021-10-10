@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 import './CustProfile.css';
 import NavigationBar from '../Navbar/CustomerNavbarHome.js';
 import { Container, Col, Row, Form, Button, ButtonGroup, Card } from 'react-bootstrap';
+import axios from 'axios';
+import endPointObj from '../../endPointUrl.js';
 
 
 class CustomerProfile extends Component {
@@ -14,6 +16,8 @@ class CustomerProfile extends Component {
         this.state = {};
         this.onChange = this.onChange.bind(this);
         this.onUpdate = this.onUpdate.bind(this);
+        this.onImageChange = this.onImageChange.bind(this);
+        this.onUpload = this.onUpload.bind(this);
     }
 
     componentWillMount() {
@@ -31,7 +35,8 @@ class CustomerProfile extends Component {
                 address: user.address || this.state.address,
                 phone_number: user.phone_number || this.state.phone_number,
                 country: user.country || this.state.country,
-                dob: user.dob || this.state.dob
+                dob: user.dob || this.state.dob,
+                user_image: user.user_image || this.state.user_image
 
             };
             console.log("Userdata name"+userData.name);
@@ -49,6 +54,35 @@ class CustomerProfile extends Component {
         })
     }
 
+    
+    onImageChange = (e) => {
+        this.setState({
+            file: e.target.files[0],
+            fileText: e.target.files[0].name
+        });
+    }
+
+    onUpload = (e) => {
+        e.preventDefault();
+        const formData = new FormData();
+        formData.append("image", this.state.file);
+        const uploadConfig = {
+            headers: {
+                "content-type": "multipart/form-data"
+            }
+        };
+        axios.post(endPointObj.url + "/uploads/user/" + this.state.user_id, formData, uploadConfig)
+            .then(response => {
+                alert("Image uploaded successfully!");
+                this.setState({
+                    fileText: "Choose file...",
+                    user_image: response.data
+                });
+            })
+            .catch(err => {
+                console.log("Error");
+            });
+    }
 
     onUpdate = (e) => {
         console.log("Updating the customer details - frontend");
@@ -60,12 +94,30 @@ class CustomerProfile extends Component {
     };
 
     render() {
-
+        var imageSrc,
+        fileText = this.state.fileText || "Choose image..",
+        title = this.state.name;
+        if (this.state) {
+            imageSrc = endPointObj.url + "/images/user/" + this.state.user_image;
+        }
         return (
             <div className= "profileBackGroundLayer">
                     <div> <NavigationBar /> </div>
                     <br/><br/>
                     <div className="profileContainer"> 
+                    <center>
+                                <Card style={{ width: '18rem' }}>
+                                    <Card.Img variant="top" src={imageSrc} />
+                                   
+                                </Card>
+                                <form onSubmit={this.onUpload}><br /><br /><br />
+                                    <div class="custom-file" style={{width: "80%"}}>
+                                        <input type="file" class="custom-file-input" name="image" accept="image/*" onChange={this.onImageChange} required/>
+                                        <label class="custom-file-label" for="image">{fileText}</label>
+                                    </div><br/><br/>
+                                    <Button type="submit" variant="primary">Upload</Button>
+                                </form>
+                            </center>
                   
                         <div className="profileLabel"><b><u>Profile Update</u></b></div><br/>
                       

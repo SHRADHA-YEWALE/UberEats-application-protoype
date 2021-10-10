@@ -47,12 +47,15 @@ router.get('/restaurantsearch/:search_input', (req, res) => {
     let search_input = req.body.searchInput;
     let search_string = "%".concat(search_input,"%");
     let deliverySearch = req.body.delivery;
+    let pickupSearch = req.body.pickup;
     let categorySearch = req.body.category;
     console.log("Helossss", categorySearch);
-    console.log("Byess", deliverySearch);
+    console.log("delivery", deliverySearch);
+    console.log("pickup", pickupSearch);
+
     let sql ;
 
-    if (deliverySearch && deliverySearch !== "") {
+    if (deliverySearch && deliverySearch === true && pickupSearch === false) {
       sql = `SELECT DISTINCT 
       r.resto_id, r.resto_name, r.resto_description, r.res_cuisine, r.res_image, r.location, r.phone_number, r.email_id, r.zipcode, r.timings
       FROM uber_eats.restaurant r
@@ -65,8 +68,40 @@ router.get('/restaurantsearch/:search_input', (req, res) => {
       OR r.resto_name LIKE '${search_string}'
       OR r.res_cuisine LIKE '${search_string}'
       OR ms.menu_section_name = '${categorySearch}')
-      AND r.delivery = '${deliverySearch}' `;
-    } else {
+      AND r.delivery = '${true}' `;
+    } 
+    else if(pickupSearch && pickupSearch === true && deliverySearch === false) {
+      sql = `SELECT DISTINCT 
+      r.resto_id, r.resto_name, r.resto_description, r.res_cuisine, r.res_image, r.location, r.phone_number, r.email_id, r.zipcode, r.timings
+      FROM uber_eats.restaurant r
+      LEFT OUTER JOIN menu_items mi
+      ON mi.resto_id = r.resto_id
+      LEFT OUTER JOIN menu_sections ms
+      ON ms.resto_id = r.resto_id
+      WHERE ((mi.item_name LIKE '${search_string}')
+      OR mi.item_description LIKE '${search_string}'
+      OR r.resto_name LIKE '${search_string}'
+      OR r.res_cuisine LIKE '${search_string}'
+      OR ms.menu_section_name = '${categorySearch}')
+      AND r.pickup = '${true}' `;
+    }
+    else if(pickupSearch && pickupSearch === true && deliverySearch && deliverySearch === true) {
+      sql = `SELECT DISTINCT 
+      r.resto_id, r.resto_name, r.resto_description, r.res_cuisine, r.res_image, r.location, r.phone_number, r.email_id, r.zipcode, r.timings
+      FROM uber_eats.restaurant r
+      LEFT OUTER JOIN menu_items mi
+      ON mi.resto_id = r.resto_id
+      LEFT OUTER JOIN menu_sections ms
+      ON ms.resto_id = r.resto_id
+      WHERE ((mi.item_name LIKE '${search_string}')
+      OR mi.item_description LIKE '${search_string}'
+      OR r.resto_name LIKE '${search_string}'
+      OR r.res_cuisine LIKE '${search_string}'
+      OR ms.menu_section_name = '${categorySearch}')
+      AND r.pickup = '${true}'
+      AND r.delivery = '${true}' `;
+    }
+    else {
       sql = `SELECT DISTINCT 
       r.resto_id, r.resto_name, r.resto_description, r.res_cuisine, r.res_image, r.location, r.phone_number, r.email_id, r.zipcode, r.timings
       FROM uber_eats.restaurant r
@@ -123,6 +158,103 @@ router.get('/restaurantsearch/:search_input', (req, res) => {
       }
     });
   });
+
+  router.post('/updateFavStatus', (req, res) => {
+    console.log("Inside update restaurant as favourite", req.body.resto_id, req.body.user_id);
+    let sql = `insert into uber_eats.favourite_restaurant(resto_id, cust_id)values('${req.body.resto_id}', '${req.body.user_id}')`;
+    pool.query(sql, (err, result) => {
+      if (err) {
+        res.writeHead(500, {
+          'Content-Type': 'text/plain'
+        });
+        res.end("Database Error", err);
+      }
+      if (result && result.affectedRows > 0) {
+        res.writeHead(200, {
+          'Content-Type': 'text/plain'
+        });
+        
+        res.end('UPDATED_FAV_RESTAURANT');
+      }
+    });
+  });
+
+  router.get('/updateFavStatus/:user_id', (req, res) => {
+    console.log("Inside get favourite restaurant for user: ", req.params.user_id);
+    let sql = `SELECT resto_id FROM uber_eats.favourite_restaurant WHERE cust_id = '${req.params.user_id}' `;
+    pool.query(sql, (err, result) => {
+      if (err) {
+        res.writeHead(500, {
+          'Content-Type': 'text/plain'
+        });
+        res.end("Database Error", err);
+      }
+      if (result && result.length > 0) {
+        console.log("result resto:", result[0].resto_id);
+        result.forEach(resto => {
+        let rsql = `SELECT * FROM uber_eats.restaurant WHERE resto_id = '${resto.resto_id}' `;
+        pool.query(rsql, (err, reslt) => {
+            if (err) {
+              res.writeHead(500, {
+                'Content-Type': 'text/plain'
+              });
+              res.end("Database Error", err);
+            }
+            if (reslt && reslt.length > 0 ) {
+              console.log("Resulttttttttt",reslt);      
+              res.writeHead(200, {
+                'Content-Type': 'text/plain'
+              });
+              
+              res.end(JSON.stringify(reslt));
+            }
+            else {
+              res.writeHead(500, {
+                'Content-Type': 'text/plain'
+              });
+              res.end('DATABASE ERROR');  
+            }
+          });   
+        });  
+        console.log("Get favourite restaurant result", result); 
+      }
+      else {
+        res.writeHead(500, {
+          'Content-Type': 'text/plain'
+        });
+        res.end('NO_FAVOURITE_RESTAURANT');
+      }
+    });
+  });
+
+  router.get('/getFavRestaurant', (req, res) => {
+    console.log("Inside get favourite restaurant");
+    var fav = 'F';
+    let sql = `SELECT * FROM uber_eats.restaurant WHERE favourite = '${fav}' `;
+    pool.query(sql,(err, result) => {
+      if (err) {
+        res.writeHead(500, {
+          'Content-Type': 'text/plain'
+        });
+        res.end("Database Error", err);
+      }
+      if (result && result.length > 0 ) {
+        console.log("Your favourite restaurant", result);
+  
+        res.writeHead(200, {
+          'Content-Type': 'text/plain'
+        });
+        res.end(JSON.stringify(result));
+      }
+      else {
+        res.writeHead(500, {
+          'Content-Type': 'text/plain'
+        });
+        res.end('INTERNAL SERVER ERROR');
+      }
+    });
+  });
+
 
   module.exports = router;
 

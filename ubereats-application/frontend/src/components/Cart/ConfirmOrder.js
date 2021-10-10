@@ -54,9 +54,9 @@ class ConfirmOrder extends Component {
             delivery: this.state.delivery,
             tax: (this.state.tax * this.state.sub_total / 100).toFixed(2),
             total: this.state.total,
-            cart_items: this.state.cart_items,
+            cart_items: this.state.cart_items
         }
-
+        console.log("cart_items", data.cart_items);
         axios.post(endPointObj.url +"/cart/placeorder", data)
             .then(response => {
                 console.log("put order response", response);

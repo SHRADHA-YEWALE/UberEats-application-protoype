@@ -149,7 +149,7 @@ class LandingPage extends Component {
                     </Form>
                     </div>
                     
-                    <br /><br />
+                    <br /><br /><br /><br />
                     {noRecordMessage}
                     <Row md="6">{restaurantCards}</Row>
                     <br /><br /><br /><br /><br /><br /><br /><br /><br />

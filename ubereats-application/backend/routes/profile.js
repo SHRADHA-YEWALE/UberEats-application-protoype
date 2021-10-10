@@ -110,17 +110,17 @@ router.get('/customer/:user_id', (req, res) => {
 
 
   router.post('/restaurant', (req, res) => {
-    console.log("Inside update restaurant data");
+    console.log("Inside update restaurant data", req.body.delivery, req.body.pickup);
     let sql;
     if(req.body.password && req.body.password !== "")
     {
       var hashedPassword = "'" + passwordHash.generate(req.body.password) + "'";
       sql = `UPDATE uber_eats.restaurant set resto_name = '${req.body.name}', pwd = ${hashedPassword}, location = '${req.body.address}', phone_number = '${req.body.phone_number}', resto_description = '${req.body.description}', timings = '${req.body.timings}' ,
-      zipcode = '${req.body.zipcode}', delivery = '${req.body.delivery}'  where resto_id = '${req.body.user_id}' `;
+      zipcode = '${req.body.zipcode}', delivery = '${req.body.delivery}', pickup = '${req.body.pickup}'  where resto_id = '${req.body.user_id}' `;
     }
     else{
       sql = `UPDATE uber_eats.restaurant set resto_name = '${req.body.name}', location = '${req.body.address}', phone_number = '${req.body.phone_number}', resto_description = '${req.body.description}', timings = '${req.body.timings}' ,
-      zipcode = '${req.body.zipcode}', delivery = '${req.body.delivery}' where resto_id = '${req.body.user_id}' `;
+      zipcode = '${req.body.zipcode}', delivery = '${req.body.delivery}', pickup = '${req.body.pickup}' where resto_id = '${req.body.user_id}' `;
     }
     
     pool.query(sql, (err, result) => {

@@ -56,7 +56,7 @@ class OrderItemsView extends Component {
                     let itemRow = (
                         <tr>
                             <td colSpan="4" align="center">{item.item_name}</td>
-                            <td colSpan="4" align="center">{item.quantity}</td>
+                            <td colSpan="4" align="center">{item.item_quantity}</td>
                         </tr>
                     );
                     itemsRender.push(itemRow);

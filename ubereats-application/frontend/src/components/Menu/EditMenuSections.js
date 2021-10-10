@@ -78,7 +78,7 @@ class EditMenuSections extends Component {
         if (this.state.message === "SECTION_EXISTS") {
             message = <Alert variant="warning">A section with name {this.state.menu_section_name} already exists</Alert>;
         } else if(this.state.message === "SECTION_UPDATED" || this.state.noRecordFlag) {
-            message = <Alert variant="warning">Section updates successfully!</Alert>;
+            message = <Alert variant="warning">Menu Catoegory updates successfully!</Alert>;
             redirectVar = <Redirect to="/menu/section" />;
         }
 
@@ -91,7 +91,7 @@ class EditMenuSections extends Component {
                 {redirectVar}
                 <Container className="justify-content">
                     <br />
-                    <h3>Update Section</h3><br />
+                    <h3>Update Menu Category</h3><br />
                     <Form onSubmit={this.onSubmit}>
                         <Form.Group as={Row} controlId="menu_section_name">
                             <Form.Label column sm="2">

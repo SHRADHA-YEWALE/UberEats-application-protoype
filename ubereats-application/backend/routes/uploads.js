@@ -6,6 +6,41 @@ const fs = require('fs');
 const pool = require('../sqlpool.js');
 const { response } = require("express");
 
+const userstorage = multer.diskStorage({
+    destination: path.join(__dirname, '..') + '/public/uploads/users',
+    filename: (req, file, cb) => {
+        cb(null, 'user' + req.params.user_id + "-" + Date.now() + path.extname(file.originalname));
+    }
+});
+
+const useruploads = multer({
+    storage: userstorage,
+    limits: { fileSize: 1000000 },
+}).single("image");
+
+router.post("/user/:user_id", (req, res) => {
+    useruploads(req, res, function (err) {
+        if (!err) {
+            let imagesql = `update uber_eats.customer SET cust_img = '${req.file.filename}' WHERE cust_id = ${req.params.user_id}`;
+            pool.query(imagesql, (err, result) => {
+                if (err) {
+                    res.writeHead(500, {
+                        'Content-Type': 'text/plain'
+                    });
+                    res.end("Database Error",err);
+                }
+            });
+            res.writeHead(200, {
+                'Content-Type': 'text/plain'
+            });
+            res.end(req.file.filename);
+        }
+        else {
+            console.log('Error!',err);
+        }
+    })
+});
+
 const resstorage = multer.diskStorage({
     destination: path.join(__dirname, '..') + '/public/uploads/restaurants',
     filename: (req, file, cb) => {

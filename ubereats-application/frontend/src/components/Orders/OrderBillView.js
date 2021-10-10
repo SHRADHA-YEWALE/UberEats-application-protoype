@@ -39,7 +39,7 @@ class OrderBillView extends Component {
                         <Card style={{ width: "35em", height: "42rem"}}>
                             <Card.Title>
                                 <br />
-                                <h3>{order_details.res_name}</h3>
+                                <h3>{order_details.resto_name}</h3>
                             </Card.Title>
                             <Card.Body>
                                 <Table style={{ width: "25em" }}>

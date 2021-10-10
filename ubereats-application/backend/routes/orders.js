@@ -41,8 +41,8 @@ router.get('/pendingorders/:user_id', (req, res) => {
 router.get('/orderitems/:order_id', (req, res) => {
     console.log("inside orderitems", req.params.order_id);
     let sql = `SELECT 
-    o.order_id, o.item_id, o.quantity, mi.item_name, mi.item_price, mi.item_description
-    FROM uber_eats.orders o
+    o.order_id, o.item_id, o.item_quantity, mi.item_name, mi.item_price, mi.item_description
+    FROM uber_eats.order_details o
     JOIN menu_items mi
     ON mi.item_id = o.item_id
     WHERE o.order_id = '${req.params.order_id}' `;
@@ -102,7 +102,7 @@ router.get('/orderitems/:order_id', (req, res) => {
   });
 
   router.post('/updateStatus', (req, res) => {
-    console.log("Inside update restaurant data", req.body.order_id, req.body.order_status);
+    console.log("Inside update order at restaurant data", req.body.order_id, req.body.order_status);
     
     sql = `UPDATE uber_eats.orders set order_status = '${req.body.order_status}' where order_id = '${req.body.order_id}' `;
        

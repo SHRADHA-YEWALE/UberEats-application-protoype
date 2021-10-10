@@ -13,7 +13,9 @@ class CustomerHome extends Component {
         this.setState({
             search_input: "",
             food_category:"",
-            noRecord: false
+            noRecord: false,
+            delivery: false,
+            pickup: false
         });
 
         this.onChange = this.onChange.bind(this);
@@ -68,8 +70,11 @@ class CustomerHome extends Component {
             let data = {
                 searchInput : searchInput,
                 delivery : this.state.delivery,
+                pickup: this.state.pickup,
                 category: this.state.food_category
             }
+            console.log("delivery:"+ data.delivery);
+            console.log("pickup:"+data.pickup);
             axios.post(endPointObj.url + "/restaurant/restaurantDeliverySearch", data)
                 .then(response => {
                     var cuisines = [];
@@ -178,14 +183,21 @@ class CustomerHome extends Component {
                                 className = "searchInputField"
                                 onChange={this.onChange}
                             /> <br /><br /><br/><br/>
-                             <FormLabel><h4>Mode of delivery:</h4></FormLabel>
-                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                             <input type="radio" id="pickup" name="delivery" value="P" onChange={this.onChange} />
-                             <FormLabel for="pickup"><h5>Pickup</h5></FormLabel>
-                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                             <input type="radio" id="delivery" name="delivery" value="D" onChange={this.onChange} />
-                             <FormLabel for="pickup"><h5>Delivery</h5></FormLabel>
-                             <br/>
+                             
+                             <Form.Group as={Row} className="mb-3" controlId="formGridDelivery">
+                                {/* <Form.Label column sm="3" className="inputLabel">Mode of Delivery</Form.Label>
+                                <select name="delivery"  onChange={this.onChange} value={this.state.delivery}>
+                                        <option>Mode of Delivery</option>
+                                        <option value="D">Delivery</option>
+                                        <option value="P" selected>Pickup</option>
+                                </select> */}
+                                <FormLabel><h4>Mode of delivery:</h4></FormLabel>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <input type="checkbox" id="delivery" name="delivery" onChange={(e) => this.setState({delivery: !this.state.delivery})}/>
+                                <label for="delivery">Delivery</label>
+                                <input type="checkbox" id="pickup" name="pickup" onChange={(e) => this.setState({pickup: !this.state.pickup})} />
+                                <label for="pickup">Pickup</label><br/>
+                                </Form.Group>
                              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                              <FormLabel><h4>Food Category:</h4></FormLabel>
                              <select name="food_category"  onChange={this.onChange} style={{ width: '10em', height: '2em'}}>

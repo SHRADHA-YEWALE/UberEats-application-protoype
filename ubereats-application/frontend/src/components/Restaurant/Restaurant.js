@@ -126,7 +126,7 @@ class Restaurant extends Component {
                         </Col>
                         <Col>
                         <Card.Body md={4}>
-                            <Card.Title><h1>{resName}</h1></Card.Title>
+                            <Card.Title><h2 style={{ color:"#000000" }}>{resName}</h2></Card.Title>
                             <Col md={2}><Card.Text style={{ width: "17rem", color:"#000000" }}><b>Location:</b> {resAddress} | {resZIP}</Card.Text></Col>
                             <Col md={2}><Card.Text style={{ width: "20rem", color:"#000000"  }}><b>Contact:</b> <Link>{restoEmail}</Link> | {resPhone}</Card.Text></Col>
                             <Col md={2}><Card.Text style={{ width: "17rem", color:"#000000"  }}><b>About us:</b> {restoDescription}</Card.Text></Col>

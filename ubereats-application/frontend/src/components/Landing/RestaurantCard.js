@@ -2,11 +2,49 @@ import React, { Component } from "react";
 import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import endPointObj from '../../endPointUrl.js';
+import axios from 'axios';
+
 
 class RestaurantCard extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+        message:""
+    };
+    this.onSubmit = this.onSubmit.bind(this);
+}
+
+  onSubmit = (e) => {
+    e.preventDefault();
+
+    let data = {
+      user_id: localStorage.getItem("user_id"),
+      resto_id: this.props.restaurant.resto_id
+    }
+
+    axios.post(endPointObj.url + '/restaurant/updateFavStatus', data)
+        .then(response => {
+            this.setState({
+                message: response.data
+            });
+        })
+        .catch(err => {
+            if (err.response && err.response.data) {
+                this.setState({
+                    message: err.response.data
+                });
+            }
+        });
+};
   render() {
+
+    if(this.state.message == 'UPDATED_FAV_RESTAURANT') {
+      alert("Restaurant added to favourites successfully!");
+    }
     console.log(this.props.restaurant.resto_name);
-    console.log(this.props.restaurant.res_cuisine);
+    console.log(this.props.restaurant.resto_description);
     var resData = this.props.restaurant;
     let imageSrc = endPointObj.url + "/images/restaurant/" + this.props.restaurant.res_image;
     return (
@@ -20,10 +58,13 @@ class RestaurantCard extends Component {
           style={{ width: "15rem", height: "10em", margin: "5%" }}
           src={imageSrc}
         />
-          <Card.Text>{this.props.restaurant.res_cuisine}</Card.Text>
+          <Card.Text>{this.props.restaurant.resto_description}</Card.Text>
         </Card.Body>
       </Card>
       </Link>
+      <form onSubmit={this.onSubmit}>
+        <button type="submit">Add to Favourites</button>
+      </form>
       </Card>
     );
   }

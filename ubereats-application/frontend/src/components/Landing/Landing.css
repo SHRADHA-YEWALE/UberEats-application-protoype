@@ -21,8 +21,9 @@
 
 .custHomeRestoSearch {
   margin: 1em auto;
-  margin-top: -4em;
+  margin-top: -15em;
   width: 30em;
+  margin-left: 2em;
 }
 
 .searchInputField {

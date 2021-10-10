@@ -135,7 +135,7 @@ class MenuSections extends Component {
         return (
             <Container className="restoMenuSectionContainer">
                 <br />
-                <h3>Add New Section</h3><br />
+                <h3>Add New Menu Category</h3><br />
                 <Form onSubmit={this.onSubmit}>
                     <Form.Group as={Row} controlId="menu_section_name">
                         <Form.Label>

@@ -13,7 +13,10 @@ import endPointObj from '../../endPointUrl.js';
 class RestaurantProfile extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            delivery: false,
+            pickup: false
+        };
         this.onChange = this.onChange.bind(this);
         this.onUpdate = this.onUpdate.bind(this);
         this.onResImageChange = this.onResImageChange.bind(this);
@@ -37,11 +40,14 @@ class RestaurantProfile extends Component {
                 timings : user.timings || this.state.timings,
                 res_image: user.res_image || this.state.res_image,
                 zipcode: user.zipcode || this.state.zipcode,
-                delivery: user.delivery || this.state.delivery
+                delivery: user.delivery || this.state.delivery,
+                pickup: user.pickup || this.state.pickup
             };
             console.log("Restaurant name"+userData.name);
             console.log("Restaurant address"+userData.address);
             console.log("Restaurant phone"+userData.phone_number);
+            console.log("delivery:"+userData.delivery);
+            console.log("pickup:"+userData.pickup);
             this.setState(userData);
         }
     }
@@ -57,6 +63,9 @@ class RestaurantProfile extends Component {
         this.setState({
             [e.target.name]: e.target.value
         })
+        console.log("delivery", this.state.delivery);
+        console.log("pickup", this.state.pickup);
+
     }
 
 
@@ -93,6 +102,8 @@ class RestaurantProfile extends Component {
     }
 
     render() {
+        console.log("delivery", this.state.delivery);
+        console.log("pickup", this.state.pickup);
         var resImageSrc, res_title, title,
         resFileText = this.state.resFileText || "Choose image..";
 
@@ -227,12 +238,17 @@ class RestaurantProfile extends Component {
                                 </Form.Group>
                            
                                 <Form.Group as={Row} className="mb-3" controlId="formGridDelivery">
-                                <Form.Label column sm="3" className="inputLabel">Mode of Delivery</Form.Label>
+                                {/* <Form.Label column sm="3" className="inputLabel">Mode of Delivery</Form.Label>
                                 <select name="delivery"  onChange={this.onChange} value={this.state.delivery}>
                                         <option>Mode of Delivery</option>
                                         <option value="D">Delivery</option>
                                         <option value="P" selected>Pickup</option>
-                                </select>
+                                </select> */}
+                                 <Form.Label column sm="3" className="inputLabel"><h4>Mode of delivery:</h4></Form.Label>
+                                <input type="checkbox" id="delivery" name="delivery" onChange={(e) => this.setState({delivery: !this.state.delivery})}/>
+                                <label for="delivery">Delivery</label>
+                                <input type="checkbox" id="pickup" name="pickup" onChange={(e) => this.setState({pickup: !this.state.pickup})} />
+                                <label for="pickup">Pickup</label><br/>
                                 </Form.Group>
           
                             <div class ="buttonDiv">

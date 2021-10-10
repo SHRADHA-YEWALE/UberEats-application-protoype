@@ -233,7 +233,7 @@ class Cart extends Component {
                         </tbody>
                     </Table>
                     <Button variant="warning" onClick={this.clearCart}>Clear Cart</Button> &nbsp; &nbsp;
-                    <Button variant="primary" href="/customerHome">Save for Later</Button> &nbsp; &nbsp;
+                    
                     <Link to={{pathname: "/order/confirm", state: confirmDetails}}>
                         <Button variant="success">Proceed to Checkout</Button>
                     </Link>
@@ -247,7 +247,7 @@ class Cart extends Component {
                 <Navigationbar /><br />
                 <table>
                     <tr>
-                        <td><img src={cartIcon} width="400" height="400" /></td> &nbsp; &nbsp; &nbsp;
+                        <td>&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;</td> &nbsp; &nbsp; &nbsp;
                         <td> &nbsp; &nbsp; &nbsp;</td>&nbsp; &nbsp; &nbsp;
                         <td> &nbsp; &nbsp; &nbsp;</td>&nbsp; &nbsp; &nbsp;
                         <td>

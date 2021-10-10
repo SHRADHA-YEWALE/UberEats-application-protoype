@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const pool = require('../sqlpool.js');
+const moment= require('moment');
 
 router.post('/item', (req, res) => {
     console.log("Inside add item to cart db call");
@@ -74,11 +75,11 @@ router.post('/item', (req, res) => {
   });
 
   router.post('/placeorder', (req, res) => {
-    const currentDate = new Date();
-    const timestamp = currentDate.getTime();
+    //const timestamp = new Date().getTime();
+    const timestamp = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
     let sql = `insert into uber_eats.orders(user_id, resto_id, order_status, sub_total, tax, delivery, discount, total_price, order_date) 
     values(${req.body.user_id}, ${req.body.res_id}, '${req.body.order_status}',${req.body.sub_total}, ${req.body.tax}, 
-     ${req.body.delivery}, ${req.body.discount}, ${req.body.total}, ${timestamp})`;
+     ${req.body.delivery}, ${req.body.discount}, ${req.body.total}, '${timestamp}')`;
     pool.query(sql, (err, result) => {
       if (err) {
         console.log(err);
@@ -88,7 +89,34 @@ router.post('/item', (req, res) => {
         res.end("Database Error", err);
       }
       if (result && result.affectedRows > 0) {
-
+        let sqlorder = `select order_id from uber_eats.orders where resto_id = '${req.body.res_id}' and user_id = '${req.body.user_id}' 
+        and order_status= '${req.body.order_status}' and order_date = '${timestamp}'`;
+        pool.query(sqlorder, (err, resd) => {
+          if (err) {
+            console.log(err);
+            res.writeHead(500, {
+              'Content-Type': 'text/plain'
+            });
+            res.end("Database Error");
+          }
+          if(resd && resd.length > 0) {
+            console.log("result", resd[0].order_id);
+            req.body.cart_items.forEach(cart_item => {
+            let sqlItem = `insert into uber_eats.order_details(order_id,item_id,item_quantity)
+            values(${resd[0].order_id},${cart_item.item_id}, ${cart_item.item_quantity})`;
+            pool.query(sqlItem, (err, result) => {
+              if (err) {
+                console.log(err);
+                res.writeHead(500, {
+                  'Content-Type': 'text/plain'
+                });
+                res.end("Database Error");
+              }
+            });
+             });  
+          }
+        });
+        
         //order details
         res.writeHead(200, {
           'Content-Type': 'text/plain'

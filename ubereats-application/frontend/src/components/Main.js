@@ -22,6 +22,7 @@ import OrderHistory from './Orders/OrderHistory';
 import RestaurantOrderHistory from './Orders/RestaurantOrderHistory';
 import OrderItemsRestaurantView from './Orders/OrderItemsViewRestaurant';
 import LandingPage from './LandingPage.js';
+import Favourite  from './Restaurant/FavouriteRestaurant.js';
 
 
 class Main extends Component {
@@ -49,6 +50,7 @@ class Main extends Component {
                 <Route path="/orders/restaurant/orders/details" component={OrderItemsRestaurantView} />
                 <Route path="/orders/history" component={OrderHistory} />
                 <Route path="/orders/orderHistory" component={RestaurantOrderHistory} />
+                <Route path="/favourite" component={Favourite} />
 
             </div>
         );

@@ -85,14 +85,14 @@ class RestaurantOrderHistory extends Component {
                                         <Card.Text>{order.order_date}</Card.Text>
                                     </Col>
                                     <Col align="center">
-                                        <Link to={{ pathname: "restaurant/orders/details", state: {order_details: order} }}>
+                                        <Link to={{ pathname: "restaurant/orders/details", state: {order_details: order, prevPath: "/orders/orderHistory"} }}>
                                             <Button variant="link">Order Details</Button>
                                         </Link>
-                                        <Link to={{ pathname: "/orders/billing", state: {order_details: order, prevPath: "/orders/history"} }}>
+                                        <Link to={{ pathname: "restaurant/orders/details", state: {order_details: order, prevPath: "/orders/orderHistory"} }}>
                                             <Button variant="link">Billing Details</Button>
                                         </Link>
                                     </Col>
-                                    <Col align="center">
+                                    {/* <Col align="center">
                                         <br />
                                         <b>Order Status</b><br/>
                                         {order.order_status}
@@ -114,7 +114,7 @@ class RestaurantOrderHistory extends Component {
                                     <br />
                                     </Form>
                                         <br />
-                                    </Col>
+                                    </Col> */}
                                 </Row>
                             </Card.Body>
                         </Card>
