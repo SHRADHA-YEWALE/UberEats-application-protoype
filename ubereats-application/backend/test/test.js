@@ -150,7 +150,7 @@ describe("UberEats", function () {
         it('Fetch Restaurant Name from Owner user id',function () {
             agent.get("/profile/restaurant/5")
                 .then(function (res) {
-                    expect(JSON.parse(res.text).name).to.equal('Resto bar');
+                    expect(JSON.parse(res.text).name).to.equal('Taco Bell');
                 })
                 .catch(error => {
                     console.log(error);
