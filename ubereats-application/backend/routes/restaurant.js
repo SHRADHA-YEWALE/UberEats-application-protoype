@@ -50,7 +50,6 @@ router.get('/restaurantsearch/:search_input', (req, res) => {
     let pickupSearch = req.body.pickup;
     let categorySearch = req.body.category;
     console.log("Helossss", categorySearch);
-    
     console.log("delivery", deliverySearch);
     console.log("pickup", pickupSearch);
 
@@ -103,7 +102,6 @@ router.get('/restaurantsearch/:search_input', (req, res) => {
       AND r.delivery = '${true}' `;
     }
     else {
-      console.log("HMMMMMM");
       sql = `SELECT DISTINCT 
       r.resto_id, r.resto_name, r.resto_description, r.res_cuisine, r.res_image, r.location, r.phone_number, r.email_id, r.zipcode, r.timings
       FROM uber_eats.restaurant r
@@ -111,11 +109,11 @@ router.get('/restaurantsearch/:search_input', (req, res) => {
       ON mi.resto_id = r.resto_id
       LEFT OUTER JOIN menu_sections ms
       ON ms.resto_id = r.resto_id
-      WHERE (mi.item_name LIKE '${search_string}'
+      WHERE (mi.item_name LIKE '${search_string}')
       OR mi.item_description LIKE '${search_string}'
       OR r.resto_name LIKE '${search_string}'
-      OR r.location LIKE '${search_string}')
-      AND ms.menu_section_name = '${categorySearch}' `; 
+      OR r.location LIKE '${search_string}'
+      OR ms.menu_section_name LIKE '${categorySearch}' `; 
     }
 
     pool.query(sql, (err, result) => {
@@ -137,7 +135,6 @@ router.get('/restaurantsearch/:search_input', (req, res) => {
       }
     });
   });
-
 
   router.get('/:res_id', (req, res) => {
 
