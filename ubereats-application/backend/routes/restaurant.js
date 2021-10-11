@@ -43,7 +43,7 @@ router.get('/restaurantsearch/:search_input', (req, res) => {
   });
 
 
- router.post('/restaurantDeliverySearch', (req, res) => {
+  router.post('/restaurantDeliverySearch', (req, res) => {
     let search_input = req.body.searchInput;
     let search_string = "%".concat(search_input,"%");
     let deliverySearch = req.body.delivery;

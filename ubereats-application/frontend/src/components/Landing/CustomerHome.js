@@ -71,7 +71,7 @@ class CustomerHome extends Component {
                 searchInput : searchInput,
                 delivery : this.state.delivery,
                 pickup: this.state.pickup,
-                category: this.state.food_category
+                category: 'veg'
             }
             console.log("delivery:"+ data.delivery);
             console.log("pickup:"+data.pickup);
