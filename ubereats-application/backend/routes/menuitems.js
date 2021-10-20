@@ -89,11 +89,9 @@ router.get('/items/:resto_id', (req, res) => {
   });
 
   router.post('/itemsupdate', (req, res) => {
-    console.log("Inside update menu items");   
+    console.log("Inside update menu items", req.body.item_price);   
     let sql = `update uber_eats.menu_items set item_name = '${req.body.item_name}', item_description =  '${req.body.item_description}',
-    item_price = '${req.body.item_price}', 
-    menu_section_id = (SELECT menu_section_id from uber_eats.menu_sections where menu_section_name = '${req.body.menu_section_name}' AND res_id = '${req.body.user_id}') 
-    WHERE item_id = '${req.body.item_name}' AND res_id = '${req.body.user_id}'`;
+    item_price = '${req.body.item_price}' WHERE item_id = '${req.body.item_id}' AND resto_id = '${req.body.user_id}'`;
     pool.query(sql, (err, result) => {
       if (err) {
         console.log(err);

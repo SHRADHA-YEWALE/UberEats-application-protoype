@@ -71,7 +71,7 @@ class CustomerHome extends Component {
                 searchInput : searchInput,
                 delivery : this.state.delivery,
                 pickup: this.state.pickup,
-                category: this.state.food_category
+                category: 'veg'
             }
             console.log("delivery:"+ data.delivery);
             console.log("pickup:"+data.pickup);
@@ -192,7 +192,7 @@ class CustomerHome extends Component {
                                         <option value="P" selected>Pickup</option>
                                 </select> */}
                                 <FormLabel><h4>Mode of delivery:</h4></FormLabel>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 <input type="checkbox" id="delivery" name="delivery" onChange={(e) => this.setState({delivery: !this.state.delivery})}/>
                                 <label for="delivery">Delivery</label>
                                 <input type="checkbox" id="pickup" name="pickup" onChange={(e) => this.setState({pickup: !this.state.pickup})} />

@@ -67,6 +67,8 @@
     width: 70px;
     margin: 5px;
   }
+
+  /*It will set navbar rightside width tp 70px and navbar leftside padding-left to 50px when browser window is 900px or smaller*/
   @media only screen and (max-width: 900px) {
     .navbar .rightSide a {
       width: 70px;

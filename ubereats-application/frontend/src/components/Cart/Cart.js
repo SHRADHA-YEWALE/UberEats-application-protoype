@@ -23,12 +23,15 @@ class Cart extends Component {
     componentWillMount() {
         document.title = "Your Cart";
         let cartItems = [];
-        if (localStorage.getItem("cart_items")) {
-            cartItems.push(...JSON.parse(localStorage.getItem("cart_items")));
-            this.setState({
-                cart_items: cartItems
-            });
-        } else {
+        //  if (localStorage.getItem("cart_items")) {
+        //     cartItems.push(...JSON.parse(localStorage.getItem("cart_items")));
+            
+        //     this.setState({
+        //         cart_items: cartItems
+        //     });
+        //     console.log("cart items:",this.state.cart_items);
+        // } 
+        //else {
             let user_id = localStorage.getItem("user_id");
             axios.get(endPointObj.url + "/cart/item/" + user_id)
                 .then(response => {
@@ -44,7 +47,7 @@ class Cart extends Component {
                         console.log(err.response.data);
                     }
                 });
-        }
+        //}
     };
 
     getRestaurantDetails = () => {

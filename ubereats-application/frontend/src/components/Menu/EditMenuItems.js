@@ -8,7 +8,8 @@ class EditMenuItems extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            menu_sections: []
+            menu_sections: [],
+            item_price: ""
         };
 
         this.onChange = this.onChange.bind(this);
@@ -140,10 +141,12 @@ class EditMenuItems extends Component {
     }
 
     render() {
+        console.log("item price",this.state.item_price);
         let message = null,
             redirectVar = null;
 
         if (this.state.message === "ITEM_UPDATED") {
+            alert("Item updated successfully!");
             redirectVar = <Redirect to="/menu/view" />;
         }
         else if (this.state.message === "ITEM_EXISTS") {
@@ -216,7 +219,7 @@ class EditMenuItems extends Component {
                             <Form.Group as={Row} controlId="item_price">
                                 <Form.Label column sm="3">Price: </Form.Label>
                                 <Col sm="4">
-                                    <Form.Control style={{ width: "15rem" }} type="text" name="item_price" placeholder="Enter Price.." defaultValue={this.state.item_price} onChange={this.onChange} pattern="^(\d*\.)?\d+$" required />
+                                    <input style={{ width: "15rem" }} type="text" name="item_price" placeholder="Enter Price.." value={this.state.item_price} onChange={(e) => this.setState({ item_price: e.target.value })} pattern="^(\d*\.)?\d+$" required />
                                 </Col>
                             </Form.Group>
                             <Form.Group as={Row} controlId="item_section">
