@@ -66,7 +66,6 @@ class ConfirmOrder extends Component {
                     this.setState({
                         message: response.data
                     });
-                    alert("Your order Successfully placed!");
                 }
             })
             .catch(error => {

@@ -74,8 +74,6 @@ class CustomerProfile extends Component {
         axios.post(endPointObj.url + "/uploads/user/" + this.state.user_id, formData, uploadConfig)
             .then(response => {
                 console.log("image response", response.data);
-
-                alert("Image uploaded successfully!");
                 this.setState({
                     fileText: "Choose file...",
                     user_image: response.data

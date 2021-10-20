@@ -129,7 +129,6 @@ class EditMenuItems extends Component {
         };
         axios.post(endPointObj.url + '/uploads/item/' + this.state.item_id, formData, uploadConfig)
             .then(response => {
-                alert("Image uploaded successfully!");
                 this.setState({
                     fileText: "Choose file...",
                     item_image: response.data
@@ -223,7 +222,7 @@ class EditMenuItems extends Component {
                                 </Col>
                             </Form.Group>
                             <Form.Group as={Row} controlId="item_section">
-                                <Form.Label column sm="3">Section:</Form.Label>
+                                <Form.Label column sm="3">Category:</Form.Label>
                                 <Col sm="4">
                                     <Form.Control as="select" style={{ width: "15rem" }} onChange={this.onChange} name="menu_section_name">
                                         {section_options}

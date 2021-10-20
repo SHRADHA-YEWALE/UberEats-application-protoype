@@ -20,7 +20,8 @@ router.get('/restaurantsearch/:search_input', (req, res) => {
     OR mi.item_description LIKE '${search_string}'
     OR r.resto_name LIKE '${search_string}'
     OR r.res_cuisine LIKE '${search_string}'
-    OR ms.menu_section_name LIKE '${search_string}' `;
+    OR ms.menu_section_name LIKE '${search_string}' 
+    OR r.location LIKE '${search_string}' `;
 
     pool.query(sql, (err, result) => {
       if (err) {
@@ -103,7 +104,6 @@ router.get('/restaurantsearch/:search_input', (req, res) => {
       AND r.delivery = '${true}' `;
     }
     else {
-      console.log("HMMMMMM");
       sql = `SELECT DISTINCT 
       r.resto_id, r.resto_name, r.resto_description, r.res_cuisine, r.res_image, r.location, r.phone_number, r.email_id, r.zipcode, r.timings
       FROM uber_eats.restaurant r

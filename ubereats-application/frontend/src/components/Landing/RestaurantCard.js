@@ -62,9 +62,6 @@ class RestaurantCard extends Component {
         </Card.Body>
       </Card>
       </Link>
-      <form onSubmit={this.onSubmit}>
-        <button type="submit">Add to Favourites</button>
-      </form>
       </Card>
     );
   }

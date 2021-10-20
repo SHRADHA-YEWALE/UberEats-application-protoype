@@ -90,7 +90,6 @@ class RestaurantProfile extends Component {
         axios.post(endPointObj.url + '/uploads/restaurant/' + this.state.user_id, formData, uploadConfig)
             .then(response => {
                 console.log("image response", response.data);
-                alert("Image uploaded successfully!");
                 this.setState({
                     resFileText: "Choose file...",
                     res_image: response.data
@@ -246,9 +245,9 @@ class RestaurantProfile extends Component {
                                 </select> */}
                                  <Form.Label column sm="3" className="inputLabel"><h4>Mode of delivery:</h4></Form.Label>
                                 <input type="checkbox" id="delivery" name="delivery" onChange={(e) => this.setState({delivery: !this.state.delivery})}/>
-                                <label for="delivery">Delivery</label>
+                                <label for="delivery" style={{ color: '#ffffff' }}>Delivery</label>
                                 <input type="checkbox" id="pickup" name="pickup" onChange={(e) => this.setState({pickup: !this.state.pickup})} />
-                                <label for="pickup">Pickup</label><br/>
+                                <label for="pickup" style={{ color: '#ffffff' }}>Pickup</label><br/>
                                 </Form.Group>
           
                             <div class ="buttonDiv">

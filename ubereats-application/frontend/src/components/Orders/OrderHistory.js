@@ -11,11 +11,8 @@ class OrderHistory extends Component {
     render() {
         let ordersComponent = null;
         let redirectVar = null;
-        if (localStorage.getItem("user_id")) {
-            if (localStorage.getItem("is_owner") === "1")
+        if (localStorage.getItem("user_id")) {            
                 ordersComponent = <RestaurantOrderHistory/>
-            else
-                ordersComponent = <CustomerOrderHistory />
         }
         else {
             redirectVar = <Redirect to="/" />
