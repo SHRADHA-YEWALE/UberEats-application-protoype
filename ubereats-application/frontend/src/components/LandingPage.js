@@ -33,11 +33,8 @@ class LandingPage extends Component {
         
         if (this.state) {
             var searchInput = typeof this.state.search_input === "undefined" || this.state.search_input === "" ? "_" : this.state.search_input;
-            let data = {
-                searchInput : searchInput,
-                delivery : this.state.delivery
-            }
-            axios.post(endPointObj.url + "/restaurant/restaurantDeliverySearch", data)
+           
+            axios.get(endPointObj.url + "/restaurant/restaurantsearch/" + searchInput)
                 .then(response => {
                     var cuisines = [];
                     if (response.data) {

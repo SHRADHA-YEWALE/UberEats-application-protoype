@@ -159,7 +159,6 @@ class OrderItemsViewRestaurant extends Component {
                          <Col md={9}>   
                          <label>Update order status</label>   
                          <select name="o_status" value= {this.state.o_status} onChange={(e) => this.setState({ o_status: e.target.value })} style={{ width: '10em', height: '2em'}}>
-                            <option value="ORDER RECEIVED">ORDER RECEIVED</option>
                             <option value="PREPARING">PREPARING</option>
                             <option value="PICKUP READY">PICKUP READY</option>
                             <option value="DELIVERED">DELIVERED</option>

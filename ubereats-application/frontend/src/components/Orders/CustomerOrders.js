@@ -124,11 +124,11 @@ class CustomerOrders extends Component {
                 {redirectVar}
                 <Navigationbar /><br />
                 <Container className="customerOrder">
-                    <h3>Your Pending Orders</h3><br />
+                    <h3>Your Orders</h3><br />
                     {message}
                     {orderCards}
                     <center>
-                        <Button href="/customerHome">Home</Button>
+                        <Button style={{ width: "15rem" }} href="/customerHome">Home</Button>
                     </center>
                 </Container>
             </div>

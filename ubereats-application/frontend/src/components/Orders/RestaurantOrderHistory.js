@@ -69,7 +69,10 @@ class RestaurantOrderHistory extends Component {
 
         if (this.state && this.state.completed_orders) {
             orders = this.state.completed_orders;
-            if (orders.length > 0) {
+            if(this.state.completed_orders == 'NO_ORDERS') {
+                message = <Alert variant="warning">You have no orders.</Alert>    
+            }
+            else if (orders.length > 0) {
                 orderCards = orders.map(order => {
                     this.state.order_id = order.order_id;
                     this.state.order_status = order.order_status;
@@ -124,13 +127,13 @@ class RestaurantOrderHistory extends Component {
             }
         }
         else {
-            message = <Alert variant="warning">You did not complete any orders yet.</Alert>
+            message = <Alert variant="warning">You have no orders.</Alert>
         }
         return (
             <div>
                 <Navigationbar /><br />
                 <Container className="restaurantOrderHistory">
-                    <h2>Customer orders</h2>
+                    <h2>Customer Orders List</h2>
                     {message}
                     {orderCards}
                     <center>

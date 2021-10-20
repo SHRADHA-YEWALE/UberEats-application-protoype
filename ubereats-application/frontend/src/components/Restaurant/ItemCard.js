@@ -65,7 +65,6 @@ class ItemCard extends Component {
       }
       axios.post(endPointObj.url + "/cart/item", data)
                 .then(response => {
-                    alert("Item successfully added to cart!");
                     if (response.data[0]) {
                         this.setState({
                             menu_items: response.data
@@ -98,7 +97,6 @@ class ItemCard extends Component {
     }
     axios.post(endPointObj.url + "/cart/cartItemdelete", data)
           .then(response => {
-              alert("Item successfully removed from cart");
               let index = cartItems.findIndex((cartItem => cartItem.item_id === item_id));
               if(index !== -1){
                 console.log("change remove cart text");

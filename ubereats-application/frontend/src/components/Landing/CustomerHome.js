@@ -71,10 +71,11 @@ class CustomerHome extends Component {
                 searchInput : searchInput,
                 delivery : this.state.delivery,
                 pickup: this.state.pickup,
-                category: 'veg'
+                category: this.state.food_category
             }
             console.log("delivery:"+ data.delivery);
             console.log("pickup:"+data.pickup);
+            console.log("category:"+data.category);
             axios.post(endPointObj.url + "/restaurant/restaurantDeliverySearch", data)
                 .then(response => {
                     var cuisines = [];
@@ -135,7 +136,7 @@ class CustomerHome extends Component {
         if (this.state && this.state.displayRestaurants) {
             restaurantCards = this.state.displayRestaurants.map(restaurant => {
                 return (
-                    <Col md={6}>
+                    <Col md={4}>
                         <RestaurantCard restaurant={restaurant} />
                     </Col>
                 );
@@ -167,10 +168,7 @@ class CustomerHome extends Component {
                 <center><br /><br />
                     
                     <br />
-                    <table>
-                    <tr>  
-                    <td>
-                    <div className="custHomeRestoSearch"><br/><br/> 
+                    <div><br/><br/> 
                     <h4>Search for the Restaurants for delicious food.</h4><br/><br/>
                     <Form onSubmit={this.onSearch}>
                         <InputGroup style={{ width: '90%', height: '100%', paddingTop: '0em'}} size="lg">
@@ -191,14 +189,15 @@ class CustomerHome extends Component {
                                         <option value="D">Delivery</option>
                                         <option value="P" selected>Pickup</option>
                                 </select> */}
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 <FormLabel><h4>Mode of delivery:</h4></FormLabel>
                              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 <input type="checkbox" id="delivery" name="delivery" onChange={(e) => this.setState({delivery: !this.state.delivery})}/>
-                                <label for="delivery">Delivery</label>
+                                <label for="delivery">Delivery</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 <input type="checkbox" id="pickup" name="pickup" onChange={(e) => this.setState({pickup: !this.state.pickup})} />
                                 <label for="pickup">Pickup</label><br/>
                                 </Form.Group>
-                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                              <FormLabel><h4>Food Category:</h4></FormLabel>
                              <select name="food_category"  onChange={this.onChange} style={{ width: '10em', height: '2em'}}>
                                 <option value="veg">Veg</option>
@@ -212,15 +211,13 @@ class CustomerHome extends Component {
                         </InputGroup> 
                     </Form>
                     </div>
-                    </td>
-                    <td>
+
                     <div className="welcomeTitle">
-                    <h1>Welcome to UberEats</h1>
                     </div>
                     <br /><br />
                     {noRecordMessage}
                     <Row md="6">{restaurantCards}</Row>
-                    </td></tr> </table>
+                
                 </center>
             </div>
         )
