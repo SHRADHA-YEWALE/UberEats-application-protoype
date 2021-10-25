@@ -47,10 +47,10 @@ class RestaurantLogin extends Component {
         if (!localStorage.getItem("user_id")) {
             redirectVar = <Redirect to="/restaurantLogin" />
         }
-        if(this.props.user && this.props.user.user_id){
-            console.log("Success");
+        if(this.props.user && this.props.user._id){
+            console.log("Login Success");
             localStorage.setItem("email_id", this.props.user.email_id);
-            localStorage.setItem("user_id", this.props.user.user_id);
+            localStorage.setItem("user_id", this.props.user._id);
             localStorage.setItem("name", this.props.user.name);
             redirectVar = <Redirect to="/restaurantHome" />
         }

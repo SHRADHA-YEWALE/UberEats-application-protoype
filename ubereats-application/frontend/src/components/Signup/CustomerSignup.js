@@ -50,7 +50,7 @@ class CustomerSignup extends Component {
             redirectVar = <Redirect to="/customerSignup" />
         }
         if (this.props.user === "USER_ADDED" && this.state.signedUp) {
-            console.log("User successfully login");
+            console.log("User successfully Added");
             alert("You have registered successfully. Please Login!");
             redirectVar = <Redirect to="/customerLogin" />
         }
@@ -87,7 +87,7 @@ class CustomerSignup extends Component {
                                         <tr>
                                         
                                             <td><label className='floatLabel'><b> Date Of Birth </b></label></td>
-                                            <td><input type="date" className="date" name="dob" onChange={this.onChange} placeholder="dob" required /></td>
+                                            <td><input type="date" className="date" name="dob" onChange={this.onChange} placeholder="dob" /></td>
                                     
                                         </tr>
                                         <tr>

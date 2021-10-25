@@ -58,7 +58,7 @@ class Cart extends Component {
             axios.get(endPointObj.url + "/restaurant/" + res_id)
                 .then(response => {
                     if (response.data) {
-                        console.log("Hey there", response.data);
+                        console.log("response", response.data);
                         this.setState({
                             restaurant: response.data,
                         });
@@ -95,7 +95,6 @@ class Cart extends Component {
         }
         axios.post(endPointObj.url + "/cart/cartItemdelete", data)
                 .then(response => {
-                    alert("Item successfully removed from cart");
                     let index = cart_items.findIndex((cart_item => cart_item.item_id === item_id));
                     cart_items.splice(index, 1);
                     this.setState({

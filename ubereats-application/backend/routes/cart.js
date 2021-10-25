@@ -77,9 +77,9 @@ router.post('/item', (req, res) => {
   router.post('/placeorder', (req, res) => {
     //const timestamp = new Date().getTime();
     const timestamp = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
-    let sql = `insert into uber_eats.orders(user_id, resto_id, order_status, sub_total, tax, delivery, discount, total_price, order_date) 
+    let sql = `insert into uber_eats.orders(user_id, resto_id, order_status, sub_total, tax, delivery, discount, total_price, order_date, order_instruction) 
     values(${req.body.user_id}, ${req.body.res_id}, '${req.body.order_status}',${req.body.sub_total}, ${req.body.tax}, 
-     ${req.body.delivery}, ${req.body.discount}, ${req.body.total}, '${timestamp}')`;
+     ${req.body.delivery}, ${req.body.discount}, ${req.body.total}, '${timestamp}', '${req.body.order_instruction}')`;
     pool.query(sql, (err, result) => {
       if (err) {
         console.log(err);

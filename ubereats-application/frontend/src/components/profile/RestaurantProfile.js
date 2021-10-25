@@ -90,7 +90,6 @@ class RestaurantProfile extends Component {
         axios.post(endPointObj.url + '/uploads/restaurant/' + this.state.user_id, formData, uploadConfig)
             .then(response => {
                 console.log("image response", response.data);
-                alert("Image uploaded successfully!");
                 this.setState({
                     resFileText: "Choose file...",
                     res_image: response.data

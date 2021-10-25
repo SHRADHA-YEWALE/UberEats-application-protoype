@@ -87,7 +87,6 @@ class OrderItemsViewRestaurant extends Component {
         }
 
         if(this.state.message == 'ORDER_STATUS_UPDATED') {
-            alert("Order status updated successfully!");
             redirectVar = <Redirect to="/orders/orderHistory" />;
         }
        

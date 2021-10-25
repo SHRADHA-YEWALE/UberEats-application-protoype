@@ -1,6 +1,6 @@
 //import express module 
 var express = require('express');
-//create  an express app
+//create an express app
 var app = express();
 //require express middleware body-parser
 var bodyParser = require('body-parser');
@@ -10,6 +10,27 @@ var session = require('express-session');
 var cookieParser = require('cookie-parser');
 //import cors
 const cors = require('cors');
+
+const { mongoDB } = require('./config/config');
+const mongoose = require('mongoose');
+
+app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
+
+var options = {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+};
+
+//Mongodb connect
+mongoose.connect(mongoDB, options, (err, res) => {
+  if (err) {
+      console.log(err);
+      console.log(`MongoDB Connection Failed`);
+  } else {
+      console.log(`MongoDB Connected`);
+  }
+});
+
 
 app.use(bodyParser.json());
 app.use(cookieParser());
@@ -36,13 +57,6 @@ app.use(session({
 
 app.use(express.static('./public'));
 
-
-const signup = require("./routes/signup");
-app.use("/signup", signup);
-
-const login = require("./routes/login");
-app.use("/login", login);
-
 const profile = require("./routes/profile");
 app.use("/profile", profile);
 
@@ -67,9 +81,17 @@ app.use("/cart", cart);
 const orders = require("./routes/orders");
 app.use("/orders", orders);
 
+//mongodb routes
+var signupRouter = require('./api/signup/signup.router');
+app.use('/signup', signupRouter);
+
+var loginRouter = require('./api/login/login.router');
+app.use('/login', loginRouter);
+
 const port = process.env.PORT || 3001;
 var server = app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });
+
 
 module.exports = app;

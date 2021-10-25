@@ -42,17 +42,17 @@ class CustomerLogin extends Component {
     }
 
     render() {
-        //console.log(this.props);
+        console.log("this.props", this.props);
         let redirectVar = null;
         let message = ""
         if (!localStorage.getItem("user_id")) {
             redirectVar = <Redirect to="/customerLogin" />
         }
-        if(this.props.user && this.props.user.user_id){
-            console.log("Success");
+        if(this.props.user && this.props.user._id){
+            console.log(" Login Success");
             localStorage.setItem("email_id", this.props.user.email_id);
-            localStorage.setItem("user_id", this.props.user.user_id);
-            localStorage.setItem("name", this.props.user.name);
+            localStorage.setItem("user_id", this.props.user._id);
+            localStorage.setItem("name", this.props.user.cust_name);
             redirectVar = <Redirect to="/customerHome" />
         }
           

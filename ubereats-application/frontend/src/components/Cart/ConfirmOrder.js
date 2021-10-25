@@ -3,11 +3,16 @@ import { Redirect } from 'react-router';
 import endPointObj from '../../endPointUrl.js';
 import { Button, Alert, Container, Table, Card } from "react-bootstrap";
 import Navigationbar from '../Navbar/CustomerNavbarHome';
+import { Form} from "react-bootstrap";
+
 import axios from 'axios';
 
 class ConfirmOrder extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            order_instruction : ""
+        };
 
         this.getUserProfile();
         this.placeOrder = this.placeOrder.bind(this);
@@ -54,7 +59,8 @@ class ConfirmOrder extends Component {
             delivery: this.state.delivery,
             tax: (this.state.tax * this.state.sub_total / 100).toFixed(2),
             total: this.state.total,
-            cart_items: this.state.cart_items
+            cart_items: this.state.cart_items,
+            order_instruction: this.state.order_instruction
         }
         console.log("cart_items", data.cart_items);
         axios.post(endPointObj.url +"/cart/placeorder", data)
@@ -66,7 +72,6 @@ class ConfirmOrder extends Component {
                     this.setState({
                         message: response.data
                     });
-                    alert("Your order Successfully placed!");
                 }
             })
             .catch(error => {
@@ -134,6 +139,12 @@ class ConfirmOrder extends Component {
                                     <tr>
                                         <td colSpan="4">Contact Number</td>
                                         <td align="center">{this.state.phone_number}</td>
+                                    </tr>
+                                  
+                                    <tr>
+                                        <td colSpan="4">Order Instructions</td>
+                                        <td align="center"><input type="text" name="order_instruction" id = "order_instruction" onChange={(e) => this.setState({ order_instruction: e.target.value })}/></td>
+                                    
                                     </tr>
                                 </tbody>
                             </Table>

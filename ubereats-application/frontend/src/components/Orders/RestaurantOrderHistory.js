@@ -69,7 +69,10 @@ class RestaurantOrderHistory extends Component {
 
         if (this.state && this.state.completed_orders) {
             orders = this.state.completed_orders;
-            if (orders.length > 0) {
+            if(this.state.completed_orders == 'NO_ORDERS') {
+                message = <Alert variant="warning">You have no orders.</Alert>    
+            }
+            else if (orders.length > 0) {
                 orderCards = orders.map(order => {
                     this.state.order_id = order.order_id;
                     this.state.order_status = order.order_status;
@@ -91,6 +94,12 @@ class RestaurantOrderHistory extends Component {
                                         <Link to={{ pathname: "restaurant/orders/details", state: {order_details: order, prevPath: "/orders/orderHistory"} }}>
                                             <Button variant="link">Billing Details</Button>
                                         </Link>
+                                    </Col>
+                                    <Col align="center">
+                                        <br />
+                                        <b>Order Status</b><br />
+                                        {order.order_status}
+                                        <br />
                                     </Col>
                                     {/* <Col align="center">
                                         <br />

@@ -75,7 +75,6 @@ class CustomerProfile extends Component {
             .then(response => {
                 console.log("image response", response.data);
 
-                alert("Image uploaded successfully!");
                 this.setState({
                     fileText: "Choose file...",
                     user_image: response.data
