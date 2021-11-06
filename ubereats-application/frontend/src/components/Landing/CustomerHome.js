@@ -122,7 +122,6 @@ class CustomerHome extends Component {
         let redirectVar = null;  
 
         if(!localStorage.getItem("user_id")) {
-            alert("BYE");
             redirectVar = <Redirect to= "/customerLogin"/>
         }
         if (this.state && this.state.cuisineList) {

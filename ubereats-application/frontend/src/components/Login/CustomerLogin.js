@@ -46,18 +46,17 @@ class CustomerLogin extends Component {
 
     render() {
         console.log("this.props.user", this.props.user);
-        console.log("Token", this.state.token);
+        console.log("Token", this.props.user);
 
         let redirectVar = null;
         let message = ""
-        // if (!localStorage.getItem("user_id")) {
-        //     redirectVar = <Redirect to="/customerLogin" />
-        // }
-        if (this.state.token.length > 0) {
-            console.log("Token");
-            localStorage.setItem("token", this.state.token);
+        if (!localStorage.getItem("user_id")) {
+            //message = "Invalid username or password!";
+            redirectVar = <Redirect to="/customerLogin" />
+        }else if (this.props.user.length > 0) {
+            localStorage.setItem("token", this.props.user);
 
-            var decoded = jwt_decode(this.state.token.split(' ')[1]);
+            var decoded = jwt_decode(this.props.user.split(' ')[1]);
             console.log("Decoded", decoded);
             localStorage.setItem("user_id", decoded._id);
             localStorage.setItem("email_id", decoded.email_id);

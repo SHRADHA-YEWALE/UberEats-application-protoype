@@ -48,11 +48,11 @@ class RestaurantLogin extends Component {
         let redirectVar = null;
         let message = "";
        
-        if (this.state.token.length > 0) {
+        if (this.props.user.length > 0) {
             console.log("Token");
-            localStorage.setItem("token", this.state.token);
+            localStorage.setItem("token", this.props.user);
 
-            var decoded = jwt_decode(this.state.token.split(' ')[1]);
+            var decoded = jwt_decode(this.props.user.split(' ')[1]);
             console.log("Decoded", decoded);
             localStorage.setItem("user_id", decoded._id);
             localStorage.setItem("email_id", decoded.email_id);
