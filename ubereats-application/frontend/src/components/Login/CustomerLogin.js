@@ -7,13 +7,14 @@ import NavigationBar from '../Navbar/Navbar';
 import '../Signup/Signup.css';
 import './Login.css';
 import { customerLogin } from '../../actions/customerLogin';
+const jwt_decode = require('jwt-decode');
 
 
 class CustomerLogin extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            
+            token: "",
         };
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
@@ -24,6 +25,7 @@ class CustomerLogin extends Component {
             [e.target.name]: e.target.value
         })
     }
+
 
 
     onSubmit = (e) => {
@@ -37,22 +39,29 @@ class CustomerLogin extends Component {
         this.props.customerLogin(data);
 
         this.setState({
-            loginFlag: 1
+            loginFlag: 1,
+            token: this.props.user
         });
     }
 
     render() {
-        console.log("this.props", this.props);
+        console.log("this.props.user", this.props.user);
+        console.log("Token", this.state.token);
+
         let redirectVar = null;
         let message = ""
-        if (!localStorage.getItem("user_id")) {
-            redirectVar = <Redirect to="/customerLogin" />
-        }
-        if(this.props.user && this.props.user._id){
-            console.log(" Login Success");
-            localStorage.setItem("email_id", this.props.user.email_id);
-            localStorage.setItem("user_id", this.props.user._id);
-            localStorage.setItem("name", this.props.user.cust_name);
+        // if (!localStorage.getItem("user_id")) {
+        //     redirectVar = <Redirect to="/customerLogin" />
+        // }
+        if (this.state.token.length > 0) {
+            console.log("Token");
+            localStorage.setItem("token", this.state.token);
+
+            var decoded = jwt_decode(this.state.token.split(' ')[1]);
+            console.log("Decoded", decoded);
+            localStorage.setItem("user_id", decoded._id);
+            localStorage.setItem("email_id", decoded.email_id);
+            
             redirectVar = <Redirect to="/customerHome" />
         }
           

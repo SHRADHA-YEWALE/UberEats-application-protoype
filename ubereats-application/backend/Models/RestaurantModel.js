@@ -10,7 +10,7 @@ var restaurantSchema = new Schema({
     phone_number: {type: String},
     resto_description: {type: String},
     timings: {type: String},
-    resto_img: {type: String},
+    res_image: {type: String},
     delivery: {type:String},
     favourite: {type:String},
 },

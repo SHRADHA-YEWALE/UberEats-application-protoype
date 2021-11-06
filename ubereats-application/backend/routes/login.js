@@ -16,7 +16,7 @@ router.post('/customer', (req, res) => {
       }
       if (result && result.length > 0) {
         if (passwordHash.verify(req.body.password, result[0].pwd)) {
-          console.log("User login successfuly");
+          console.log("User login successfully");
           res.cookie('cookie', "admin", { maxAge: 90000000, httpOnly: false, path: '/' });
           req.session.user = req.body.email_id;
           let userObject = { user_id: result[0].cust_id, name: result[0].cust_name, email_id: result[0].email_id, pwd: result[0].pwd, address: result[0].address, phone_number: result[0].phone_number };

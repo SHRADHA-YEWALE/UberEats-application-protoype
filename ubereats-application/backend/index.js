@@ -11,7 +11,7 @@ var cookieParser = require('cookie-parser');
 //import cors
 const cors = require('cors');
 
-const { mongoDB } = require('./config/config');
+const { mongoDB } = require('./config/configValue');
 const mongoose = require('mongoose');
 
 app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
@@ -57,9 +57,6 @@ app.use(session({
 
 app.use(express.static('./public'));
 
-const profile = require("./routes/profile");
-app.use("/profile", profile);
-
 const upload = require("./routes/uploads");
 app.use("/uploads", upload);
 
@@ -87,6 +84,12 @@ app.use('/signup', signupRouter);
 
 var loginRouter = require('./api/login/login.router');
 app.use('/login', loginRouter);
+
+// var profileRouter = require('./api/customer/customer.router');
+// app.use('/profile/customer', profileRouter);
+
+var restoProfileRouter = require('./api/restaurant/restaurant.router');
+app.use('/profile/restaurant', restoProfileRouter);
 
 const port = process.env.PORT || 3001;
 var server = app.listen(port, () => {

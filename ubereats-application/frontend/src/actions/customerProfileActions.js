@@ -3,10 +3,10 @@ import endPointObj from '../endPointUrl.js';
 import axios from "axios";
 
 export const getCustomer = () => dispatch => {
-    axios.get(endPointObj.url + '/profile/customer/'+ localStorage.getItem("user_id"))
+    axios.get(endPointObj.url + '/profile/customer/getCustomerProfileDetails/'+ localStorage.getItem("user_id"))
         .then(customer => dispatch({
             type: GET_CUSTOMER,
-            payload: customer.data
+            payload: customer.data.data
         }))
         .catch(error => {
             console.log(error);

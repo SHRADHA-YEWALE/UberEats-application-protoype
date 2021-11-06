@@ -3,10 +3,10 @@ import endPointObj from '../endPointUrl.js';
 import axios from "axios";
 
 export const getRestaurant = () => dispatch => {
-    axios.get(endPointObj.url + '/profile/restaurant/'+ localStorage.getItem("user_id"))
+    axios.get(endPointObj.url + '/profile/restaurant/getRestaurantProfileDetails/'+ localStorage.getItem("user_id"))
         .then(restaurant => dispatch({
             type: GET_RESTAURANT,
-            payload: restaurant.data
+            payload: restaurant.data.data
         }))
         .catch(error => {
             console.log(error);
@@ -15,7 +15,7 @@ export const getRestaurant = () => dispatch => {
 
 export const updateRestaurant = (restaurantProfileData) => dispatch => {
     axios.defaults.withCredentials = true;
-    axios.post(endPointObj.url +'/profile/restaurant', restaurantProfileData)
+    axios.post(endPointObj.url +'/profile/restaurant/updateRestaurantProfilePic', restaurantProfileData)
         .then(response => response.data)
         .then(data => {
             if (data === 'RESTAURANT_UPDATED') {

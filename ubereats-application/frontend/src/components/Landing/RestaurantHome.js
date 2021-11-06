@@ -24,7 +24,7 @@ class RestaurantHome extends Component {
 
           var userData = {
               user_id: user.user_id || this.state.user_id,
-              name: user.name || this.state.name,
+              name: user.resto_name || this.state.name,
               description: user.description || this.state.description,
               email_id: user.email_id || this.state.email_id,
               address: user.address || this.state.address,

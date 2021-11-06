@@ -30,7 +30,7 @@ class CustomerProfile extends Component {
 
             var userData = {
                 user_id: user.user_id || this.state.user_id,
-                name: user.name || this.state.name,
+                name: user.cust_name || this.state.name,
                 email_id: user.email_id || this.state.email_id,
                 address: user.address || this.state.address,
                 phone_number: user.phone_number || this.state.phone_number,

@@ -5,7 +5,7 @@ const path = require('path');
 const fs = require('fs');
 
 router.get('/user/:user_image', (req, res) => {
-    console.log("Yoooo there", req.params.user_image);
+    console.log("User Image", req.params.user_image);
     var image = path.join(__dirname, '..') + '/public/uploads/users/' + req.params.user_image;
     if (fs.existsSync(image)) {
         res.sendFile(image);

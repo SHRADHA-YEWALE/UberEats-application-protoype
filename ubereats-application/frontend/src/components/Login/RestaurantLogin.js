@@ -7,13 +7,14 @@ import NavigationBar from '../Navbar/Navbar.js';
 import '../Signup/Signup.css';
 import './Login.css'
 import { restaurantLogin } from '../../actions/restaurantLogin';
+const jwt_decode = require('jwt-decode');
 
 
 class RestaurantLogin extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            
+            token: "",    
         };
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
@@ -36,30 +37,32 @@ class RestaurantLogin extends Component {
         this.props.restaurantLogin(data);
 
         this.setState({
-            loginFlag: 1
+            loginFlag: 1,
+            token: this.props.user
         });
     }
 
     render() {
-        //console.log(this.props);
+        console.log("this.props.user", this.props.user);
+        console.log("Token", this.state.token);
         let redirectVar = null;
         let message = "";
-        if (!localStorage.getItem("user_id")) {
-            redirectVar = <Redirect to="/restaurantLogin" />
-        }
-        if(this.props.user && this.props.user._id){
-            console.log("Login Success");
-            localStorage.setItem("email_id", this.props.user.email_id);
-            localStorage.setItem("user_id", this.props.user._id);
-            localStorage.setItem("name", this.props.user.name);
+       
+        if (this.state.token.length > 0) {
+            console.log("Token");
+            localStorage.setItem("token", this.state.token);
+
+            var decoded = jwt_decode(this.state.token.split(' ')[1]);
+            console.log("Decoded", decoded);
+            localStorage.setItem("user_id", decoded._id);
+            localStorage.setItem("email_id", decoded.email_id);
+            
             redirectVar = <Redirect to="/restaurantHome" />
         }
-        else if(this.props.user === "NO_USER" && this.state.loginFlag){
-            message = "User not find with the provided email id";
+        else if(this.props.user === "NO_USER"){
+            message = "User not find with the provided email id or password";
         }
-        else if(this.props.user === "INCORRECT_PASSWORD" && this.state.loginFlag){
-            message = "Invalid Password! Please enter correct password.";
-        }
+        
   
         console.log(this.props);
         return (

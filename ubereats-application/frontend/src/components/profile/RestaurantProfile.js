@@ -31,8 +31,8 @@ class RestaurantProfile extends Component {
             var { user } = nextProps;
 
             var userData = {
-                user_id: user.user_id || this.state.user_id,
-                name: user.name || this.state.name,
+                user_id: localStorage.getItem("user_id"),
+                name: user.resto_name || this.state.name,
                 description: user.description || this.state.description,
                 email_id: user.email_id || this.state.email_id,
                 address: user.address || this.state.address,
@@ -43,6 +43,7 @@ class RestaurantProfile extends Component {
                 delivery: user.delivery || this.state.delivery,
                 pickup: user.pickup || this.state.pickup
             };
+            console.log("Restaurant Id"+userData.user_id);
             console.log("Restaurant name"+userData.name);
             console.log("Restaurant address"+userData.address);
             console.log("Restaurant phone"+userData.phone_number);
@@ -70,7 +71,7 @@ class RestaurantProfile extends Component {
 
 
     onUpdate = (e) => {
-        console.log("Updating the customer details - frontend");
+        console.log("Updating the restaurant details - frontend");
         //prevent page from refresh
         e.preventDefault();
 
@@ -87,7 +88,7 @@ class RestaurantProfile extends Component {
                 "content-type": "multipart/form-data"
             }
         };
-        axios.post(endPointObj.url + '/uploads/restaurant/' + this.state.user_id, formData, uploadConfig)
+        axios.post(endPointObj.url + '/profile/restaurant/updateRestaurantProfilePic/' + this.state.user_id, formData, uploadConfig)
             .then(response => {
                 console.log("image response", response.data);
                 this.setState({
