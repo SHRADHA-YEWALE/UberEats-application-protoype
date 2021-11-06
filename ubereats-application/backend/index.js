@@ -85,8 +85,8 @@ app.use('/signup', signupRouter);
 var loginRouter = require('./api/login/login.router');
 app.use('/login', loginRouter);
 
-// var profileRouter = require('./api/customer/customer.router');
-// app.use('/profile/customer', profileRouter);
+var profileRouter = require('./api/customer/customer.router');
+app.use('/profile/customer', profileRouter);
 
 var restoProfileRouter = require('./api/restaurant/restaurant.router');
 app.use('/profile/restaurant', restoProfileRouter);

@@ -1,17 +1,18 @@
 const Customer = require("../../Models/CustomerModel");
 const Restaurant = require("../../Models/RestaurantModel");
 //Imported for jwt 
-//const jwt = require('jsonwebtoken');
-//const { secret } = require("../../config/configValues");
-//const { auth } = require("../../config/passport");
-//const { checkAuth } = require("../../config/passport");
+const jwt = require('jsonwebtoken');
+const { secret } = require("../../config/configValue");
+const { auth } = require("../../config/passport");
+const { checkAuth } = require("../../config/passport");
+auth();
 
 module.exports = {
 
     customerLogin: (req, res) => {
-        //auth();
+   
         Customer.findOne({ email_id: req.body.email_id, password: req.body.password }, (error, result) => {
-        console.log("inside customer login")
+        console.log("Inside customer login")
         if (error) {
             console.log(error);
         } else {
@@ -27,13 +28,12 @@ module.exports = {
                     path: "/"
                 });
 
-                const payload = { _id: result._id };
-                //const token = jwt.sign(payload, secret, {
-                //    expiresIn: 1008000
-                //});
-                //result.token = token;
-                console.log(result);
-                return res.send(result);
+                const payload = { _id: result._id,  email_id: req.body.email_id};
+                const token = jwt.sign(payload, secret, {
+                   expiresIn: 1008000
+                });
+                console.log("JWT token", token)
+                res.status(200).end("JWT " + token);
             } else {
                 res.writeHead(401, {
                     'Content-Type': 'text/plain'
