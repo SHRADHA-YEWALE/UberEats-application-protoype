@@ -7,7 +7,7 @@ module.exports = {
       console.log('Inside customer signup -> req body:',req.body);
   
       var query = {};
-      query.userType =req.body.userType;
+      query.email_id = req.body.email_id;
   
     
       Customer.findOne(query, (error, result) => {
@@ -15,10 +15,10 @@ module.exports = {
           console.log(error);
           //callBack(error);
         }else if (result && result != null){
+          console.log("User exists", result);
           res.writeHead(401, {
             'Content-Type': 'text/plain'
           })
-          console.log('invalid');
           res.end('USER_EXISTS');
         }else {
           var customerdetails = new Customer({
@@ -55,7 +55,7 @@ module.exports = {
       console.log('Inside restaurant signup -> req body:',req.body);
   
       var query = {};
-      query.userType =req.body.userType;
+      query.email_id = req.body.email_id;
   
     
       Restaurant.findOne(query, (error, result) => {

@@ -4,7 +4,6 @@ const {
 
 const jwt = require('jsonwebtoken');
 const { secret } = require('../../config/configValues');
-var kafka = require('../../kafka/client');
 
 console.log('req');
 module.exports = {

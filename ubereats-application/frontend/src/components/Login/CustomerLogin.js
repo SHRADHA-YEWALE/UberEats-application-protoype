@@ -50,10 +50,7 @@ class CustomerLogin extends Component {
 
         let redirectVar = null;
         let message = ""
-        if (!localStorage.getItem("user_id")) {
-            //message = "Invalid username or password!";
-            redirectVar = <Redirect to="/customerLogin" />
-        }else if (this.props.user.length > 0) {
+        if (this.props.user.length > 0) {
             localStorage.setItem("token", this.props.user);
 
             var decoded = jwt_decode(this.props.user.split(' ')[1]);
@@ -62,6 +59,9 @@ class CustomerLogin extends Component {
             localStorage.setItem("email_id", decoded.email_id);
             
             redirectVar = <Redirect to="/customerHome" />
+        } else if (!localStorage.getItem("user_id")) {
+            //message = "Invalid username or password!";
+            redirectVar = <Redirect to="/customerLogin" />
         }
           
         console.log(this.props);

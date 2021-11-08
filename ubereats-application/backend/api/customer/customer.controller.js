@@ -5,9 +5,6 @@ const {
     updateCustomerProfilePic
  } = require("./customer.service");
   
-  //const jwt = require('jsonwebtoken');
-  //const { secret } = require('../../config/configValues');
-  //var kafka = require('../../kafka/client');
   
   const { hashSync, genSaltSync, compareSync } = require("bcrypt");
   //const { sign } = require("jsonwebtoken");

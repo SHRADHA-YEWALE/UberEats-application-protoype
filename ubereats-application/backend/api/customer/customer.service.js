@@ -1,7 +1,7 @@
 const Customer = require("../../Models/CustomerModel");
 const multer = require('multer');
 const path = require('path');
-
+var kafka = require('../../kafka/client');
 
 
 //Upload restaurant profile picture
@@ -21,39 +21,65 @@ module.exports = {
   
     getCustomerProfileDetails: (id, callBack) => {
         console.log("Inside get customer details service");
-        Customer.findOne({ _id: id }, (error, result) => {
-        if (error) {
-            callBack(error);
+
+        const params = {
+            data: id,
+            path: 'get-customer-details'
         }
-        console.log("Customer Details:",result);
-        return callBack(null, result);
+
+        kafka.make_request('customer', params, (error, result) => {
+            if (error) {
+                console.log(error);
+                callBack(error);
+            }
+            console.log("Customer details", result);
+            return callBack(null, result);
         });
+        
+        // Customer.findOne({ _id: id }, (error, result) => {
+        // if (error) {
+        //     callBack(error);
+        // }
+        // console.log("Customer Details:",result);
+        // return callBack(null, result);
+        // });
     },
 
     updateCustomerProfile: (data, callBack) => {
         console.log("Inside update restaurant profile service", data.user_id);
         var newData = {
-            resto_name: data.resto_name,
-            resto_description: data.resto_description,
+            cust_name: data.cust_name,
             password: data.pwd,
             address: data.address,
-            zipcode: data.zipcode,
             phone_number: data.phone_number,
-            timings: data.timings,
-            delivery: data.delivery,
-            favourite: data.favourite,
             country: data.country,
             dob: data.dob,
-            email_id: data.email_id
+            email_id: data.email_id,
+            user_id: data.user_id
         }
-        Customer.updateOne({ _id: data.user_id }, newData, { upsert: false }, (error, results) => {
-        if (error) {
-            console.log("Error while updating restaurant details", error);
-            callBack(error);
+
+        const params = {
+            data: newData,
+            path: 'update-customer-details'
         }
-        console.log("Result after updating restaurant details", results);
-        return callBack(null, results);
+
+        kafka.make_request('customer', params, (error, results) => {
+            if (error) {
+                console.log("Error while updating customer details", error);
+                callBack(error);
+            }
+            console.log("Result after updating customer details", results);
+            return callBack(null, results);
         });
+
+        // Customer.updateOne({ _id: data.user_id }, newData, { upsert: false }, (error, results) => {
+        // if (error) {
+        //     console.log("Error while updating restaurant details", error);
+        //     callBack(error);
+        // }
+        // console.log("Result after updating restaurant details", results);
+        // return callBack(null, results);
+        // });
     },
   
     updateCustomerProfilePic: (req, res, callBack) => {

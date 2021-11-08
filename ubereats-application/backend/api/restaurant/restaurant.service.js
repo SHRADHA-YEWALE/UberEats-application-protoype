@@ -1,8 +1,7 @@
 const Restaurant = require("../../Models/RestaurantModel");
 const multer = require('multer');
 const path = require('path');
-
-
+var kafka = require('../../kafka/client');
 
 //Upload restaurant profile picture
 const resstorage = multer.diskStorage({
@@ -21,12 +20,25 @@ module.exports = {
   
     getRestaurantProfileDetails: (id, callBack) => {
         console.log("Inside get restaurant details service");
-        Restaurant.findOne({ _id: id }, (error, result) => {
-        if (error) {
-            callBack(error);
+        // Restaurant.findOne({ _id: id }, (error, result) => {
+        // if (error) {
+        //     callBack(error);
+        // }
+        // console.log("Restaurant Details:",result);
+        // return callBack(null, result);
+        // });
+        const params = {
+            data: id,
+            path: 'get-restaurant-details'
         }
-        console.log("Restaurant Details:",result);
-        return callBack(null, result);
+
+        kafka.make_request('restaurant', params, (error, result) => {
+            if (error) {
+                console.log(error);
+                callBack(error);
+            }
+            console.log("Restaurant details", result);
+            return callBack(null, result);
         });
     },
 
