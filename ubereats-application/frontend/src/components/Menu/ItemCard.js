@@ -6,7 +6,7 @@ import "./Menu.css";
 
 class ItemCard extends Component {
   render() {
-    console.log("Inside Itemcard", this.props.menu_item.item_id);
+    console.log("Inside Itemcard", this.props.menu_item._id);
     let imageSrc = endPointObj.url + "/images/item/" + this.props.menu_item.item_image;
     return (
         <div>
@@ -23,10 +23,10 @@ class ItemCard extends Component {
               </Card.Body>
             </Col>
             <Col align="left">
-              <Link to={{ pathname: "/menu/item/update", state: { item_id: this.props.menu_item.item_id } }}>   
-                <Button variant="link" name={this.props.menu_item.item_id} className="edit-menu-btn-primary">Edit</Button>&nbsp;
+              <Link to={{ pathname: "/menu/item/update", state: { item_id: this.props.menu_item._id } }}>   
+                <Button variant="link" name={this.props.menu_item._id} className="edit-menu-btn-primary">Edit</Button>&nbsp;
                 </Link>
-                <Button variant="link" onClick={this.props.deleteItem} name={this.props.menu_item.item_id} className="edit-menu-btn-primary">Delete</Button>    
+                <Button variant="link" onClick={this.props.deleteItem} name={this.props.menu_item._id} className="edit-menu-btn-primary">Delete</Button>    
             </Col>
           </Row>
         </Card>

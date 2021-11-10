@@ -51,7 +51,7 @@ class RestaurantSignup extends Component {
         }
         if (this.props.user === "USER_ADDED" && this.state.signedUp) {
             console.log("User successfully login");
-            alert("You have registered successfully. Please Login!");
+            message = "You have registered successfully. Please Login!";
             redirectVar = <Redirect to="/restaurantLogin" />
         }
         else if(this.props.user === "USER_EXISTS" && this.state.signedUp){

@@ -16,7 +16,7 @@ export const getCustomer = () => dispatch => {
 export const updateCustomer = (updateCustomerData) => dispatch => {
     console.log("Inside dispatching the update payload action");
     axios.defaults.withCredentials = true;
-    axios.post(endPointObj.url +'/profile/customer', updateCustomerData)
+    axios.post(endPointObj.url +'/profile/customer/updateCustomerProfile', updateCustomerData)
         .then(response => response.data)
         .then(data => {
             if (data === 'CUSTOMER_UPDATED') {

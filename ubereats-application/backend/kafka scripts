@@ -12,4 +12,8 @@ kafka-topics --create --zookeeper localhost:9092 --replication-factor 1 --partit
 
 kafka-topics --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic customer
 kafka-topics --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic restaurant
+kafka-topics --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic menu
+kafka-topics --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic menusection
+kafka-topics --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic cart
+
 

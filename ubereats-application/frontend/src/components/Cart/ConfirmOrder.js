@@ -20,6 +20,7 @@ class ConfirmOrder extends Component {
     componentWillMount() {
         document.title = "Your Order";
         if (this.props.location.state) {
+            console.log("prop state",this.props.location.state);
             this.setState({
                 restaurant: this.props.location.state.restaurant,
                 cart_items: this.props.location.state.cart_items,
@@ -34,12 +35,13 @@ class ConfirmOrder extends Component {
     };
 
     getUserProfile = () => {
-        axios.get(endPointObj.url + "/profile/customer/" + localStorage.getItem("user_id"))
+        axios.get(endPointObj.url + "/profile/customer/getCustomerProfileDetails/" + localStorage.getItem("user_id"))
         .then(response => {
             if(response.data){
+                console.log("FE: Customer data response", response.data);
                 this.setState({
-                    address: response.data.address,
-                    phone_number: response.data.phone_number
+                    address: response.data.data.address,
+                    phone_number: response.data.data.phone_number
                 });
             }
         })
@@ -52,7 +54,7 @@ class ConfirmOrder extends Component {
 
         let data = {
             user_id: localStorage.getItem("user_id"),
-            res_id: this.state.restaurant.user_id,
+            res_id: this.state.restaurant._id,
             order_status: 'ORDER_PLACED',
             sub_total: this.state.sub_total,
             discount: (this.state.discount * this.state.sub_total / 100).toFixed(2),
@@ -105,7 +107,7 @@ class ConfirmOrder extends Component {
                     <Card style={{width: "40rem", height: "35rem"}}>
                         <Card.Title>
                             <br />
-                            <h3>{this.state.restaurant.name}</h3>
+                            <h3>{this.state.restaurant.resto_name}</h3>
                             {this.state.restaurant.address} | {this.state.restaurant.zipcode}
                         </Card.Title>
                         <Card.Body>

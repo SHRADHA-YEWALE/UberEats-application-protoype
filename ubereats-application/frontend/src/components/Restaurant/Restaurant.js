@@ -24,13 +24,14 @@ class Restaurant extends Component {
 
     componentWillMount() {
         if (this.props.location.state) {
-            document.title = this.props.location.state.res_name;
+            document.title = this.props.location.state.resto_name;
         }
     }
 
+
     getSections = () => {
         if (this.props.location.state) {
-            axios.get(endPointObj.url + "/menu/sections/" + this.props.location.state.resto_id)
+            axios.get(endPointObj.url + "/menu/getMenuSections/" + this.props.location.state._id)
                 .then(response => {
                     console.log("Restaurant FE:",response);
                     if (response.data[0]) {
@@ -49,7 +50,7 @@ class Restaurant extends Component {
 
     getMenuItems = () => {
         if (this.props.location.state) {
-            axios.get(endPointObj.url + "/menu/items/" + this.props.location.state.resto_id)
+            axios.get(endPointObj.url + "/menu/getMenuItems/" + this.props.location.state._id)
                 .then(response => {
                     console.log("get menu items FE:", response);
                     if (response.data[0]) {
@@ -71,7 +72,7 @@ class Restaurant extends Component {
 
 
         if (this.state && this.state.menu_items && this.state.menu_items.length > 0) {
-            items = this.state.menu_items.filter(menu_item => menu_item.menu_section_id === menu_section.menu_section_id);
+            items = this.state.menu_items.filter(menu_item => menu_item.item_category === menu_section.menu_section_name);
             if (items.length > 0) {
                 section = <h4>{menu_section.menu_section_name}</h4>;
                 itemsRender.push(section);
@@ -102,7 +103,7 @@ class Restaurant extends Component {
             resName = restaurant.resto_name;
             restoEmail = restaurant.email_id;
             resZIP = restaurant.zipcode;
-            resAddress = restaurant.location;
+            resAddress = restaurant.address;
             resPhone = restaurant.phone_number;
             resCuisine = restaurant.res_cuisine;
             restoDescription = restaurant.resto_description;

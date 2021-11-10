@@ -48,7 +48,7 @@ class RestaurantLogin extends Component {
         let redirectVar = null;
         let message = "";
        
-        if (this.props.user.length > 0) {
+        if (this.state.token.length > 0) {
             console.log("Token");
             localStorage.setItem("token", this.props.user);
 

@@ -32,21 +32,21 @@ class Cart extends Component {
         //     console.log("cart items:",this.state.cart_items);
         // } 
         //else {
-            let user_id = localStorage.getItem("user_id");
-            axios.get(endPointObj.url + "/cart/item/" + user_id)
-                .then(response => {
-                    console.log("In the cart: get menu items FE:", response);
-                    if (response) {
-                        this.setState({
-                            cart_items: response.data
-                        });
-                    }
-                })
-                .catch(err => {
-                    if (err.response && err.response.data) {
-                        console.log(err.response.data);
-                    }
-                });
+        let user_id = localStorage.getItem("user_id");
+        axios.get(endPointObj.url + "/cart/getcartitems/" + user_id)
+            .then(response => {
+                console.log("In the cart: get menu items FE:", response);
+                if (response) {
+                    this.setState({
+                        cart_items: response.data
+                    });
+                }
+            })
+            .catch(err => {
+                if (err.response && err.response.data) {
+                    console.log(err.response.data);
+                }
+            });
         //}
     };
 
@@ -55,7 +55,7 @@ class Cart extends Component {
         if (localStorage.getItem("cart_res_id")) {
             res_id = localStorage.getItem("cart_res_id");
             
-            axios.get(endPointObj.url + "/restaurant/" + res_id)
+            axios.get(endPointObj.url + "/restaurant/getRestaurantProfileDetails/" + res_id)
                 .then(response => {
                     if (response.data) {
                         console.log("response", response.data);

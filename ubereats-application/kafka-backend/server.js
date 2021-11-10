@@ -3,7 +3,9 @@ var connection =  new require('./kafka/Connection');
 //topics files
 var Customer = require('./services/customer.js');
 var Restaurant = require('./services/restaurant.js');
-
+var Menu = require('./services/menu.js');
+var MenuSection = require('./services/menusection.js');
+var Cart = require('./services/cart.js');
 
 
 const { mongoDB} = require('./config/configValue');
@@ -60,4 +62,9 @@ function handleTopicRequest(topic_name,fname){
 //second argument is a function that will handle this topic request
 handleTopicRequest("customer",Customer);
 handleTopicRequest("restaurant",Restaurant);
+handleTopicRequest("menu",Menu);
+handleTopicRequest("cart",Cart);
+handleTopicRequest("menusection",MenuSection);
+
+
 

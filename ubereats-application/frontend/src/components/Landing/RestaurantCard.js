@@ -21,7 +21,7 @@ class RestaurantCard extends Component {
 
     let data = {
       user_id: localStorage.getItem("user_id"),
-      resto_id: this.props.restaurant.resto_id
+      resto_id: this.props.restaurant._id
     }
 
     axios.post(endPointObj.url + '/restaurant/updateFavStatus', data)

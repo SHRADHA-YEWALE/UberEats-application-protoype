@@ -2,7 +2,9 @@ const {
 
     getRestaurantProfileDetails,
     updateRestaurantProfile,
-    updateRestaurantProfilePic
+    updateRestaurantProfilePic,
+    restaurantSearch,
+    restaurantDeliverySearch
  } = require("./restaurant.service");
   
   //const jwt = require('jsonwebtoken');
@@ -80,5 +82,33 @@ const {
           data: req.file.filename
         });
       });
-    }
+    },
+
+    restaurantSearch: (req, res) => {
+      console.log("Inside restaurant search call controller");
+
+      let search_input = req.params.search_input;
+      restaurantSearch(search_input, (err, results) => {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        
+        res.end(JSON.stringify(results));
+      });
+    },
+
+    restaurantDeliverySearch: (req, res) => {
+      console.log("Inside restaurant delivery search call controller", req.body.searchInput);
+
+      let search_input = req.body.searchInput;
+      restaurantDeliverySearch(search_input, (err, results) => {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        console.log("in controller result", JSON.stringify(results));
+        res.end(JSON.stringify(results));
+      });
+    }, 
 }

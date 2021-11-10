@@ -38,10 +38,10 @@ class ItemCard extends Component {
   };
 
   addToCart = (e) => {
-    let item_id = this.props.menu_item.item_id;
+    let item_id = this.props.menu_item._id;
     let cartItems = [];
 
-    if (parseInt(localStorage.getItem("cart_res_id")) !== this.props.menu_item.res_id) {
+    if (parseInt(localStorage.getItem("cart_res_id")) !== this.props.menu_item.resto_id) {
       localStorage.setItem("cart_items", cartItems);
     }
 
@@ -55,14 +55,16 @@ class ItemCard extends Component {
         item_name: this.props.menu_item.item_name, item_description: this.props.menu_item.item_description, resto_id: this.props.menu_item.resto_id});
       localStorage.setItem("cart_res_id", this.props.menu_item.resto_id);
       localStorage.setItem("cart_items", JSON.stringify(cartItems));
-      
+      console.log("item id", item_id);
       let data = {
         item_id: item_id,
         item_quantity: this.state.item_quantity || 1,
+        item_name: this.props.menu_item.item_name,
         user_id: localStorage.getItem("user_id"),
-        resto_id: this.props.menu_item.resto_id
+        resto_id: this.props.menu_item.resto_id,
+        item_price: this.props.menu_item.item_price
       }
-      axios.post(endPointObj.url + "/cart/item", data)
+      axios.post(endPointObj.url + "/cart/addItem", data)
                 .then(response => {
                     alert("Item successfully added to cart!");
                     if (response.data[0]) {
@@ -84,7 +86,7 @@ class ItemCard extends Component {
   };
 
   removeFromCart = (e) => {
-    let item_id = this.props.menu_item.item_id;
+    let item_id = this.props.menu_item._id;
     let cartItems = [];
 
     if (localStorage.getItem("cart_items")) {
@@ -95,7 +97,7 @@ class ItemCard extends Component {
       item_id: cartItems.map(item => item.item_id),
       user_id: localStorage.getItem("user_id")
     }
-    axios.post(endPointObj.url + "/cart/cartItemdelete", data)
+    axios.post(endPointObj.url + "/cart/cartItemDelete", data)
           .then(response => {
               alert("Item successfully removed from cart");
               let index = cartItems.findIndex((cartItem => cartItem.item_id === item_id));
@@ -132,9 +134,9 @@ class ItemCard extends Component {
     if (localStorage.getItem("cart_items")) {
       cartItems.push(...JSON.parse(localStorage.getItem("cart_items")));
       cartItemIds = cartItems.map(cartItem => cartItem.item_id);
-      buttonText = cartItemIds.includes(this.props.menu_item.item_id) ? "Remove from Cart" : buttonText;
-      buttonVariant = cartItemIds.includes(this.props.menu_item.item_id) ? "warning" : buttonVariant;
-      buttonClick = cartItemIds.includes(this.props.menu_item.item_id) ? this.removeFromCart : this.openModal;
+      buttonText = cartItemIds.includes(this.props.menu_item._id) ? "Remove from Cart" : buttonText;
+      buttonVariant = cartItemIds.includes(this.props.menu_item._id) ? "warning" : buttonVariant;
+      buttonClick = cartItemIds.includes(this.props.menu_item._id) ? this.removeFromCart : this.openModal;
     }
     if(this.state){
       showModal = this.state.showModal;

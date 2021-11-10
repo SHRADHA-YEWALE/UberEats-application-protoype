@@ -73,6 +73,7 @@ class CustomerHome extends Component {
                 pickup: this.state.pickup,
                 category: this.state.food_category
             }
+            console.log("searchinput:"+ data.searchInput);
             console.log("delivery:"+ data.delivery);
             console.log("pickup:"+data.pickup);
             console.log("category:"+data.category);
@@ -87,6 +88,7 @@ class CustomerHome extends Component {
                             });
                         }
                         else {
+                            console.log("response FE", response.data);
                             for (var i = 0; i < response.data.length; i++) {
                                 if(!cuisines.includes(response.data[i].res_cuisine))
                                 cuisines.push(response.data[i].res_cuisine)

@@ -63,17 +63,17 @@ app.use("/uploads", upload);
 const images = require("./routes/images");
 app.use("/images", images);
 
-const menuitems = require("./routes/menuitems");
-app.use("/menu", menuitems);
+// const menuitems = require("./routes/menuitems");
+// app.use("/menu", menuitems);
 
-const menusections = require("./routes/menusections");
-app.use("/menu", menusections); 
+// const menusections = require("./routes/menusections");
+// app.use("/menu", menusections); 
 
-const restaurant = require("./routes/restaurant");
-app.use("/restaurant", restaurant); 
+// const restaurant = require("./routes/restaurant");
+// app.use("/restaurant", restaurant); 
 
-const cart = require("./routes/cart");
-app.use("/cart", cart); 
+// const cart = require("./routes/cart");
+// app.use("/cart", cart); 
 
 const orders = require("./routes/orders");
 app.use("/orders", orders);
@@ -90,6 +90,15 @@ app.use('/profile/customer', profileRouter);
 
 var restoProfileRouter = require('./api/restaurant/restaurant.router');
 app.use('/profile/restaurant', restoProfileRouter);
+
+const restaurant = require('./api/restaurant/restaurant.router');
+app.use("/restaurant", restaurant); 
+
+const menu = require('./api/menu/menu.router');
+app.use("/menu", menu);
+
+const cart = require('./api/cart/cart.router');
+app.use("/cart", cart); 
 
 const port = process.env.PORT || 3001;
 var server = app.listen(port, () => {

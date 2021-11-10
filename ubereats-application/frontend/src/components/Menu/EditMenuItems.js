@@ -25,7 +25,7 @@ class EditMenuItems extends Component {
         this.setState({
             item_id: item_id
         });
-        axios.get(endPointObj.url + '/menu/menuitem/' + item_id)
+        axios.get(endPointObj.url + '/menu/getMenuItem/' + item_id)
             .then(response => {
                 if (response.data.status && response.data.status === "NO_RECORD") {
                     this.setState({
@@ -33,15 +33,16 @@ class EditMenuItems extends Component {
                     });
                 }
                 else {
-                    console.log("Get itme response FE", response);
-                    console.log("item name", response.data.item_name);
+                    console.log("Get item response FE", response);
+                    console.log("item name", response.data[0].item_name);
                     this.setState({
-                        item_name: response.data.item_name,
-                        item_description: response.data.item_description,
-                        item_price: response.data.item_price,
-                        item_image: response.data.item_image,
-                        menu_section_id: response.data.menu_section_id,
-                        menu_section_name: response.data.menu_section_name,
+                        item_id: response.data[0]._id,
+                        item_name: response.data[0].item_name,
+                        item_description: response.data[0].item_description,
+                        item_price: response.data[0].item_price,
+                        item_image: response.data[0].item_image,
+                        menu_section_id: response.data[0].menu_section_id,
+                        menu_section_name: response.data[0].menu_section_name,
                         data_flag: true
                     });
                 } 
@@ -55,7 +56,7 @@ class EditMenuItems extends Component {
     };
 
     getSections = () => {
-        axios.get(endPointObj.url + "/menu/sections/" + localStorage.getItem("user_id"))
+        axios.get(endPointObj.url + "/menu/getMenuSections/" + localStorage.getItem("user_id"))
             .then(response => {
                 console.log("result FE", response);
                 if (response.data) {
@@ -127,7 +128,7 @@ class EditMenuItems extends Component {
                 "content-type": "multipart/form-data"
             }
         };
-        axios.post(endPointObj.url + '/uploads/item/' + this.state.item_id, formData, uploadConfig)
+        axios.post(endPointObj.url + '/menu/uploads/image/' + this.state.item_id, formData, uploadConfig)
             .then(response => {
                 alert("Image uploaded successfully!");
                 this.setState({

@@ -29,7 +29,7 @@ class CustomerProfile extends Component {
             var { user } = nextProps;
 
             var userData = {
-                user_id: user.user_id || this.state.user_id,
+                user_id: user.user_id || this.state.user_id|| localStorage.getItem("user_id"),
                 name: user.cust_name || this.state.name,
                 email_id: user.email_id || this.state.email_id,
                 address: user.address || this.state.address,
@@ -39,6 +39,7 @@ class CustomerProfile extends Component {
                 user_image: user.user_image || this.state.user_image
 
             };
+            console.log("User id", userData.user_id);
             console.log("Userdata name"+userData.name);
             console.log("Userdata address"+userData.address);
             console.log("Userdata phone"+userData.phone_number);

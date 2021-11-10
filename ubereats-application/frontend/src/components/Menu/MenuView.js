@@ -19,7 +19,7 @@ class MenuView extends Component {
     }
 
     getSections = () => {
-        axios.get(endPointObj.url + "/menu/sections/" + localStorage.getItem("user_id"))
+        axios.get(endPointObj.url + "/menu/getMenuSections/" + localStorage.getItem("user_id"))
             .then(response => {
                 if (response.data) {
                     this.setState({
@@ -35,7 +35,7 @@ class MenuView extends Component {
     };
 
     getMenuItems = () => {
-        axios.get(endPointObj.url + "/menu/items/" + localStorage.getItem("user_id"))
+        axios.get(endPointObj.url + "/menu/getMenuItems/" + localStorage.getItem("user_id"))
             .then(response => {
                 if (response.data) {
                     this.setState({
@@ -53,12 +53,11 @@ class MenuView extends Component {
     sectionItems = (menu_section) => {
         var itemsRender = [], items, item, section;
         if (this.state && this.state.menu_items && this.state.menu_items.length > 0) {
-            items = this.state.menu_items.filter(menu_item => menu_item.menu_section_id === menu_section.menu_section_id);
+            items = this.state.menu_items.filter(menu_item => menu_item.item_category == menu_section.menu_section_name);
             if (items.length > 0) {
                 section = <h4>{menu_section.menu_section_name}</h4>;
                 itemsRender.push(section);
                 for (var i = 0; i < items.length; i++) {
-            
                     item =  <Col md={6}><ItemCard menu_item={items[i]} deleteItem={this.deleteItem}/></Col>;
                     itemsRender.push(item);
                 }

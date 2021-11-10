@@ -1,4 +1,6 @@
 const Restaurant = require("../../Models/RestaurantModel");
+const Menu = require("../../Models/MenuModel");
+
 const multer = require('multer');
 const path = require('path');
 var kafka = require('../../kafka/client');
@@ -93,5 +95,72 @@ module.exports = {
                 console.log('Error Occured!');
             }
         })
+    },
+    restaurantSearch: (searchinput, callBack) => {
+        console.log("Inside get restaurant details service with search input", searchinput);
+        if(searchinput == "_") {
+            console.log("Getting all restaurant details");
+            Restaurant.find({}, (error, result) => {
+                if (error) {
+                    callBack(error);
+                }
+                console.log("Restaurant search result:",result);
+                return callBack(null, result);
+            });    
+
+        } else {
+            let filter = {};
+            filter = {
+                '$or' : [ 
+                        {resto_name: { "$regex": searchinput, "$options": "i" }},
+                        {address: { "$regex": searchinput, "$options": "i" }}
+                    ]
+            }
+            console.log("filter", filter);
+            Restaurant.find(filter, (error, result) => {
+                if (error) {
+                    callBack(error);
+                }
+                console.log("Restaurant search result:",result);
+                return callBack(null, result);
+            });
+        }
+    },
+    restaurantDeliverySearch: (searchinput, callBack) => {
+        console.log("Inside get restaurant by filter service with search input", searchinput);
+
+        let filter = {};
+        filter = {
+            '$or': [
+                { resto_name: { "$regex": searchinput, "$options": "i" } },
+                { address: { "$regex": searchinput, "$options": "i" } }
+            ]
+        }
+        console.log("filter resto", filter.resto_name);
+        console.log("filter address", filter.address);
+
+        Restaurant.find(filter, (error, result) => {
+            if (error) {
+                callBack(error);
+            }
+            console.log("Restaurant search result:", result);
+            if (result.length == 0) {
+                console.log("Inside restaurant search with item search");
+                Menu.find({ item_name: { "$regex": searchinput, "$options": "i" } }, (error, data) => {
+                    console.log("Restaurant search result with menu item:", data);
+                   
+                    Restaurant.find({_id: data[0].resto_id}, (error, reslt) => {
+                        if (error) {
+                            callBack(error);
+                        }
+                        console.log("item search reslt", reslt);
+                        return callBack(null, reslt); 
+                    });    
+                                          
+                });
+            }
+            return callBack(null, result);
+        });
+
     }
 }

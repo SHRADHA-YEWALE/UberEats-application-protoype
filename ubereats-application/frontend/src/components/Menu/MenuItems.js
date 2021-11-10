@@ -9,7 +9,7 @@ class MenuItems extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            menu_sections: []
+            menu_sections: [],
         };
 
         this.onChange = this.onChange.bind(this);
@@ -26,7 +26,7 @@ class MenuItems extends Component {
     };
 
     getSections = () => {
-        axios.get(endPointObj.url + "/menu/sections/" + localStorage.getItem("user_id"))
+        axios.get(endPointObj.url + "/menu/getMenuSections/" + localStorage.getItem("user_id"))
             .then(response => {
                 if (response.data[0]) {
                     this.setState({
@@ -44,18 +44,18 @@ class MenuItems extends Component {
     onSubmit = e => {
         e.preventDefault();
         const data = {
-            user_id: localStorage.getItem("user_id"),
+            resto_id: localStorage.getItem("user_id"),
             item_name: this.state.item_name,
             item_description: this.state.item_description,
             item_price: this.state.item_price,
-            menu_section_name: this.state.menu_section_name || this.state.menu_sections[0].menu_section_name,
+            item_category: this.state.menu_section_name || this.state.menu_sections[0].menu_section_name,
             item_image: this.state.item_image
         };
 
-        axios.post(endPointObj.url + "/menu/items", data)
+        axios.post(endPointObj.url + "/menu/addMenu", data)
             .then(response => {
                 this.setState({
-                    message: response.data
+                    message: response.data,
                 });
             })
             .catch(err => {
@@ -83,7 +83,7 @@ class MenuItems extends Component {
                 "content-type": "multipart/form-data"
             }
         };
-        axios.post(endPointObj.url + "/uploads/item/" + this.state.item_id, formData, uploadConfig)
+        axios.post(endPointObj.url + "menu/uploads/image/" + this.state.item_id, formData, uploadConfig)
             .then(response => {
                 alert("Image uploaded successfully!");
                 this.setState({
@@ -97,8 +97,9 @@ class MenuItems extends Component {
     }
 
     render() {
+        console.log("Item id", this.state.item_id);
         let message = null, redirectVar= null;
-        if (this.state.message === "ITEM_ADDED") {
+        if (this.state.message === "MENU_ADDED") {
             redirectVar = <Redirect to="/menu/view" />;
         }
         else if (this.state.message === "ITEM_EXISTS") {
