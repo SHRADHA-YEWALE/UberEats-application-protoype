@@ -25,10 +25,10 @@ class OrderItemsViewRestaurant extends Component {
             this.setState({
                 order_details: this.props.location.state.order_details,
                 prevPath: this.props.location.state.prevPath,
-                order_id: this.props.location.state.order_details.order_id
+                order_id: this.props.location.state.order_details._id
             });
 
-            axios.get(endPointObj.url + "/orders/orderitems/" + this.props.location.state.order_details.order_id)
+            axios.get(endPointObj.url + "/order/orderitems/" + this.props.location.state.order_details.order_id)
                 .then(response => {
                     if (response.data) {
                         console.log("order item view", response.data);
@@ -54,13 +54,13 @@ class OrderItemsViewRestaurant extends Component {
 
     onUpdate = (e) => {
         e.preventDefault();
-
+        console.log("ORDER ID", this.state.order_id);
         const data = {
             order_status : this.state.o_status,
             order_id : this.state.order_id
         }
     
-        axios.post(endPointObj.url + '/orders/updateStatus', data)
+        axios.post(endPointObj.url + '/order/updateStatus', data)
             .then(response => {
                 this.setState({
                     message: response.data
@@ -136,6 +136,10 @@ class OrderItemsViewRestaurant extends Component {
                                         <tr>
                                             <td colSpan="4">Contact Number:</td>
                                             <td>{order_details.phone_number}</td>
+                                        </tr>
+                                        <tr>
+                                            <td colSpan="4">Order Instruction:</td>
+                                            <td>{order_details.order_instruction}</td>
                                         </tr>
                                     </tbody>
                                 </Table>

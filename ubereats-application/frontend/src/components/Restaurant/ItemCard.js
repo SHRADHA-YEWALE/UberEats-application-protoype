@@ -50,18 +50,20 @@ class ItemCard extends Component {
     }
 
     let index = cartItems.findIndex((cartItem => cartItem.item_id === item_id));
+    localStorage.setItem("cart_res_id", this.props.menu_item.resto_id);
+
     if (index === -1) {
       cartItems.push({ item_id: item_id, item_quantity: this.state.item_quantity || 1, item_price: this.props.menu_item.item_price, 
         item_name: this.props.menu_item.item_name, item_description: this.props.menu_item.item_description, resto_id: this.props.menu_item.resto_id});
       localStorage.setItem("cart_res_id", this.props.menu_item.resto_id);
       localStorage.setItem("cart_items", JSON.stringify(cartItems));
-      console.log("item id", item_id);
       let data = {
         item_id: item_id,
         item_quantity: this.state.item_quantity || 1,
         item_name: this.props.menu_item.item_name,
         user_id: localStorage.getItem("user_id"),
         resto_id: this.props.menu_item.resto_id,
+        resto_name: this.props.menu_item.resto_name,
         item_price: this.props.menu_item.item_price
       }
       axios.post(endPointObj.url + "/cart/addItem", data)
@@ -124,7 +126,10 @@ class ItemCard extends Component {
 
 
   render() {
-    let imageSrc = endPointObj.url + "/images/item/" + this.props.menu_item.item_image;
+    console.log("resto id", this.props.menu_item.resto_id);
+    localStorage.setItem("cart_res_id", this.props.menu_item.resto_id);
+
+    let imageSrc = endPointObj.frontendServer + '/images/item/' + this.props.menu_item.item_image;
     let buttonText = "Add to Cart";
     let buttonVariant = "primary";
     let cartItems = [];
@@ -147,7 +152,7 @@ class ItemCard extends Component {
         <Card bg="white" style={{ width: "50rem", margin: "2%" }} border="1">
           <Row>
             <Col>
-              <Card.Img style={{ width: "12rem", height: "9rem" }} alt="" src={imageSrc} />
+              <Card.Img style={{ width: "14rem", height: "14rem" }} alt="" src={imageSrc} />
             </Col>
             <Col>
             <Card.Body>

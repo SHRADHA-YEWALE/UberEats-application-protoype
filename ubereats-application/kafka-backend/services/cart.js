@@ -10,7 +10,8 @@ function handle_request(msg, callBack) {
         console.log("Data from the request", data);
         var cartItem = new Cart({
             cust_id: data.user_id,
-            resto_id: data.resto_id, 
+            resto_id: data.resto_id,
+            resto_name: data.resto_name, 
             item_id: data.item_id,
             item_name: data.item_name,
             item_price: data.item_price,

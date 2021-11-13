@@ -49,7 +49,7 @@ module.exports = {
             res.writeHead(200, {
                 'Content-Type': 'text/plain'
             })
-            res.end('MENU_ADDED');
+            res.end(JSON.stringify(result));
         });
         
     },
@@ -154,9 +154,10 @@ module.exports = {
             //return callBack(null, result);
         }); 
     },
-    uploadMenuImage: (req, res) => {
-        console.log("Inside uploadMenuImage controller", req.params.id);
-        uploadMenuImage(req, res, (err, results) => {
+    
+      uploadMenuImage: (req, res) => {
+        console.log("Inside uploadMenuImage controller", req.body.id);
+        uploadMenuImage(req, (err, results) => {
           if (err) {
             console.log(err);
             return res.status(500).json({
@@ -164,10 +165,8 @@ module.exports = {
               message: "Database connection errror"
             });
           }
-          return res.status(200).json({
-            success: 1,
-            data: req.file.filename
-          });
+          console.log("upload profile pic", results);
+          res.end(JSON.stringify(results));
         });
       },
 }

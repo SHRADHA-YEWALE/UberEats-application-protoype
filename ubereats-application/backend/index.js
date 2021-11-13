@@ -75,8 +75,8 @@ app.use("/images", images);
 // const cart = require("./routes/cart");
 // app.use("/cart", cart); 
 
-const orders = require("./routes/orders");
-app.use("/orders", orders);
+// const orders = require("./routes/orders");
+// app.use("/orders", orders);
 
 //mongodb routes
 var signupRouter = require('./api/signup/signup.router');
@@ -99,6 +99,9 @@ app.use("/menu", menu);
 
 const cart = require('./api/cart/cart.router');
 app.use("/cart", cart); 
+
+const order = require("./api/order/order.router");
+app.use("/order", order);
 
 const port = process.env.PORT || 3001;
 var server = app.listen(port, () => {

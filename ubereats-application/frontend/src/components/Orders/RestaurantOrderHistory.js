@@ -44,7 +44,7 @@ class RestaurantOrderHistory extends Component {
     };
 
     getCompletedOrders = () => {
-        axios.get(endPointObj.url + "/orders/completedorders/restaurant/" + localStorage.getItem("user_id"))
+        axios.get(endPointObj.url + "/order/restaurant/orderitems/" + localStorage.getItem("user_id"))
             .then(response => {
                 if (response.data) {
                     console.log("restaurant orders page", response.data);
@@ -73,8 +73,9 @@ class RestaurantOrderHistory extends Component {
                 message = <Alert variant="warning">You have no orders.</Alert>    
             }
             else if (orders.length > 0) {
+                console.log("Hiiiii", orders);
                 orderCards = orders.map(order => {
-                    this.state.order_id = order.order_id;
+                    this.state.order_id = order._id;
                     this.state.order_status = order.order_status;
                     return (
                         <Card style={{ width: "50rem", margin: "2%" }}>
@@ -90,9 +91,6 @@ class RestaurantOrderHistory extends Component {
                                     <Col align="center">
                                         <Link to={{ pathname: "restaurant/orders/details", state: {order_details: order, prevPath: "/orders/orderHistory"} }}>
                                             <Button variant="link">Order Details</Button>
-                                        </Link>
-                                        <Link to={{ pathname: "restaurant/orders/details", state: {order_details: order, prevPath: "/orders/orderHistory"} }}>
-                                            <Button variant="link">Billing Details</Button>
                                         </Link>
                                     </Col>
                                     <Col align="center">
@@ -133,7 +131,7 @@ class RestaurantOrderHistory extends Component {
             }
         }
         else {
-            message = <Alert variant="warning">You did not complete any orders yet.</Alert>
+            message = <Alert variant="warning">You do not have any orders yet.</Alert>
         }
         return (
             <div>

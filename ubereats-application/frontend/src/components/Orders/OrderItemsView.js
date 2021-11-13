@@ -22,9 +22,10 @@ class OrderItemsView extends Component {
                 prevPath: this.props.location.state.prevPath
             });
 
-            axios.get(endPointObj.url + "/orders/orderitems/" + this.props.location.state.order_details.order_id)
+            axios.get(endPointObj.url + "/order/orderitems/" + this.props.location.state.order_details._id)
                 .then(response => {
-                    if (response.data) {
+                    console.log("Get order by orderid response", response.data);
+                    if (response) {
                         console.log("order item view", response.data);
                         this.setState({
                             order_items: response.data
@@ -39,7 +40,7 @@ class OrderItemsView extends Component {
 
     render() {
         let order_details;
-        let items;
+        let items = [];
         let itemsRender = [];
         let itemsCard = null;
         let redirectVar = null;
@@ -49,19 +50,35 @@ class OrderItemsView extends Component {
         }
         console.log(this.props);
         if (this.state && this.state.order_details && this.state.order_items) {
+            console.log("yoopiiu", this.state.order_details);
             order_details = this.state.order_details;
-            items = this.state.order_items;
-            if (items.length > 0) {
-                items.forEach(item => {
-                    let itemRow = (
-                        <tr>
-                            <td colSpan="4" align="center">{item.item_name}</td>
-                            <td colSpan="4" align="center">{item.item_quantity}</td>
-                        </tr>
-                    );
-                    itemsRender.push(itemRow);
-                });
-            }
+            items = this.state.order_items.item_details;
+            console.log("Item details oo", this.state.order_details.item_details);
+            this.state.order_details.item_details.map(item => {
+                console.log("DDDDDDDDV", item);
+                let itemRow = (
+                    <tr>
+                        <td colSpan="4" align="center">{item.item_name}</td>
+                        <td colSpan="4" align="center">{item.item_quantity}</td>
+                    </tr>
+                );
+                itemsRender.push(itemRow);
+            });
+
+            console.log("itemsRender", itemsRender);
+            // items.forEach(itm => {
+            //     console.log("BYEEE", typeof itm);
+            //     console.log("OK", itm);
+            //     // let itemRow = (
+            //     //     <tr>
+            //     //         <td colSpan="4" align="center">{itm.item_id}</td>
+            //     //         <td colSpan="4" align="center">{itm.item_quantity}</td>
+            //     //     </tr>
+            //     // );
+            //     // itemsRender.push(itemRow);
+            // });          
+            
+            
             itemsCard =
                 (
                     <center>

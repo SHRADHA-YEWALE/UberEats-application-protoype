@@ -15,7 +15,9 @@ class MenuItems extends Component {
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.onImageChange = this.onImageChange.bind(this);
-        this.onUpload = this.onUpload.bind(this);
+        //this.onUpload = this.onUpload.bind(this);
+        this.onClickHandler = this.onClickHandler.bind(this);
+        this.onChangeHandler = this.onChangeHandler.bind(this);
         this.getSections();
     }
 
@@ -54,8 +56,10 @@ class MenuItems extends Component {
 
         axios.post(endPointObj.url + "/menu/addMenu", data)
             .then(response => {
+                console.log("Add menu response", response.data);
                 this.setState({
-                    message: response.data,
+                    item_id: response.data._id,
+                    message: 'MENU_ADDED'
                 });
             })
             .catch(err => {
@@ -74,33 +78,61 @@ class MenuItems extends Component {
         });
     }
 
-    onUpload = (e) => {
-        e.preventDefault();
-        const formData = new FormData();
-        formData.append("itemimage", this.state.file);
-        const uploadConfig = {
-            headers: {
-                "content-type": "multipart/form-data"
-            }
-        };
-        axios.post(endPointObj.url + "menu/uploads/image/" + this.state.item_id, formData, uploadConfig)
-            .then(response => {
-                alert("Image uploaded successfully!");
-                this.setState({
-                    fileText: "Choose file...",
-                    item_image: response.data
-                });
-            })
-            .catch(err => {
-                console.log("Error");
+    // onUpload = (e) => {
+    //     e.preventDefault();
+    //     const formData = new FormData();
+    //     formData.append("itemimage", this.state.file);
+    //     const uploadConfig = {
+    //         headers: {
+    //             "content-type": "multipart/form-data"
+    //         }
+    //     };
+    //     axios.post(endPointObj.url + "menu/uploads/image/" + this.state.item_id, formData, uploadConfig)
+    //         .then(response => {
+    //             alert("Image uploaded successfully!");
+    //             this.setState({
+    //                 fileText: "Choose file...",
+    //                 item_image: response.data
+    //             });
+    //         })
+    //         .catch(err => {
+    //             console.log("Error");
+    //         });
+    // }
+
+    onChangeHandler = event => {
+        this.setState({
+            selected_image: event.target.files[0]
+        })
+    }
+
+    onClickHandler = (e) => {
+        console.log("Uploading imageee");
+        const data = new FormData()
+        data.append('image', this.state.selected_image);
+        data.append('id', this.state.item_id);
+        axios.post(endPointObj.url + "/menu/uploads/image", data)
+            .then(res => { // then print response status
+                console.log("img up", res);
+                if(res) {
+                    console.log("Upload image response data", res.data.data.imageUrl);
+                    alert("Image uploaded successfully!");
+                    this.setState({
+                        resFileText: "Choose file...",
+                        item_image: res.data.data.imageUrl
+                    });
+                }
             });
+        this.setState({
+            selected_image : ''
+        })      
     }
 
     render() {
         console.log("Item id", this.state.item_id);
         let message = null, redirectVar= null;
         if (this.state.message === "MENU_ADDED") {
-            redirectVar = <Redirect to="/menu/view" />;
+            //redirectVar = <Redirect to="/menu/view" />;
         }
         else if (this.state.message === "ITEM_EXISTS") {
             message = <Alert variant="warning">A item with name {this.state.item_name} already exists</Alert>;
@@ -118,7 +150,7 @@ class MenuItems extends Component {
         var imageSrc,
             fileText = this.state.fileText || "Choose image..";
         if (this.state) {
-            imageSrc = endPointObj.url + "/images/item/" + this.state.item_image;
+            imageSrc = endPointObj.frontendServer + "/images/item/" + this.state.item_image;
         }
         return (
             <div className = "restoMenuEditContainer">
@@ -131,13 +163,11 @@ class MenuItems extends Component {
                             <Card style={{ width: '4rem', height: '2rem' }}>
                                 <Card.Img variant="top" style={{ width: '8rem', height: '8rem' }} src={imageSrc} />
                             </Card><br/><br/>
-                            <form onSubmit={this.onUpload}><br /><br /><br />
-                                <div class="custom-file" style={{ width: "80%" }}>
-                                    <input type="file" class="custom-file-input" name="image" accept="image/*" onChange={this.onImageChange} required />
-                                    <label class="custom-file-label" for="image" style={{"text-align":"left"}}>{fileText}</label>
-                                </div><br /><br />
-                                <Button type="submit" className="edit-menu-btn-primary">Upload</Button>
-                            </form>
+                            <form>
+                                        <br />
+                                        <input type="file" accept="image/jpg, image/png" name="myImage" onChange={this.onChangeHandler} /> <br />
+                                        <input type="button" className="my-2" value="Upload" onClick={this.onClickHandler} />
+                                    </form>
                         </center>
                     </Col>
              

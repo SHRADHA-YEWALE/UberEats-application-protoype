@@ -7,7 +7,7 @@ import "./Menu.css";
 class ItemCard extends Component {
   render() {
     console.log("Inside Itemcard", this.props.menu_item._id);
-    let imageSrc = endPointObj.url + "/images/item/" + this.props.menu_item.item_image;
+    let imageSrc = endPointObj.frontendServer + "/images/item/" + this.props.menu_item.item_image;
     return (
         <div>
         <Card bg="white" style={{ width: "50rem", margin: "5%" }}>

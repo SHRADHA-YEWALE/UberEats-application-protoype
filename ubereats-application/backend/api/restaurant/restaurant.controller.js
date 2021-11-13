@@ -49,9 +49,8 @@ const {
   
   
     updateRestaurantProfile: (req, res) => {
-      const body = req.body;
-      console.log("Update restaurant form data", body);
-      updateRestaurantProfile(body, (err, results) => {
+      console.log("Update restaurant form data", req);
+      updateRestaurantProfile(req, (err, results) => {
         if (err) {
           console.log(err);
           return res.status(500).json({
@@ -68,8 +67,8 @@ const {
   
   
     updateRestaurantProfilePic: (req, res) => {
-      console.log("Inside updateRestaurantProfilePic controller", req.params.id);
-      updateRestaurantProfilePic(req, res, (err, results) => {
+      console.log("Inside updateRestaurantProfilePic controller", req.body.id);
+      updateRestaurantProfilePic(req, (err, results) => {
         if (err) {
           console.log(err);
           return res.status(500).json({
@@ -77,12 +76,11 @@ const {
             message: "Database connection errror"
           });
         }
-        return res.status(200).json({
-          success: 1,
-          data: req.file.filename
-        });
+        console.log("upload profile pic", results);
+        res.end(JSON.stringify(results));
       });
     },
+    
 
     restaurantSearch: (req, res) => {
       console.log("Inside restaurant search call controller");

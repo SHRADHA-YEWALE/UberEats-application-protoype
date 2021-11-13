@@ -13,14 +13,15 @@ class Cart extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            cart_items: []
+            cart_items: [],
+            restaurant: ''
         };
         this.clearCart = this.clearCart.bind(this);
         this.removeItem = this.removeItem.bind(this);
         this.getRestaurantDetails();
     }
 
-    componentWillMount() {
+    componentWillMount() {        
         document.title = "Your Cart";
         let cartItems = [];
         //  if (localStorage.getItem("cart_items")) {
@@ -58,9 +59,9 @@ class Cart extends Component {
             axios.get(endPointObj.url + "/restaurant/getRestaurantProfileDetails/" + res_id)
                 .then(response => {
                     if (response.data) {
-                        console.log("response", response.data);
+                        console.log("hiiiiiiiiiiiiiresponse", response.data);
                         this.setState({
-                            restaurant: response.data,
+                            restaurant: response.data
                         });
                     }
                 })
@@ -90,7 +91,7 @@ class Cart extends Component {
         let cart_items = this.state.cart_items;
         
         let data = {
-            item_id: parseInt(e.target.name),
+            item_id: e.target.name,
             user_id: localStorage.getItem("user_id")
         }
         axios.post(endPointObj.url + "/cart/cartItemdelete", data)
@@ -133,6 +134,7 @@ class Cart extends Component {
     };
 
     render() {
+        console.log("res state", this.state.restaurant);
         let redirectVar = null,
             itemsRender = [],
             message = null,
@@ -147,8 +149,8 @@ class Cart extends Component {
         }
 
         if (this.state && this.state.restaurant) {
-            resName = this.state.restaurant.name;
-            resAddress = this.state.restaurant.location;
+            resName = this.state.restaurant.data.resto_name;
+            resAddress = this.state.restaurant.data.address;
             resZIP = this.state.restaurant.zipcode;
         }
 
@@ -204,7 +206,8 @@ class Cart extends Component {
                 );
                 itemsRender.push(item);
             }
-            var confirmDetails = {restaurant: this.state.restaurant, subTotal: subTotal, delivery: delivery, discount: discount, tax: tax, total: total, cart_items: this.state.cart_items};
+            var 
+            confirmDetails = {restaurant: this.state.restaurant, subTotal: subTotal, delivery: delivery, discount: discount, tax: tax, total: total, cart_items: this.state.cart_items};
             var cartTable = (
                 <div>
                     <Table style={{ width: "90%" }}>

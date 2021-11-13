@@ -15,7 +15,7 @@ export const getRestaurant = () => dispatch => {
 
 export const updateRestaurant = (restaurantProfileData) => dispatch => {
     axios.defaults.withCredentials = true;
-    axios.post(endPointObj.url +'/profile/restaurant/updateRestaurantProfilePic', restaurantProfileData)
+    axios.post(endPointObj.url +'/profile/restaurant/updateRestaurantProfile', restaurantProfileData)
         .then(response => response.data)
         .then(data => {
             if (data === 'RESTAURANT_UPDATED') {

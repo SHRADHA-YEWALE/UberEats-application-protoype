@@ -20,7 +20,7 @@ class ConfirmOrder extends Component {
     componentWillMount() {
         document.title = "Your Order";
         if (this.props.location.state) {
-            console.log("prop state",this.props.location.state);
+            console.log("restaurant prop state",this.props.location.state.restaurant);
             this.setState({
                 restaurant: this.props.location.state.restaurant,
                 cart_items: this.props.location.state.cart_items,
@@ -40,6 +40,7 @@ class ConfirmOrder extends Component {
             if(response.data){
                 console.log("FE: Customer data response", response.data);
                 this.setState({
+                    cust_name: response.data.data.cust_name,
                     address: response.data.data.address,
                     phone_number: response.data.data.phone_number
                 });
@@ -51,10 +52,15 @@ class ConfirmOrder extends Component {
     };
 
     placeOrder = (e) => {
-
+        console.log("Whatsapp:", this.state.restaurant._id);
+        console.log("insta:", this.state.restaurant.name);
         let data = {
             user_id: localStorage.getItem("user_id"),
-            res_id: this.state.restaurant._id,
+            address: this.state.address,
+            phone_number: this.state.phone_number,
+            cust_name: this.state.cust_name,
+            resto_id: this.state.restaurant.data._id,
+            resto_name: this.state.restaurant.data.resto_name,
             order_status: 'ORDER_PLACED',
             sub_total: this.state.sub_total,
             discount: (this.state.discount * this.state.sub_total / 100).toFixed(2),
@@ -65,9 +71,10 @@ class ConfirmOrder extends Component {
             order_instruction: this.state.order_instruction
         }
         console.log("cart_items", data.cart_items);
-        axios.post(endPointObj.url +"/cart/placeorder", data)
+        console.log("placing order", data);
+        axios.post(endPointObj.url +"/order/placeorder", data)
             .then(response => {
-                console.log("put order response", response);
+                console.log("Place order response", response);
                 if (response.data) {
                     localStorage.removeItem("cart_items");
                     localStorage.removeItem("cart_res_id");
@@ -107,8 +114,8 @@ class ConfirmOrder extends Component {
                     <Card style={{width: "40rem", height: "35rem"}}>
                         <Card.Title>
                             <br />
-                            <h3>{this.state.restaurant.resto_name}</h3>
-                            {this.state.restaurant.address} | {this.state.restaurant.zipcode}
+                            <h3>{this.state.restaurant.data.resto_name}</h3>
+                            {this.state.restaurant.data.address} | {this.state.restaurant.data.zipcode} 
                         </Card.Title>
                         <Card.Body>
                             <Table style={{ width: "90%" }}>
@@ -157,7 +164,7 @@ class ConfirmOrder extends Component {
                             <br />
                         </Card.Body>
                     </Card>
-                    <br />
+                    <br /><br /><br />
                     <Button variant="info" href="/cart">Back to Cart</Button>
                 </div>
             );
@@ -168,7 +175,7 @@ class ConfirmOrder extends Component {
                 {redirectVar}
                 <Navigationbar /> <br />
                 
-                    <h3 style = {{ paddingLeft:"18em" }}>Confirm your Order</h3><br/>
+                    <h3 style = {{ paddingLeft:"25em" }}>Confirm your Order</h3><br/>
                     <center>
                         {message}
                         {order}

@@ -11,7 +11,7 @@ const { secret } = require('../../config/configValue');
 console.log('req');
 module.exports = {
     addItemToCart: (req, res) => {
-        console.log("Add cart item service", req.body);
+        console.log("Add cart item controller", req.body);
         const params = {
             data: req.body,
             path: 'add-cart-item'

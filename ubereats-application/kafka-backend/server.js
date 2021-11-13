@@ -6,6 +6,8 @@ var Restaurant = require('./services/restaurant.js');
 var Menu = require('./services/menu.js');
 var MenuSection = require('./services/menusection.js');
 var Cart = require('./services/cart.js');
+var Order = require('./services/order.js');
+
 
 
 const { mongoDB} = require('./config/configValue');
@@ -65,6 +67,7 @@ handleTopicRequest("restaurant",Restaurant);
 handleTopicRequest("menu",Menu);
 handleTopicRequest("cart",Cart);
 handleTopicRequest("menusection",MenuSection);
+handleTopicRequest("order",Order);
 
 
 

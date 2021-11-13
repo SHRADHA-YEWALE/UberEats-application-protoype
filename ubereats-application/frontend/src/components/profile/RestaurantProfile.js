@@ -15,11 +15,14 @@ class RestaurantProfile extends Component {
         super(props);
         this.state = {
             delivery: false,
-            pickup: false
+            pickup: false,
+            selected_image: '',
+            profile_pic: '',
         };
         this.onChange = this.onChange.bind(this);
         this.onUpdate = this.onUpdate.bind(this);
-        this.onResImageChange = this.onResImageChange.bind(this);
+        this.onClickHandler = this.onClickHandler.bind(this);
+        this.onChangeHandler = this.onChangeHandler.bind(this);
     }
 
     componentWillMount() {
@@ -53,11 +56,10 @@ class RestaurantProfile extends Component {
         }
     }
 
-    onResImageChange = (e) => {
+    onChangeHandler = event => {
         this.setState({
-            [e.target.name]: e.target.files[0],
-            resFileText: e.target.files[0].name
-        });
+            selected_image: event.target.files[0]
+        })
     }
 
     onChange = (e) => {
@@ -79,26 +81,47 @@ class RestaurantProfile extends Component {
         this.props.updateRestaurant(data);
     };
 
-    onResUpload = (e) => {
-        e.preventDefault();
-        const formData = new FormData();
-        formData.append("resimage", this.state.res_file);
-        const uploadConfig = {
-            headers: {
-                "content-type": "multipart/form-data"
-            }
-        };
-        axios.post(endPointObj.url + '/profile/restaurant/updateRestaurantProfilePic/' + this.state.user_id, formData, uploadConfig)
-            .then(response => {
-                console.log("image response", response.data);
-                this.setState({
-                    resFileText: "Choose file...",
-                    res_image: response.data
-                });
-            })
-            .catch(err => {
-                console.log("Error");
+    // onResUpload = (e) => {
+    //     e.preventDefault();
+    //     const formData = new FormData();
+    //     formData.append("resimage", this.state.res_file);
+    //     const uploadConfig = {
+    //         headers: {
+    //             "content-type": "multipart/form-data"
+    //         }
+    //     };
+    //     axios.post(endPointObj.url + '/profile/restaurant/updateRestaurantProfilePic/' + this.state.user_id, formData, uploadConfig)
+    //         .then(response => {
+    //             console.log("image response", response.data);
+    //             this.setState({
+    //                 resFileText: "Choose file...",
+    //                 res_image: response.data
+    //             });
+    //         })
+    //         .catch(err => {
+    //             console.log("Error");
+    //         });
+    // }
+
+    onClickHandler = (e) => {
+        const data = new FormData()
+        data.append('image', this.state.selected_image);
+        data.append('id', this.state.user_id);
+        axios.post(endPointObj.url + "/profile/restaurant/updateRestaurantProfilePic", data)
+            .then(res => { // then print response status
+                console.log("img up", res);
+                if(res) {
+                    console.log("Upload image response data", res.data.imageUrl);
+                    alert('Uploaded Successfully');
+                    this.setState({
+                        resFileText: "Choose file...",
+                        res_image: res.data.imageUrl
+                    });
+                }
             });
+        this.setState({
+            selected_image : ''
+        })      
     }
 
     render() {
@@ -108,7 +131,7 @@ class RestaurantProfile extends Component {
         resFileText = this.state.resFileText || "Choose image..";
 
         if (this.state) {
-            resImageSrc = endPointObj.url + '/images/restaurant/' + this.state.res_image;
+            resImageSrc = endPointObj.frontendServer + '/images/restaurant/' + this.state.res_image;
             res_title = this.state.name;
         }
 
@@ -123,13 +146,12 @@ class RestaurantProfile extends Component {
                                         <Card.Img style={{ width: '20em' }} variant="top" src={resImageSrc} />
                                     </Card>
                                     <br/>
-                                    <form onSubmit={this.onResUpload}>
-                                        <div class="custom-file" style={{ width: "80%" }}>
-                                            <input type="file" class="custom-file-input" name="res_file" accept="image/*" onChange={this.onResImageChange} required/>
-                                            <label class="custom-file-label" for="user-file">{resFileText}</label>
-                                        </div><br/>
-                                        <Button type="submit" variant="primary" className="submit-resto-btn-primary">Upload</Button>
+                                    <form>
+                                        <br />
+                                        <input type="file" accept="image/jpg, image/png" name="myImage" onChange={this.onChangeHandler} /> <br />
+                                        <input type="button" className="my-2" value="Upload" onClick={this.onClickHandler} />
                                     </form>
+                                    
                                 </center>
                   
                         <div className="profileLabel"><b><u>Restaurant Profile Update</u></b></div><br/>

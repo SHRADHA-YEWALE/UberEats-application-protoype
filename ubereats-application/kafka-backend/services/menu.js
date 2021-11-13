@@ -20,6 +20,7 @@ function handle_request(msg, callBack) {
             if (error) {
                 callBack(error);
             }
+            console.log("Menu item added response", result);
             return callBack(null, result);
         });
     }

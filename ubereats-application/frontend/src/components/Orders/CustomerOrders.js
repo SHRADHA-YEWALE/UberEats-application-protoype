@@ -24,10 +24,10 @@ class CustomerOrders extends Component {
     cancelOrder = (e) => {
         let pending_orders = this.state.pending_orders;
         let data = {
-            order_id: parseInt(e.target.name)
+            order_id: e.target.name
         };
 
-        axios.post(endPointObj.url+ "/orders/cancelorder", data)
+        axios.post(endPointObj.url+ "/order/cancelorder", data)
             .then(response => {
                 if (response.data === "ORDER_CANCELLED") {
                     let index = pending_orders.findIndex(order => order.order_id === data.order_id);
@@ -46,7 +46,7 @@ class CustomerOrders extends Component {
     };
 
     getPendingOrders = () => {
-        axios.get(endPointObj.url+ "/orders/pendingorders/"+ localStorage.getItem("user_id"))
+        axios.get(endPointObj.url+ "/order/pendingorder/"+ localStorage.getItem("user_id"))
             .then(response => {
                 if (response.data) {
                     console.log("Order details", response.data);
@@ -62,6 +62,29 @@ class CustomerOrders extends Component {
                     });
                 }
             });
+    };
+
+     getRestaurantDetails = () => {
+        let res_id;
+        if (this.props.location.restaurant) {
+            res_id = this.props.location.restaurant.resto_id;
+            
+            axios.get(endPointObj.url + "/restaurant/getRestaurantProfileDetails/" + res_id)
+                .then(response => {
+                    if (response.data) {
+                        console.log("hiiiiiiiiiiiiiresponse", response.data);
+                        this.setState({
+                            restaurant: response.data,
+                        });
+                        localStorage.setItem("restaurant",  response.data);
+                    }
+                })
+                .catch(error => {
+                    if (error.response && error.response.data) {
+                        console.log(error.response.data);
+                    }
+                })
+        }
     };
 
     render() {
@@ -89,13 +112,13 @@ class CustomerOrders extends Component {
             orders = this.state.pending_orders;
             if (orders.length > 0) {
                 orderCards = orders.map(order => {
+                    console.log("uuuuu", order);
                     return (
                         <Card style={{ width: "50rem", margin: "2%" }}>
                             <Card.Body>
                                 <Row>
                                     <Col>
                                         <Card.Title>{order.resto_name}</Card.Title>
-                                        <Card.Subtitle className="mb-2 text-muted">{order.location} | {order.zipcode}</Card.Subtitle>
                                         <Row>
                                             <Link to={{ pathname: "/orders/details", state: {order_details: order, prevPath: "/orders"} }}>
                                                 <Button variant="link">Order Details</Button>
@@ -110,7 +133,7 @@ class CustomerOrders extends Component {
                                         <Card.Text>{order.order_date}</Card.Text>
                                     </Col>
                                     <Col align="right">
-                                        <Button variant="secondary" name={order.order_id} onClick={this.cancelOrder}>Cancel Order</Button>&nbsp;
+                                        <Button variant="secondary" name={order._id} onClick={this.cancelOrder}>Cancel Order</Button>&nbsp;
                                 </Col>
                                 </Row>
                             </Card.Body>

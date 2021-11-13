@@ -8,6 +8,7 @@ var cartSchema = new Schema({
     item_name: {type: String},
     item_price: {type: String},
     resto_id: {type: String},
+    resto_name: {type: String},
     item_quantity: {type: String}
 },
 {
