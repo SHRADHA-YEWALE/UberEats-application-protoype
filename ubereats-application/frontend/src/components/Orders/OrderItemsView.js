@@ -50,12 +50,11 @@ class OrderItemsView extends Component {
         }
         console.log(this.props);
         if (this.state && this.state.order_details && this.state.order_items) {
-            console.log("yoopiiu", this.state.order_details);
+            console.log("order details", this.state.order_details);
             order_details = this.state.order_details;
             items = this.state.order_items.item_details;
             console.log("Item details oo", this.state.order_details.item_details);
             this.state.order_details.item_details.map(item => {
-                console.log("DDDDDDDDV", item);
                 let itemRow = (
                     <tr>
                         <td colSpan="4" align="center">{item.item_name}</td>

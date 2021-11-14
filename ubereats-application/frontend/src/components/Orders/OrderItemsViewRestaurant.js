@@ -28,7 +28,7 @@ class OrderItemsViewRestaurant extends Component {
                 order_id: this.props.location.state.order_details._id
             });
 
-            axios.get(endPointObj.url + "/order/orderitems/" + this.props.location.state.order_details.order_id)
+            axios.get(endPointObj.url + "/order/orderitems/" + this.props.location.state.order_details._id)
                 .then(response => {
                     if (response.data) {
                         console.log("order item view", response.data);
@@ -91,21 +91,20 @@ class OrderItemsViewRestaurant extends Component {
         }
        
         if (this.state && this.state.order_details && this.state.order_items) {
+            console.log("orderdetails", this.state.order_details);
             order_details = this.state.order_details;
-            items = this.state.order_items;
-            //this.state.order_id = order_details.order_id;
-            //this.state.o_status = order_details.order_status;
-            if (items.length > 0) {
-                items.forEach(item => {
-                    let itemRow = (
-                        <tr>
-                            <td colSpan="4" align="center">{item.item_name}</td>
-                            <td colSpan="4" align="center">{item.item_quantity}</td>
-                        </tr>
-                    );
-                    itemsRender.push(itemRow);
-                });
-            }
+            items = this.state.order_items.item_details;
+            console.log("Item details oo", this.state.order_details.item_details);
+            this.state.order_details.item_details.map(item => {
+                let itemRow = (
+                    <tr>
+                        <td colSpan="4" align="center">{item.item_name}</td>
+                        <td colSpan="4" align="center">{item.item_quantity}</td>
+                    </tr>
+                );
+                itemsRender.push(itemRow);
+            });
+
             itemsCard =
                 (
                     <center>
