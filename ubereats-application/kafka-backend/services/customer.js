@@ -2,7 +2,7 @@
 const Customer = require('../Models/CustomerModel');
 
 function handle_request(msg, callBack) {
-    console.log("Inside customer handle request");
+    console.log("Inside customer kafka handle request");
     if (msg.path == 'get-customer-details') {
         console.log("Inside customer handle request : get-customer-details");
         const data = msg.data
@@ -18,7 +18,7 @@ function handle_request(msg, callBack) {
     }
 
     if(msg.path == 'update-customer-details'){
-        console.log("Inside update customer details handle request");
+        console.log("Inside update customer details kafka handle request");
         const data = msg.data;
         console.log("Data from the request", data);
         Customer.updateOne({ _id: data.user_id }, data, { upsert: false }, (error, result) => {

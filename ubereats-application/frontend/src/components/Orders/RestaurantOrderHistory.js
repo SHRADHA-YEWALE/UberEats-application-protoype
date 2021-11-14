@@ -11,6 +11,7 @@ class RestaurantOrderHistory extends Component {
         super(props);
         this.onChange = this.onChange.bind(this);
         this.onUpdate = this.onUpdate.bind(this);
+        this.cancelOrder = this.cancelOrder.bind(this);
         this.getCompletedOrders();
     }
 
@@ -62,10 +63,36 @@ class RestaurantOrderHistory extends Component {
             });
     };
 
+    cancelOrder = (e) => {
+        let pending_orders = this.state.pending_orders;
+        let data = {
+            order_id: e.target.name
+        };
+
+        axios.post(endPointObj.url+ "/order/cancelorder", data)
+            .then(response => {
+                if (response.data === "ORDER_CANCELLED") { 
+                    console.log("Order cancelled");                   
+                    this.setState({
+                        pending_orders: pending_orders,
+                        message: response.data
+                    });
+                }
+            })
+            .catch(error => {
+                this.setState({
+                    message: "ORDER_ERROR"
+                });
+            });
+    };
+
     render() {
         let message = null;
         let orders = [];
         let orderCards = null;
+        if (this.state && this.state.message === "ORDER_CANCELLED") {
+            message = <Alert variant="success">Your order is cancelled.</Alert>
+        }
 
         if (this.state && this.state.completed_orders) {
             orders = this.state.completed_orders;
@@ -83,8 +110,8 @@ class RestaurantOrderHistory extends Component {
                                 <Row>
                                     <Col>
                                         <Card.Title>{order.cust_name}</Card.Title>
-                                        <Card.Subtitle className="mb-2 text-muted">{order.address}</Card.Subtitle>
-                                        <Card.Subtitle className="mb-2 text-muted">{order.phone_number}</Card.Subtitle>
+                                        <Card.Subtitle className="mb-2 text-muted">{order.order_time}</Card.Subtitle>
+                                        {/* <Card.Subtitle className="mb-2 text-muted">{order.phone_number}</Card.Subtitle> */}
                                         <br />
                                         <Card.Text>{order.order_date}</Card.Text>
                                     </Col>
@@ -98,6 +125,9 @@ class RestaurantOrderHistory extends Component {
                                         <b>Order Status</b><br />
                                         {order.order_status}
                                         <br />
+                                    </Col>
+                                    <Col align="right">
+                                        <Button variant="secondary" name={order._id} onClick={this.cancelOrder}>Cancel Order</Button>&nbsp;
                                     </Col>
                                     {/* <Col align="center">
                                         <br />

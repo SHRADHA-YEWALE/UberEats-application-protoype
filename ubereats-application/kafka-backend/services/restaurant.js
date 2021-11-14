@@ -22,7 +22,7 @@ function handle_request(msg, callBack) {
         const data = msg.data
         var newData = {
             resto_name: data.resto_name,
-            resto_description: data.resto_description,
+            resto_description: data.description,
             password: data.pwd,
             address: data.address,
             zipcode: data.zipcode,

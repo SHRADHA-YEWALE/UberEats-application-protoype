@@ -97,10 +97,10 @@ const {
     },
 
     restaurantDeliverySearch: (req, res) => {
-      console.log("Inside restaurant delivery search call controller", req.body.searchInput);
+      console.log("Inside restaurant delivery search call controller", req);
 
       let search_input = req.body.searchInput;
-      restaurantDeliverySearch(search_input, (err, results) => {
+      restaurantDeliverySearch(req, (err, results) => {
         if (err) {
           console.log(err);
           return;

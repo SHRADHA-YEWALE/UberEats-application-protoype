@@ -2,6 +2,9 @@ const Customer = require("../../Models/CustomerModel");
 const multer = require('multer');
 const path = require('path');
 var kafka = require('../../kafka/client');
+const fs = require('fs');
+const aws = require('aws-sdk');
+const config = require("../../config/configValue");
 
 
 //Upload restaurant profile picture
@@ -46,7 +49,7 @@ module.exports = {
     },
 
     updateCustomerProfile: (data, callBack) => {
-        console.log("Inside update restaurant profile service", data.user_id);
+        console.log("Inside update customer profile service", data.user_id);
         var newData = {
             cust_name: data.cust_name,
             password: data.pwd,
@@ -81,31 +84,70 @@ module.exports = {
         // return callBack(null, results);
         // });
     },
-  
-    updateCustomerProfilePic: (req, res, callBack) => {
-        console.log("Inside update restaurant profile picture with data", req.params.id);
-        // Customer.updateOne({ _id: data.id }, { profilePicURL: data.profilePicURL }, { upsert: false }, (error, results) => {
-        //     if (error) {
-        //         callBack(error);
-        //     }
-        //     return callBack(null, results);
-        // });
 
-        resuploads(req, res, function (err) {
-            console.log("Inside update restaurant profile picture with data", req.params.id, req.file.filename);
-            if (!err) {
-                Customer.updateOne({ _id: req.params.id }, { res_image: req.file.filename }, { upsert: false }, (error, results) => {
+    updateCustomerProfilePic(req, callBack) {
+        console.log('In upload');
+
+        aws.config.setPromisesDependency();
+        aws.config.update({
+            accessKeyId: config.s3AccessKey,
+            secretAccessKey: config.s3SecretAccessKey,
+            region: config.s3region
+        });
+        const s3 = new aws.S3();
+        var params = {
+            ACL: 'public-read',
+            Bucket: config.s3BucketName,
+            Body: fs.createReadStream(req.file.path),
+            Key: `images/customer/${req.file.originalname}`
+        };
+
+        s3.upload(params, (err, data) => {
+
+            if (err) {
+                console.log('Error occured while trying to upload to S3 bucket', err);
+            }
+
+            if (data) {
+                console.log("Got data", data);
+                fs.unlinkSync(req.file.path);
+                const locationUrl = data.Location;
+
+                Customer.updateOne({ _id: req.body.id }, { cust_img: req.file.originalname }, (error, result) => {
                     if (error) {
-                        console.log("Error uploading image", error);
-                        callBack(error);
+                        console.log(error);
                     }
-                    console.log("Result after uploading restaurant photo", results);
-                    return callBack(null, results);
-                });
+                    console.log("Result DATA upload file", locationUrl);
+                    return callBack(null, { imageUrl: locationUrl });
+                })
             }
-            else {
-                console.log('Error Occured!');
-            }
-        })
+        });
     }
+  
+    // updateCustomerProfilePic: (req, res, callBack) => {
+    //     console.log("Inside update restaurant profile picture with data", req.params.id);
+    //     // Customer.updateOne({ _id: data.id }, { profilePicURL: data.profilePicURL }, { upsert: false }, (error, results) => {
+    //     //     if (error) {
+    //     //         callBack(error);
+    //     //     }
+    //     //     return callBack(null, results);
+    //     // });
+
+    //     resuploads(req, res, function (err) {
+    //         console.log("Inside update restaurant profile picture with data", req.params.id, req.file.filename);
+    //         if (!err) {
+    //             Customer.updateOne({ _id: req.params.id }, { res_image: req.file.filename }, { upsert: false }, (error, results) => {
+    //                 if (error) {
+    //                     console.log("Error uploading image", error);
+    //                     callBack(error);
+    //                 }
+    //                 console.log("Result after uploading restaurant photo", results);
+    //                 return callBack(null, results);
+    //             });
+    //         }
+    //         else {
+    //             console.log('Error Occured!');
+    //         }
+    //     })
+    // }
 }

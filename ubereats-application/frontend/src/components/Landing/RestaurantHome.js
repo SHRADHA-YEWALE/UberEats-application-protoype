@@ -25,7 +25,7 @@ class RestaurantHome extends Component {
           var userData = {
               user_id: user.user_id || this.state.user_id,
               name: user.resto_name || this.state.name,
-              description: user.description || this.state.description,
+              description: user.resto_description || this.state.description,
               email_id: user.email_id || this.state.email_id,
               address: user.address || this.state.address,
               phone_number: user.phone_number || this.state.phone_number,
@@ -47,7 +47,7 @@ class RestaurantHome extends Component {
             redirectVar = <Redirect to= "/customerLogin"/>
        }
       if (this.state) {
-          resImageSrc = endPointObj.url + '/images/restaurant/' + this.state.res_image;
+          resImageSrc = endPointObj.frontendServer + '/images/restaurant/' + this.state.res_image;
           res_title = this.state.name;
       }
 

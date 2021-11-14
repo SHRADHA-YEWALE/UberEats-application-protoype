@@ -2,24 +2,69 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router';
 import Navigationbar from '../Navbar/CustomerNavbarHome.js';
 import axios from 'axios';
-import { Card, Container, Col, Row, Button, Alert } from "react-bootstrap";
+import { Card, Container, Col, Row, Button, Alert, FormLabel } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import endPointObj from '../../endPointUrl.js';
+import JwPagination from 'jw-react-pagination';
 
 class CustomerOrders extends Component {
     constructor(props) {
         super(props);
-        this.setState({
-            pending_orders: []
-        });
+        
+        this.state = {
+            o_status:"",
+            pending_orders: [],
+            pageOfItems:[],
+            pageNumber: "5"
+        };
 
         this.cancelOrder = this.cancelOrder.bind(this);
+        this.onUpdate = this.onUpdate.bind(this);
+        this.onChange = this.onChange.bind(this);
+        this.onChangePage = this.onChangePage.bind(this);
         this.getPendingOrders();
     }
 
     componentWillMount() {
         document.title = "Your Orders";
     }
+
+    //Pagination
+    onChangePage(pageOfItems) {
+        // update local state with new page of items
+        this.setState({ pageOfItems });
+    }
+
+    onChange = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value, 
+            o_status: e.target.value
+        });
+        console.log("order_status", this.state.o_status);
+    };
+
+    onUpdate = (e) => {
+        e.preventDefault();
+        console.log("ORder status", this.state.o_status);
+        const data = {
+            order_status : this.state.o_status,
+            cust_id : localStorage.getItem("user_id")
+        }
+    
+        axios.post(endPointObj.url + '/order/orderByStatus', data)
+            .then(response => {
+                this.setState({
+                    pending_orders: response.data
+                });
+            })
+            .catch(err => {
+                if (err.response && err.response.data) {
+                    this.setState({
+                        message: err.response.data
+                    });
+                }
+            });
+    };
 
     cancelOrder = (e) => {
         let pending_orders = this.state.pending_orders;
@@ -46,6 +91,7 @@ class CustomerOrders extends Component {
     };
 
     getPendingOrders = () => {
+
         axios.get(endPointObj.url+ "/order/pendingorder/"+ localStorage.getItem("user_id"))
             .then(response => {
                 if (response.data) {
@@ -72,7 +118,6 @@ class CustomerOrders extends Component {
             axios.get(endPointObj.url + "/restaurant/getRestaurantProfileDetails/" + res_id)
                 .then(response => {
                     if (response.data) {
-                        console.log("hiiiiiiiiiiiiiresponse", response.data);
                         this.setState({
                             restaurant: response.data,
                         });
@@ -88,6 +133,9 @@ class CustomerOrders extends Component {
     };
 
     render() {
+        console.log("Home page order status", this.state.o_status);
+        console.log("Pending orders", this.state.pending_orders);
+        console.log("Page number limit", this.state.pageNumber);
         let redirectVar = null;
         let orders = [];
         let orderCards = null;
@@ -111,7 +159,7 @@ class CustomerOrders extends Component {
         if (this.state && this.state.pending_orders) {
             orders = this.state.pending_orders;
             if (orders.length > 0) {
-                orderCards = orders.map(order => {
+                orderCards = this.state.pageOfItems.map(order => {
                     console.log("uuuuu", order);
                     return (
                         <Card style={{ width: "50rem", margin: "2%" }}>
@@ -147,9 +195,36 @@ class CustomerOrders extends Component {
                 {redirectVar}
                 <Navigationbar /><br />
                 <Container className="customerOrder">
-                    <h3>Your Pending Orders</h3><br />
+                    <h3>Your Orders</h3><br />
+                    <center>
+                        <form onSubmit={this.onUpdate}>
+                         <Col md={12}>   
+                         <FormLabel><b>Filter by order status</b></FormLabel>   
+                         <select name="o_status" value={this.state.o_status} onChange={(e) => this.setState({ o_status: e.target.value })} style={{ width: '10em', height: '2em'}}>
+                            <option value="ORDER_PLACED" selected>ORDER PLACED</option>
+                            <option value="ORDER_DELIVERED">ORDER DELIVERED</option>
+                            <option value="ORDER_CANCELLED">ORDER CANCELLED</option>
+                        </select> &nbsp;&nbsp; 
+                        <FormLabel><b>Page Size limit</b></FormLabel>
+                        <select name="pageNumber" value={this.state.pageNumber} onChange={(e) => this.setState({ pageNumber: e.target.value })} style={{ width: '10em', height: '2em'}}>
+                            <option value="2">2</option>
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                        </select> &nbsp;&nbsp;
+                        </Col> &nbsp;&nbsp; 
+                        <Col md={12}>   
+                        <Button type="submit" variant="success">View orders</Button>
+                        </Col>
+                        </form>
+                       
+                        </center>
+
                     {message}
                     {orderCards}
+
+                    <div style={{ display: 'block' }}>
+                        <JwPagination pageSize={this.state.pageNumber} items={this.state.pending_orders} onChangePage={this.onChangePage} />
+                    </div>
                     <center>
                         <Button href="/customerHome">Home</Button>
                     </center>

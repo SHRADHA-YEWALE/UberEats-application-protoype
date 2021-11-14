@@ -14,7 +14,7 @@ var orderSchema = new Schema({
     tax: {type: Number},
     delivery: {type: Number},
     total_price: {type: Number},
-    order_date: {type: Date},
+    order_time: {type: String},
     order_instruction: {type: String},
     item_details: [
         {

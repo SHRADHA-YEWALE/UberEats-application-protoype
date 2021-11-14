@@ -99,7 +99,7 @@ class Restaurant extends Component {
         }
 
         if (restaurant) {
-            resImageSrc = endPointObj.url + "/images/restaurant/" + restaurant.res_image;
+            resImageSrc = endPointObj.frontendServer + "/images/restaurant/" + restaurant.res_image;
             resName = restaurant.resto_name;
             restoEmail = restaurant.email_id;
             resZIP = restaurant.zipcode;

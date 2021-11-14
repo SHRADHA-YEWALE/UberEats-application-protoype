@@ -27,18 +27,27 @@ module.exports = {
     pendingorders: (req,res) => {
         console.log("Inside get pendingorders", req.params.user_id);
 
+        OrderModel.find({cust_id: req.params.user_id}, (error, result) => {
+            console.log("Get pending order result", result);
+            res.writeHead(200, {
+                'Content-Type': 'text/plain'
+            })
+            res.end(JSON.stringify(result));
+        });
+
+    },
+    getOrderByOrderStatus: (req,res) => {
+        console.log("Inside get order by order status", req.body.cust_id);
+        console.log("order status", req.body.order_status);
         let filter = {};
         filter = {
             '$and': [
-                { cust_id: { "$regex": req.params.user_id, "$options": "i" } },
-                { order_status: { $nin: ["DELIVERED", "ORDER_CANCELLED", "ORDER_DECLINED"] } }
+                { cust_id: { "$regex": req.body.cust_id, "$options": "i" } },
+                { order_status: { "$regex": req.body.order_status, "$options": "i" } }
             ]
         }
-        console.log("filter resto", filter.resto_name);
-        console.log("filter address", filter.order_status);
-
         OrderModel.find(filter, (error, result) => {
-            console.log("Get order placed details", result);
+            console.log("Get order by order status result", result);
             res.writeHead(200, {
                 'Content-Type': 'text/plain'
             })

@@ -166,7 +166,7 @@ class OrderItemsViewRestaurant extends Component {
                             <option value="PREPARING">PREPARING</option>
                             <option value="PICKUP READY">PICKUP READY</option>
                             <option value="DELIVERED">DELIVERED</option>
-                            <option value="ORDER_CANCELLED">ORDER_CANCELLED</option>
+                            <option value="ORDER_CANCELLED">CANCEL ORDER</option>
                         </select> <br/>
 
                             {/* <label> Order Status</label>

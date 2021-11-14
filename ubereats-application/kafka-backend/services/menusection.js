@@ -22,7 +22,7 @@ function handle_request(msg, callBack) {
     if(msg.path == 'get-menusection-items'){
         console.log("Inside get menu section handle request");
         const data = msg.data;
-        MenuSection.find({resto_id: data }, (error, result) => {
+        MenuSection.find({}, (error, result) => {
             if (error) {
                 callBack(error);
             }

@@ -36,7 +36,7 @@ class RestaurantProfile extends Component {
             var userData = {
                 user_id: localStorage.getItem("user_id"),
                 name: user.resto_name || this.state.name,
-                description: user.description || this.state.description,
+                description: user.resto_description|| this.state.description,
                 email_id: user.email_id || this.state.email_id,
                 address: user.address || this.state.address,
                 phone_number: user.phone_number || this.state.phone_number,
@@ -143,7 +143,7 @@ class RestaurantProfile extends Component {
 
                     <center>
                                     <Card style={{ width: '20rem' }}>
-                                        <Card.Img style={{ width: '20em' }} variant="top" src={resImageSrc} />
+                                        <Card.Img style={{ width: '20em', height: '20em' }} variant="top" src={resImageSrc} />
                                     </Card>
                                     <br/>
                                     <form>

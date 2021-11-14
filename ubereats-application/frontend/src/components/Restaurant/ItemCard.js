@@ -46,6 +46,7 @@ class ItemCard extends Component {
     }
 
     if (localStorage.getItem("cart_items")) {
+      console.log("YEsss cart items there", localStorage.getItem("cart_items"));
       cartItems.push(...JSON.parse(localStorage.getItem("cart_items")));
     }
 
@@ -139,7 +140,8 @@ class ItemCard extends Component {
     if (localStorage.getItem("cart_items")) {
       cartItems.push(...JSON.parse(localStorage.getItem("cart_items")));
       cartItemIds = cartItems.map(cartItem => cartItem.item_id);
-      buttonText = cartItemIds.includes(this.props.menu_item._id) ? "Remove from Cart" : buttonText;
+      console.log("Caritem ids", cartItemIds);
+      //buttonText = cartItemIds.includes(this.props.menu_item._id) ? "Remove from Cart" : buttonText;
       buttonVariant = cartItemIds.includes(this.props.menu_item._id) ? "warning" : buttonVariant;
       buttonClick = cartItemIds.includes(this.props.menu_item._id) ? this.removeFromCart : this.openModal;
     }

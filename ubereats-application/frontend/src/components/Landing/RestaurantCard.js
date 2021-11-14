@@ -46,7 +46,7 @@ class RestaurantCard extends Component {
     console.log(this.props.restaurant.resto_name);
     console.log(this.props.restaurant.resto_description);
     var resData = this.props.restaurant;
-    let imageSrc = endPointObj.url + "/images/restaurant/" + this.props.restaurant.res_image;
+    let imageSrc = endPointObj.frontendServer + "/images/restaurant/" + this.props.restaurant.res_image;
     return (
       <Card bg="white" style={{ width: "20rem", margin: "5%" }}>
       <Link to={{pathname: '/restaurant', state: resData}}>

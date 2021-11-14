@@ -14,7 +14,8 @@ class Cart extends Component {
         super(props);
         this.state = {
             cart_items: [],
-            restaurant: ''
+            restaurant: '',
+            item_quantity: ''
         };
         this.clearCart = this.clearCart.bind(this);
         this.removeItem = this.removeItem.bind(this);
@@ -74,9 +75,12 @@ class Cart extends Component {
     };
 
     onQuantityChange = (e) => {
-        let item_id = parseInt(e.target.name);
+        let item_id = e.target.name;
+        console.log("id",item_id);
         let newQuantity = parseInt(e.target.value);
+        console.log("quantity", newQuantity);
         let cart_items = this.state.cart_items;
+        console.log("INNNNN", cart_items);
         let index = cart_items.findIndex((cart_item => cart_item.item_id === item_id));
         cart_items[index].item_quantity = newQuantity;
         this.setState({
@@ -134,6 +138,7 @@ class Cart extends Component {
     };
 
     render() {
+        console.log("In page cart items", this.state.cart_items);
         console.log("res state", this.state.restaurant);
         let redirectVar = null,
             itemsRender = [],

@@ -110,6 +110,10 @@ class OrderItemsView extends Component {
                                             <td colSpan="4">Contact Number:</td>
                                             <td>{order_details.phone_number}</td>
                                         </tr>
+                                        <tr>
+                                            <td colSpan="4">Order Instructions:</td>
+                                            <td>{order_details.order_instruction}</td>
+                                        </tr>
                                     </tbody>
                                 </Table>
                                 <Button variant="secondary" href={this.state.prevPath}>Back</Button>

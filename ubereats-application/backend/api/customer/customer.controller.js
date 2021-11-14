@@ -58,10 +58,9 @@ const {
       });
     },
   
-  
     updateCustomerProfilePic: (req, res) => {
-      console.log("Inside updateCustomerProfilePic controller", req.params.id);
-      updateCustomerProfilePic(req, res, (err, results) => {
+      console.log("Inside updateCustomerProfilePic controller", req.body.id);
+      updateCustomerProfilePic(req, (err, results) => {
         if (err) {
           console.log(err);
           return res.status(500).json({
@@ -69,10 +68,8 @@ const {
             message: "Database connection errror"
           });
         }
-        return res.status(200).json({
-          success: 1,
-          data: req.file.filename
-        });
+        console.log("upload profile pic", results);
+        res.end(JSON.stringify(results));
       });
     }
 }

@@ -25,7 +25,7 @@ class MenuSections extends Component {
     };
 
     getSections = () => {
-        axios.get(endPointObj.url + "/menu/sections/" + localStorage.getItem("user_id"))
+        axios.get(endPointObj.url + "/menu/getMenuSections/" + localStorage.getItem("user_id"))
             .then(response => {
                 console.log("result FE", response);
                 if (response.data) {
@@ -78,11 +78,11 @@ class MenuSections extends Component {
     onSubmit = e => {
         e.preventDefault();
         const data = {
-            user_id: localStorage.getItem("user_id"),
+            resto_id: localStorage.getItem("user_id"),
             menu_section_name: this.state.menu_section_name
         };
 
-        axios.post(endPointObj.url + "/menu/sections", data)
+        axios.post(endPointObj.url + "/menu/addMenuSection", data)
             .then(response => {
                 this.setState({
                     menu_sections: [...this.state.menu_sections, { menu_section_id: response.data.menu_section_id, menu_section_name: response.data.menu_section_name }],
@@ -122,9 +122,9 @@ class MenuSections extends Component {
                             {menu_section.menu_section_name}
                         </td>
                         <td align="right">
-                            <Link to={{pathname: "/menu/section/update", state: {menu_section_id: menu_section.menu_section_id}}}>
-                                <Button variant="link" name={menu_section.menu_section_id}>Edit</Button>&nbsp;
-                            </Link>
+                            {/* <Link to={{pathname: "/menu/section/update", state: {menu_section_id: menu_section._id}}}>
+                                <Button variant="link" name={menu_section._id}>Edit</Button>&nbsp;
+                            </Link> */}
                             
                         </td>
                     </tr>

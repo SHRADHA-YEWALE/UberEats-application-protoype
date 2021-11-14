@@ -115,11 +115,11 @@ class MenuItems extends Component {
             .then(res => { // then print response status
                 console.log("img up", res);
                 if(res) {
-                    console.log("Upload image response data", res.data.data.imageUrl);
+                    console.log("Upload image response data", res.data.imageUrl);
                     alert("Image uploaded successfully!");
                     this.setState({
                         resFileText: "Choose file...",
-                        item_image: res.data.data.imageUrl
+                        item_image: res.data.imageUrl
                     });
                 }
             });
@@ -150,7 +150,7 @@ class MenuItems extends Component {
         var imageSrc,
             fileText = this.state.fileText || "Choose image..";
         if (this.state) {
-            imageSrc = endPointObj.frontendServer + "/images/item/" + this.state.item_image;
+            imageSrc = this.state.item_image;
         }
         return (
             <div className = "restoMenuEditContainer">
@@ -160,8 +160,8 @@ class MenuItems extends Component {
                         <center>
                             <br/><br/>
                             <h3>Upload Menu Item Image</h3><br />
-                            <Card style={{ width: '4rem', height: '2rem' }}>
-                                <Card.Img variant="top" style={{ width: '8rem', height: '8rem' }} src={imageSrc} />
+                            <Card style={{ width: '10rem', height: '8rem' }}>
+                                <Card.Img variant="top" style={{ width: '10rem', height: '8rem' }} src={imageSrc} />
                             </Card><br/><br/>
                             <form>
                                         <br />

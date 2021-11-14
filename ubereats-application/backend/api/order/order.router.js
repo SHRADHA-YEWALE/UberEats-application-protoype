@@ -7,6 +7,7 @@ const {
     pendingorders,
     getOrderByOrderId,
     getOrderByRestId,
+    getOrderByOrderStatus,
     cancelOrder,
     updateOrderStatus
 } = require("./order.controller");
@@ -14,6 +15,7 @@ const {
 let checkAuth = passport.authenticate('jwt', { session: false });
 router.post("/placeorder", placeorder);
 router.get("/pendingorder/:user_id", pendingorders);
+router.post("/orderByStatus", getOrderByOrderStatus);
 router.get("/orderitems/:id", getOrderByOrderId);
 router.get("/restaurant/orderitems/:id", getOrderByRestId);
 router.post("/cancelorder", cancelOrder);

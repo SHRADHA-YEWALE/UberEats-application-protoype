@@ -1,4 +1,7 @@
 const Order = require('../Models/OrderModel');
+const Cart = require('../Models/CartModel');
+
+const moment= require('moment');
 
 function handle_request(msg, callBack) {
     console.log("Inside order handle request");
@@ -7,7 +10,8 @@ function handle_request(msg, callBack) {
         console.log("Inside place order details handle request");
         const data = msg.data;
         console.log("Data from the request", data);
-
+        const timestamp = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss');
+        console.log("TimeStamp while placing the order", timestamp);
         var item_details = [];
         data.cart_items.forEach(cart_item => {
             item_details.push({
@@ -30,12 +34,22 @@ function handle_request(msg, callBack) {
             delivery: data.delivery,
             total_price: data.total_price,
             order_instruction: data.order_instruction,
-            item_details: item_details
+            item_details: item_details,
+            order_time: timestamp
           });
           orderdetails.save(data, (error, result) => {
             if (error) {
                 callBack(error);
             }
+            data.cart_items.forEach(cart_item => {
+                Cart.deleteOne({item_id: cart_item.item_id, cust_id: data.user_id},(error, result) => {
+                    if (error) {
+                        console.error("Delete cart item", error);
+                        callBack(error);
+                    }
+                    console.log("Deleted items from cart after placing the order", result);
+                });
+            });
             console.log("Order place details", result);
             return callBack(null, result);
         });
@@ -83,8 +97,10 @@ function handle_request(msg, callBack) {
     if(msg.path == 'cancel-order'){
         console.log("Inside cancel order handle request");
         const data = msg.data;
-        
-        Order.remove({_id: data.order_id},(error, result) => {
+        var newData = {
+            order_status: 'ORDER_CANCELLED'
+        }
+        Order.updateOne({_id: data.order_id},newData,(error, result) => {
             if (error) {
                 console.error("cancel order error", error);
                 callBack(error);

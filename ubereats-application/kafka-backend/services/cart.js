@@ -29,7 +29,7 @@ function handle_request(msg, callBack) {
         console.log("Inside delete cart items handle request");
         const data = msg.data;
         
-        Cart.remove({item_id: data.item_id, cust_id: data.user_id},(error, result) => {
+        Cart.deleteOne({item_id: data.item_id, cust_id: data.user_id},(error, result) => {
             if (error) {
                 console.error("Delete cart item", error);
                 callBack(error);

@@ -48,7 +48,7 @@ module.exports = {
     },
 
     updateRestaurantProfile: (data, callBack) => {
-        console.log("Inside update restaurant profile service", data.body.user_id);
+        console.log("Inside update restaurant profile service", data.body);
         const params = {
             data: data.body,
             path: 'update-restaurant-profile'
@@ -195,15 +195,46 @@ module.exports = {
         //     });
         // }
     },
-    restaurantDeliverySearch: (searchinput, callBack) => {
-        console.log("Inside get restaurant by filter service with search input", searchinput);
+    restaurantDeliverySearch: (req, callBack) => {
+        console.log("Inside get restaurant by filter service with search input");
+        var searchinput =  req.body.searchInput;
+        console.log("Delivery", req.body.delivery);
+        console.log("Pickup", req.body.pickup);
 
         let filter = {};
-        filter = {
-            '$or': [
-                { resto_name: { "$regex": searchinput, "$options": "i" } },
-                { address: { "$regex": searchinput, "$options": "i" } }
-            ]
+        if (req.body.pickup == true) {
+            filter =
+            {
+                '$and' : [
+                    { 
+                    '$or' : [ 
+                        { resto_name: { "$regex": searchinput, "$options": "i" } },
+                        { address: { "$regex": searchinput, "$options": "i" } }
+                            ]
+                    },
+                    { delivery: { "$regex": "false", "$options": "i" }}
+                ]
+            }  
+        } else if (req.body.delivery == true) {
+            filter =
+            {
+                '$and' : [
+                    { 
+                    '$or' : [ 
+                        { resto_name: { "$regex": searchinput, "$options": "i" } },
+                        { address: { "$regex": searchinput, "$options": "i" } }
+                            ]
+                    },
+                    { delivery: { "$regex": "true", "$options": "i" }}
+                ]
+            }  
+        } else {
+            filter = {
+                '$or': [
+                    { resto_name: { "$regex": searchinput, "$options": "i" } },
+                    { address: { "$regex": searchinput, "$options": "i" } }
+                ]
+            }
         }
         console.log("filter resto", filter.resto_name);
         console.log("filter address", filter.address);
