@@ -67,6 +67,7 @@ class ItemCard extends Component {
         resto_name: this.props.menu_item.resto_name,
         item_price: this.props.menu_item.item_price
       }
+      axios.defaults.headers.common['authorization'] = localStorage.getItem("token");
       axios.post(endPointObj.url + "/cart/addItem", data)
                 .then(response => {
                     alert("Item successfully added to cart!");
@@ -100,6 +101,7 @@ class ItemCard extends Component {
       item_id: cartItems.map(item => item.item_id),
       user_id: localStorage.getItem("user_id")
     }
+    axios.defaults.headers.common['authorization'] = localStorage.getItem("token");
     axios.post(endPointObj.url + "/cart/cartItemDelete", data)
           .then(response => {
               alert("Item successfully removed from cart");

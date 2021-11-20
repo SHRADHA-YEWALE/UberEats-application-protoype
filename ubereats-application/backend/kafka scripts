@@ -18,4 +18,15 @@ kafka-topics --create --zookeeper localhost:2181 --replication-factor 1 --partit
 kafka-topics --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic order
 
 
+#ec2
+bin/kafka-topics.sh --create --topic response --partitions 1  --replication-factor 1 --bootstrap-server localhost:9092
+bin/kafka-topics.sh --create --topic customer --partitions 1  --replication-factor 1 --bootstrap-server localhost:9092
+bin/kafka-topics.sh --create --topic restaurant --partitions 1  --replication-factor 1 --bootstrap-server localhost:9092
+bin/kafka-topics.sh --create --topic menu --partitions 1  --replication-factor 1 --bootstrap-server localhost:9092
+bin/kafka-topics.sh --create --topic menusection --partitions 1  --replication-factor 1 --bootstrap-server localhost:9092
+bin/kafka-topics.sh --create --topic cart --partitions 1  --replication-factor 1 --bootstrap-server localhost:9092
+bin/kafka-topics.sh --create --topic order --partitions 1  --replication-factor 1 --bootstrap-server localhost:9092
+
+
+
 

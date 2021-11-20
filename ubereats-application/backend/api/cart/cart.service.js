@@ -1,9 +1,6 @@
 var kafka = require('../../kafka/client');
 //Imported for jwt 
-const jwt = require('jsonwebtoken');
-const { secret } = require("../../config/configValue");
 const { auth } = require("../../config/passport");
-const { checkAuth } = require("../../config/passport");
 auth();
 
 module.exports = {

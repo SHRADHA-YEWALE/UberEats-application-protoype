@@ -62,7 +62,5 @@ module.exports = {
             })
             res.end(JSON.stringify(result));
         });    
-    }
-
-    
+    }   
 }

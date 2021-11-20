@@ -72,6 +72,7 @@ class ConfirmOrder extends Component {
         }
         console.log("cart_items", data.cart_items);
         console.log("placing order", data);
+        axios.defaults.headers.common['authorization'] = localStorage.getItem("token");
         axios.post(endPointObj.url +"/order/placeorder", data)
             .then(response => {
                 console.log("Place order response", response);

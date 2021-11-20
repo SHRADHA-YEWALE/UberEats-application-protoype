@@ -59,8 +59,10 @@ class RestaurantLogin extends Component {
             
             redirectVar = <Redirect to="/restaurantHome" />
         }
-        else if(this.props.user === "NO_USER"){
-            message = "User not find with the provided email id or password";
+        
+        if(this.props.user == 'NO_USER') {
+            redirectVar = <Redirect to="/restaurantLogin" />  
+            message = "Username or password  is invalid!";  
         }
         
   

@@ -12,12 +12,13 @@ const {
     updateOrderStatus
 } = require("./order.controller");
 
-let checkAuth = passport.authenticate('jwt', { session: false });
-router.post("/placeorder", placeorder);
-router.get("/pendingorder/:user_id", pendingorders);
-router.post("/orderByStatus", getOrderByOrderStatus);
-router.get("/orderitems/:id", getOrderByOrderId);
-router.get("/restaurant/orderitems/:id", getOrderByRestId);
-router.post("/cancelorder", cancelOrder);
-router.post("/updateStatus", updateOrderStatus);
+const { checkAuth } = require("../../config/passport");
+
+router.post("/placeorder", checkAuth, placeorder);
+router.get("/pendingorder/:user_id", checkAuth, pendingorders);
+router.post("/orderByStatus", checkAuth, getOrderByOrderStatus);
+router.get("/orderitems/:id", checkAuth, getOrderByOrderId);
+router.get("/restaurant/orderitems/:id", checkAuth, getOrderByRestId);
+router.post("/cancelorder", checkAuth, cancelOrder);
+router.post("/updateStatus", checkAuth, updateOrderStatus);
 module.exports = router;

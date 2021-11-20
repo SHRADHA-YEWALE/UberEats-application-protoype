@@ -8,9 +8,10 @@ const {
     getCartItems
 } = require("./cart.controller");
 
-let checkAuth = passport.authenticate('jwt', { session: false });
-router.post("/addItem", addItemToCart);
-router.post("/cartItemDelete", deleteItemCart);
-router.get("/getcartitems/:userid", getCartItems);
+const { checkAuth } = require("../../config/passport");
+
+router.post("/addItem", checkAuth, addItemToCart);
+router.post("/cartItemDelete", checkAuth, deleteItemCart);
+router.get("/getcartitems/:userid", checkAuth, getCartItems);
 
 module.exports = router;

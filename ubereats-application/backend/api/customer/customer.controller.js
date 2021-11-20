@@ -5,13 +5,6 @@ const {
     updateCustomerProfilePic
  } = require("./customer.service");
   
-  
-  const { hashSync, genSaltSync, compareSync } = require("bcrypt");
-  //const { sign } = require("jsonwebtoken");
-  
-
-  
-  
   module.exports = {
       
     getCustomerProfileDetails: (req, res) => {

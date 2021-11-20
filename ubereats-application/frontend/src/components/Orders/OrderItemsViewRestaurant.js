@@ -27,7 +27,7 @@ class OrderItemsViewRestaurant extends Component {
                 prevPath: this.props.location.state.prevPath,
                 order_id: this.props.location.state.order_details._id
             });
-
+            axios.defaults.headers.common['authorization'] = localStorage.getItem("token");
             axios.get(endPointObj.url + "/order/orderitems/" + this.props.location.state.order_details._id)
                 .then(response => {
                     if (response.data) {
@@ -59,7 +59,7 @@ class OrderItemsViewRestaurant extends Component {
             order_status : this.state.o_status,
             order_id : this.state.order_id
         }
-    
+        axios.defaults.headers.common['authorization'] = localStorage.getItem("token");
         axios.post(endPointObj.url + '/order/updateStatus', data)
             .then(response => {
                 this.setState({

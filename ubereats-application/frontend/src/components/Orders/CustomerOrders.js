@@ -50,7 +50,7 @@ class CustomerOrders extends Component {
             order_status : this.state.o_status,
             cust_id : localStorage.getItem("user_id")
         }
-    
+        axios.defaults.headers.common['authorization'] = localStorage.getItem("token");
         axios.post(endPointObj.url + '/order/orderByStatus', data)
             .then(response => {
                 this.setState({
@@ -71,7 +71,7 @@ class CustomerOrders extends Component {
         let data = {
             order_id: e.target.name
         };
-
+        axios.defaults.headers.common['authorization'] = localStorage.getItem("token");
         axios.post(endPointObj.url+ "/order/cancelorder", data)
             .then(response => {
                 if (response.data === "ORDER_CANCELLED") {
@@ -91,7 +91,7 @@ class CustomerOrders extends Component {
     };
 
     getPendingOrders = () => {
-
+        axios.defaults.headers.common['authorization'] = localStorage.getItem("token");
         axios.get(endPointObj.url+ "/order/pendingorder/"+ localStorage.getItem("user_id"))
             .then(response => {
                 if (response.data) {
@@ -114,7 +114,7 @@ class CustomerOrders extends Component {
         let res_id;
         if (this.props.location.restaurant) {
             res_id = this.props.location.restaurant.resto_id;
-            
+            axios.defaults.headers.common['authorization'] = localStorage.getItem("token");
             axios.get(endPointObj.url + "/restaurant/getRestaurantProfileDetails/" + res_id)
                 .then(response => {
                     if (response.data) {

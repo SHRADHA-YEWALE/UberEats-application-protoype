@@ -35,6 +35,7 @@ class Cart extends Component {
         // } 
         //else {
         let user_id = localStorage.getItem("user_id");
+        axios.defaults.headers.common['authorization'] = localStorage.getItem("token");
         axios.get(endPointObj.url + "/cart/getcartitems/" + user_id)
             .then(response => {
                 console.log("In the cart: get menu items FE:", response);
@@ -56,7 +57,7 @@ class Cart extends Component {
         let res_id;
         if (localStorage.getItem("cart_res_id")) {
             res_id = localStorage.getItem("cart_res_id");
-            
+            axios.defaults.headers.common['authorization'] = localStorage.getItem("token");
             axios.get(endPointObj.url + "/restaurant/getRestaurantProfileDetails/" + res_id)
                 .then(response => {
                     if (response.data) {

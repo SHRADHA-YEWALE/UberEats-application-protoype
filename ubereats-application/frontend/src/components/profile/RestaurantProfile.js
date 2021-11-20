@@ -107,6 +107,7 @@ class RestaurantProfile extends Component {
         const data = new FormData()
         data.append('image', this.state.selected_image);
         data.append('id', this.state.user_id);
+        axios.defaults.headers.common['authorization'] = localStorage.getItem("token");
         axios.post(endPointObj.url + "/profile/restaurant/updateRestaurantProfilePic", data)
             .then(res => { // then print response status
                 console.log("img up", res);

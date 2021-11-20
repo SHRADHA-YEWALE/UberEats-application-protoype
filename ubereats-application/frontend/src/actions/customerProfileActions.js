@@ -3,6 +3,7 @@ import endPointObj from '../endPointUrl.js';
 import axios from "axios";
 
 export const getCustomer = () => dispatch => {
+    axios.defaults.headers.common['authorization'] = localStorage.getItem("token");
     axios.get(endPointObj.url + '/profile/customer/getCustomerProfileDetails/'+ localStorage.getItem("user_id"))
         .then(customer => dispatch({
             type: GET_CUSTOMER,
@@ -16,6 +17,7 @@ export const getCustomer = () => dispatch => {
 export const updateCustomer = (updateCustomerData) => dispatch => {
     console.log("Inside dispatching the update payload action");
     axios.defaults.withCredentials = true;
+    axios.defaults.headers.common['authorization'] = localStorage.getItem("token");
     axios.post(endPointObj.url +'/profile/customer/updateCustomerProfile', updateCustomerData)
         .then(response => response.data)
         .then(data => {

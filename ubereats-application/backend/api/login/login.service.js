@@ -32,14 +32,14 @@ module.exports = {
                 const token = jwt.sign(payload, secret, {
                    expiresIn: 1008000
                 });
-                console.log("JWT token", token)
+                console.log("JWT token", token);
                 res.status(200).end("JWT " + token);
             } else {
                 res.writeHead(401, {
                     'Content-Type': 'text/plain'
                 })
                 console.log('invalid');
-                res.end("Invalid Credentials");
+                res.end("NO_USER");
             }
         }
 
