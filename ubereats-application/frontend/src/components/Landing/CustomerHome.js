@@ -207,8 +207,6 @@ class CustomerHome extends Component {
                             </select>
                             <br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <center><Button variant="primary" type="submit" className="restoSearchButton"><h5><b>Search</b></h5></Button></center>
-                          
-                            
                         </InputGroup> 
                     </Form>
                     </div>

@@ -28,7 +28,6 @@ class RestaurantOrderHistory extends Component {
             order_status : this.order_status,
             order_id : this.order_id
         }
-        axios.defaults.headers.common['authorization'] = localStorage.getItem("token");
         axios.post(endPointObj.url + '/orders/updateStatus', data)
             .then(response => {
                 this.setState({
@@ -45,7 +44,6 @@ class RestaurantOrderHistory extends Component {
     };
 
     getCompletedOrders = () => {
-        axios.defaults.headers.common['authorization'] = localStorage.getItem("token");
         axios.get(endPointObj.url + "/order/restaurant/orderitems/" + localStorage.getItem("user_id"))
             .then(response => {
                 if (response.data) {
@@ -69,7 +67,6 @@ class RestaurantOrderHistory extends Component {
         let data = {
             order_id: e.target.name
         };
-        axios.defaults.headers.common['authorization'] = localStorage.getItem("token");
         axios.post(endPointObj.url+ "/order/cancelorder", data)
             .then(response => {
                 if (response.data === "ORDER_CANCELLED") { 

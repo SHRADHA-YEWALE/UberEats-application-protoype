@@ -71,7 +71,6 @@ class CustomerOrders extends Component {
         let data = {
             order_id: e.target.name
         };
-        axios.defaults.headers.common['authorization'] = localStorage.getItem("token");
         axios.post(endPointObj.url+ "/order/cancelorder", data)
             .then(response => {
                 if (response.data === "ORDER_CANCELLED") {

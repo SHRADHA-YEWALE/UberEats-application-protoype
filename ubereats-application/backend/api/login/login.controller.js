@@ -2,9 +2,6 @@ const {
     login,
 } = require("./login.service");
 
-const jwt = require('jsonwebtoken');
-const { secret } = require('../../config/configValues');
-
 console.log('req');
 module.exports = {
     login: (req, res) => {

@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { customerSignup } from '../../actions/signupRoleActions';
 import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
-import { Row, Col } from 'react-bootstrap';
 import NavigationBar from '../Navbar/Navbar';
 import './Signup.css';
 

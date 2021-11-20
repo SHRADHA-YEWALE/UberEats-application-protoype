@@ -9,15 +9,17 @@ const {
     getMenuSections,
     getMenuItems,
     uploadMenuImage,
-    getMenuItem
+    getMenuItem,
+    updateMenuItem
 } = require("./menu.controller");
 
-let checkAuth = passport.authenticate('jwt', { session: false });
 router.post("/addMenu", addMenu);
 router.post("/addMenuSection", addMenuSection);
 router.get("/getMenuSections/:id", getMenuSections);
 router.get("/getMenuItems/:id", getMenuItems);
 router.post("/uploads/image", multer({ dest: 'temp/', limits: { fieldSize: 8 * 1024 * 1024 } }).single('image'), uploadMenuImage);
 router.get("/getMenuItem/:id", getMenuItem);
+router.post("/itemsupdate", updateMenuItem);
+
 
 module.exports = router;

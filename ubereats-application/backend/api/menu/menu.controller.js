@@ -155,18 +155,36 @@ module.exports = {
         }); 
     },
     
-      uploadMenuImage: (req, res) => {
+    uploadMenuImage: (req, res) => {
         console.log("Inside uploadMenuImage controller", req.body.id);
         uploadMenuImage(req, (err, results) => {
-          if (err) {
+            if (err) {
             console.log(err);
             return res.status(500).json({
-              success: 0,
-              message: "Database connection errror"
+                success: 0,
+                message: "Database connection errror"
             });
-          }
-          console.log("upload profile pic", results);
-          res.end(JSON.stringify(results));
+            }
+            console.log("upload profile pic", results);
+            res.end(JSON.stringify(results));
+    });
+    },
+    updateMenuItem: (req, res) => {
+        const params = {
+            data: req.body,
+            path: 'update-menu-items'
+        }
+
+        kafka.make_request('menu', params, (error, result) => {
+            if (error) {
+                console.log(error);
+                callBack(error);
+            }
+            res.writeHead(200, {
+                'Content-Type': 'text/plain'
+            })
+            res.end(JSON.stringify(result));
         });
-      },
+        
+    }
 }

@@ -3,6 +3,7 @@ import endPointObj from '../endPointUrl.js';
 import axios from "axios";
 
 export const getCustomer = () => dispatch => {
+    console.log("Inside get customer details", localStorage.getItem("token"));
     axios.defaults.headers.common['authorization'] = localStorage.getItem("token");
     axios.get(endPointObj.url + '/profile/customer/getCustomerProfileDetails/'+ localStorage.getItem("user_id"))
         .then(customer => dispatch({

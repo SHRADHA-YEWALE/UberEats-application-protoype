@@ -36,5 +36,19 @@ function handle_request(msg, callBack) {
         });     
     }
 
+    if(msg.path == 'update-menu-items'){
+        console.log("Inside update menu item details kafka handle request");
+        const data = msg.data;
+        console.log("Data from the request", data);
+        console.log("Data from the request item item id", data.item_id);
+
+        Menu.updateOne({ _id: data.item_id }, data, { upsert: false }, (error, result) => {
+            if (error) {
+                callBack(error);
+            }
+            return callBack(null, result);
+        })
+    }
+
 };
 exports.handle_request = handle_request;

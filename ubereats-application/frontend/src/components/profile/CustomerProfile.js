@@ -482,13 +482,13 @@ class CustomerProfile extends Component {
                                 <Form.Group as={Row} className="mb-3" controlId="formGridZip">
                                     <Form.Label column sm="3" className="inputLabel">Phone Number</Form.Label>
                                     <Col sm="10">
-                                    <Form.Control type="text"
+                                    <Form.Control type="tel"
                                         name="phone_number"
                                         style={{ width: '90%'}}
                                         onChange={this.onChange}
                                         value={this.state.phone_number}
                                         required={true}
-                                        pattern="^[0-9]+$"
+                                        pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
                                     />
                                     </Col>
                                 </Form.Group>

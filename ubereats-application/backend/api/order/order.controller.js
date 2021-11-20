@@ -1,9 +1,6 @@
 var kafka = require('../../kafka/client');
 const OrderModel = require("../../Models/OrderModel");
 
-const jwt = require('jsonwebtoken');
-const { secret } = require('../../config/configValue');
-
 console.log('req');
 module.exports = {
     placeorder: (req, res) => {
@@ -39,6 +36,23 @@ module.exports = {
     getOrderByOrderStatus: (req,res) => {
         console.log("Inside get order by order status", req.body.cust_id);
         console.log("order status", req.body.order_status);
+
+        const params = {
+            data: req.params.id,
+            path: 'get-order-by-orderid'
+        }
+        kafka.make_request('order', params, (error, result) => {
+            if (error) {
+                console.log(error);
+                callBack(error);
+            }
+            console.log("Get order details:", result);
+            res.writeHead(200, {
+                'Content-Type': 'text/plain'
+            })
+            res.end(JSON.stringify(result));
+        });
+
         let filter = {};
         filter = {
             '$and': [

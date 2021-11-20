@@ -1,13 +1,5 @@
 var kafka = require('../../kafka/client');
 
-const {
-    addItemToCart,
-    getCartItems
-} = require("./cart.service");
-
-const jwt = require('jsonwebtoken');
-const { secret } = require('../../config/configValue');
-
 console.log('req');
 module.exports = {
     addItemToCart: (req, res) => {

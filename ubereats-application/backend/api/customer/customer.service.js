@@ -86,7 +86,7 @@ module.exports = {
     },
 
     updateCustomerProfilePic(req, callBack) {
-        console.log('In upload');
+        console.log('In profile picture upload');
 
         aws.config.setPromisesDependency();
         aws.config.update({

@@ -4,7 +4,6 @@ const Restaurant = require("../../Models/RestaurantModel");
 const jwt = require('jsonwebtoken');
 const { secret } = require("../../config/configValue");
 const { auth } = require("../../config/passport");
-const { checkAuth } = require("../../config/passport");
 auth();
 
 module.exports = {
@@ -12,7 +11,7 @@ module.exports = {
     customerLogin: (req, res) => {
    
         Customer.findOne({ email_id: req.body.email_id, password: req.body.password }, (error, result) => {
-        console.log("Inside customer login")
+        console.log("Inside customer login");
         if (error) {
             console.log(error);
         } else {
@@ -48,7 +47,7 @@ module.exports = {
 
     restaurantLogin: (req, res) => {
         Restaurant.findOne({ email_id: req.body.email_id, password: req.body.password }, (error, result) => {
-        console.log("inside customer login")
+        console.log("inside Restaurant login");
         if (error) {
             console.log(error);
         } else {

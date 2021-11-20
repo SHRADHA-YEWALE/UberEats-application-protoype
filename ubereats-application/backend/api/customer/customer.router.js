@@ -9,6 +9,7 @@ const {
 } = require("./customer.controller");
 
 const { checkAuth } = require("../../config/passport");
+console.log("Check auth resto", checkAuth);
 router.get("/getCustomerProfileDetails/:id", checkAuth, getCustomerProfileDetails);
 router.post("/updateCustomerProfilePic", multer({ dest: 'temp/', limits: { fieldSize: 8 * 1024 * 1024 } }).single('image'), updateCustomerProfilePic);
 router.post("/updateCustomerProfile", checkAuth, updateCustomerProfile);

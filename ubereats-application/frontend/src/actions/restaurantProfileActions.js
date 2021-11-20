@@ -15,7 +15,6 @@ export const getRestaurant = () => dispatch => {
 
 export const updateRestaurant = (restaurantProfileData) => dispatch => {
     axios.defaults.withCredentials = true;
-    axios.defaults.headers.common['authorization'] = localStorage.getItem("token");
     axios.post(endPointObj.url +'/profile/restaurant/updateRestaurantProfile', restaurantProfileData)
         .then(response => response.data)
         .then(data => {

@@ -21,7 +21,6 @@ class OrderItemsView extends Component {
                 order_details: this.props.location.state.order_details,
                 prevPath: this.props.location.state.prevPath
             });
-            axios.defaults.headers.common['authorization'] = localStorage.getItem("token");
             axios.get(endPointObj.url + "/order/orderitems/" + this.props.location.state.order_details._id)
                 .then(response => {
                     console.log("Get order by orderid response", response.data);
