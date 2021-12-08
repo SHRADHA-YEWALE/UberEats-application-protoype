@@ -7,6 +7,9 @@ import { connect } from 'react-redux';
 import NavigationBar from '../Navbar/RestaurantNavbarHome.js';
 import { Container, Col, Row, Form, Button, ButtonGroup, Card } from 'react-bootstrap';
 import endPointObj from '../../endPointUrl.js';
+import { restaurantDataFetchQuery } from "../../queries/queries";
+import { withApollo } from 'react-apollo';
+
 
 class RestaurantHome extends Component {
   constructor(props) {
@@ -14,30 +17,62 @@ class RestaurantHome extends Component {
     this.state = {};
   }
 
-  componentWillMount() {
-      this.props.getRestaurant();
-  }
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
-      if (nextProps.user) {
-          var { user } = nextProps;
-
-          var userData = {
-              user_id: user.user_id || this.state.user_id,
-              name: user.resto_name || this.state.name,
-              description: user.resto_description || this.state.description,
-              email_id: user.email_id || this.state.email_id,
-              address: user.address || this.state.address,
-              phone_number: user.phone_number || this.state.phone_number,
-              timings : user.timings || this.state.timings,
-              res_image: user.res_image || this.state.res_image
-          };
-          console.log("Restaurant name"+userData.name);
-          console.log("Restaurant address"+userData.address);
-          console.log("Restaurant image"+userData.res_image);
-          this.setState(userData);
-      }
+  // getRestaurantDetails = async e => {
+  //   let queryResponse =  await this.props.restaurantDataFetchQuery({
+  //     variables: {
+  //       _id: localStorage.getItem("user_id"),
+  //     }
+  //   });
+  //   console.log("Get restaurant data successful", queryResponse);  
+  // }
+  componentWillMount = async e => {
+      //this.props.getRestaurant();
+      //this.getRestaurantDetails();
+      //e.preventDefault();
+      console.log("Restaurant Id:",localStorage.getItem("user_id"));
+      const {data} = await this.props.client.query({
+        query: restaurantDataFetchQuery,
+        variables: {
+          id: localStorage.getItem("user_id"),
+        },
+      });
+      console.log("RESPONSE OBJECT FROM LOGIN:",data.fetchRestaurantData);  
+      var user = data.fetchRestaurantData;
+      this.setState ({
+        user_id: user.user_id || this.state.user_id,
+        name: user.name || this.state.name,
+        description: user.description || this.state.description,
+        email_id: user.email_id || this.state.email_id,
+        address: user.location || this.state.address,
+        phone_number: user.phonenumber || this.state.phone_number,
+        timings : user.timings || this.state.timings,
+        res_image: user.res_image || this.state.res_image
+      });
+      //this.setState(userData);
   }
+  
+
+  // UNSAFE_componentWillReceiveProps(nextProps) {
+  //     if (nextProps.user) {
+  //         var { user } = nextProps;
+
+  //         var userData = {
+  //             user_id: user.user_id || this.state.user_id,
+  //             name: user.resto_name || this.state.name,
+  //             description: user.resto_description || this.state.description,
+  //             email_id: user.email_id || this.state.email_id,
+  //             address: user.address || this.state.address,
+  //             phone_number: user.phone_number || this.state.phone_number,
+  //             timings : user.timings || this.state.timings,
+  //             res_image: user.res_image || this.state.res_image
+  //         };
+  //         console.log("Restaurant name"+userData.name);
+  //         console.log("Restaurant address"+userData.address);
+  //         console.log("Restaurant image"+userData.res_image);
+  //         this.setState(userData);
+  //     }
+  // }
 
   render() {
       var resImageSrc, res_title;
@@ -107,14 +142,5 @@ class RestaurantHome extends Component {
   }
 }
 
-RestaurantHome.propTypes = {
-  getRestaurant: PropTypes.func.isRequired,
-  updateRestaurant: PropTypes.func.isRequired,
-  user: PropTypes.object.isRequired
-};
 
-const mapStateToProps = state => ({
-  user: state.restaurantProfile.user
-});
-
-export default connect(mapStateToProps, { getRestaurant, updateRestaurant })(RestaurantHome);
+export default withApollo(RestaurantHome);

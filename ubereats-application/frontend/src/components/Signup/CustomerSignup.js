@@ -6,12 +6,19 @@ import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 import NavigationBar from '../Navbar/Navbar';
 import './Signup.css';
+import { customerSignUpMutation } from "../../mutation/mutation";
+import { graphql } from "react-apollo";
+import { flowRight as compose } from "lodash";
 
 class CustomerSignup extends Component {
     
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            error: {},
+            loginError: "",
+            auth: true
+        };
     }
 
     onChange = (e) => {
@@ -20,42 +27,64 @@ class CustomerSignup extends Component {
         })
     }
 
-
-    onSubmit = (e) => {
-        //prevent the page from refresh
-        e.preventDefault();
-        const custData = {
-            name: this.state.name,
-            email_id: this.state.email_id,
-            password: this.state.password,
-            dob: this.state.dob,
-            country: this.state.country
-        }
-
-        this.props.customerSignup(custData);
-
+    validateForm = () => {
+        const { userInfo } = this.state;
+        let error = {};
+        if (this.state.name === "") error.name = "Name should not be blank";
+        //if (!isEmail(userInfo.email)) error.email = "Please enter valid mail";
+        if (this.state.email_id === "") error.email = "Email should not be blank";
+        if (this.state.password === "")
+          error.password = "Password should not be blank";
         this.setState({
-            signedUp: 1
+          error
         });
-    }
+        return error;
+      };
+
+
+    onSubmit = async e => {
+        //prevent page from refresh
+        e.preventDefault();
+        console.log("name", this.state.name);
+        console.log("email", this.state.email_id);
+        console.log("password", this.state.password);
+        console.log("country", this.state.country);
+
+        const error = this.validateForm();
+        if (Object.keys(error).length == 0) {
+          let {mutationResponse} = await this.props.customerSignUpMutation({
+            variables: {
+                name: this.state.name,
+                email: this.state.email_id,
+                password: this.state.password,
+                // dob: this.state.dob,
+                country: this.state.country
+            }
+          });
+          console.log("Restaurant Signup successful", mutationResponse);
+
+            //console.log("customer signup", JSON.stringify(mutationResponse.data.customerSignUp));
+              //this.SetLocalStorage(JSON.stringify(mutationResponse.data.customerSignUp));
+            this.setState({
+                authFlag: true
+              });
+          
+        } else {
+            this.setState({
+                authFlag: false
+              });
+            console.log("Error", error);
+            this.setState({ error });
+        }
+    };
 
     render() {
         console.log('rendering the page');
-        //redirect based on successful signup
         let redirectVar = null;
-        let message = "";
-        //Get the username from local or session storage.
-        if (!localStorage.getItem("user_id")) {
-            redirectVar = <Redirect to="/customerSignup" />
-        }
-        if (this.props.user === "USER_ADDED" && this.state.signedUp) {
-            console.log("User successfully Added");
-            alert("You have registered successfully. Please Login!");
-            redirectVar = <Redirect to="/customerLogin" />
-        }
-        else if(this.props.user === "USER_EXISTS" && this.state.signedUp){
-            message = "Username is already registered"
-        }
+        if (this.state.authFlag) {
+        console.log("Control goes to home page from here");
+        redirectVar = <Redirect to="/customerLogin" />;
+        } else redirectVar = <Redirect to="/customerSignup" />;
         return (
             <div className= "backGroundLayer">
                 {redirectVar}
@@ -83,12 +112,12 @@ class CustomerSignup extends Component {
                                             <td><input type="password" className="input_field" name="password" onChange={this.onChange} placeholder="Password" required /></td>
                                     
                                         </tr>
-                                        <tr>
+                                        {/* <tr>
                                         
                                             <td><label className='floatLabel'><b> Date Of Birth </b></label></td>
                                             <td><input type="date" className="date" name="dob" onChange={this.onChange} placeholder="dob" /></td>
                                     
-                                        </tr>
+                                        </tr> */}
                                         <tr>
                                         <td><label className='floatLabel'><b> Country </b></label></td>
                                         <td>
@@ -350,7 +379,7 @@ class CustomerSignup extends Component {
                                         </td>
                                         </tr>
                                         </table>
-                                        <div style={{ color: "#ff0000" }}>{message}</div><br />
+                                        {/* <div style={{ color: "#ff0000" }}>{this.state.error}</div><br /> */}
                                         <button type="submit" className="btn-primary"><center>Signup</center></button><br /><br />
                                         <div><Link to='/restaurantSignup' className="signupLinkClass"><b>Signup as Restaurant Owner</b></Link></div><br />
                                                                         
@@ -363,13 +392,7 @@ class CustomerSignup extends Component {
     }
 }
 
-CustomerSignup.propTypes = {
-    customerSignup: PropTypes.func.isRequired,
-    user: PropTypes.object.isRequired
-};
 
-const mapStateToProps = state => ({
-    user: state.signup.user
-});
-
-export default connect(mapStateToProps, { customerSignup })(CustomerSignup);
+export default compose(graphql(customerSignUpMutation, { name: "customerSignUpMutation" }))(
+    CustomerSignup
+  );

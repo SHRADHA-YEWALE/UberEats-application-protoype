@@ -46,7 +46,7 @@ module.exports = {
     },
 
     restaurantLogin: (req, res) => {
-        Restaurant.findOne({ email_id: req.body.email_id, password: req.body.password }, (error, result) => {
+        Restaurant.findOne({ email: req.body.email_id, password: req.body.password }, (error, result) => {
         console.log("inside Restaurant login");
         if (error) {
             console.log(error);
@@ -63,11 +63,11 @@ module.exports = {
                     path: "/"
                 });
 
-                const payload = { _id: result._id,  email_id: req.body.email_id};
+                const payload = { _id: result._id,  email_id: req.body.email};
                 const token = jwt.sign(payload, secret, {
                     expiresIn: 1008000
                 });
-                console.log("JWT token", token)
+                console.log("JWT token", token);
                 res.status(200).end("JWT " + token);
             } else {
                 res.writeHead(401, {

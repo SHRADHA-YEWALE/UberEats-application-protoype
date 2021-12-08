@@ -77,7 +77,7 @@ module.exports = {
     // },
 
     uploadMenuImage(req, callBack) {
-        console.log('In upload');
+        console.log('In upload', req);
 
         aws.config.setPromisesDependency();
         aws.config.update({

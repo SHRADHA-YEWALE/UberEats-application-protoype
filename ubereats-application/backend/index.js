@@ -79,34 +79,57 @@ app.use("/images", images);
 // app.use("/orders", orders);
 
 //mongodb routes
-var signupRouter = require('./api/signup/signup.router');
-app.use('/signup', signupRouter);
+// var signupRouter = require('./api/signup/signup.router');
+// app.use('/signup', signupRouter);
 
 var loginRouter = require('./api/login/login.router');
 app.use('/login', loginRouter);
 
-var profileRouter = require('./api/customer/customer.router');
-app.use('/profile/customer', profileRouter);
+// var profileRouter = require('./api/customer/customer.router');
+// app.use('/profile/customer', profileRouter);
 
-var restoProfileRouter = require('./api/restaurant/restaurant.router');
-app.use('/profile/restaurant', restoProfileRouter);
+// var restoProfileRouter = require('./api/restaurant/restaurant.router');
+// app.use('/profile/restaurant', restoProfileRouter);
 
-const restaurant = require('./api/restaurant/restaurant.router');
-app.use("/restaurant", restaurant); 
+// const restaurant = require('./api/restaurant/restaurant.router');
+// app.use("/restaurant", restaurant); 
 
-const menu = require('./api/menu/menu.router');
-app.use("/menu", menu);
+// const menu = require('./api/menu/menu.router');
+// app.use("/menu", menu);
 
-const cart = require('./api/cart/cart.router');
-app.use("/cart", cart); 
+// const cart = require('./api/cart/cart.router');
+// app.use("/cart", cart); 
 
-const order = require("./api/order/order.router");
-app.use("/order", order);
+// const order = require("./api/order/order.router");
+// app.use("/order", order);
+
+
+
+
+const { graphqlHTTP } = require("express-graphql");
+const schemaGraphQL = require("./schema");
+
+
+app.use(
+  "/graphql",
+  graphqlHTTP({
+    schema: schemaGraphQL,
+    graphiql: true
+  })
+);
 
 const port = process.env.PORT || 3001;
 var server = app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });
-
+// app.post("/upload", (req, res, next) => {
+//   upload(req, res, error => {
+//     if (error) {
+//       res.status(500).send(error);
+//     } else {
+//       res.status(200).send(req.file.location);
+//     }
+//   });
+// });
 
 module.exports = app;

@@ -3,12 +3,12 @@ const Schema = mongoose.Schema;
 
 var menuItemSchema = new Schema({
     _id: {type: Schema.ObjectId, auto: true },
-    item_name: {type: String, required: true},
-    item_description: {type: String, required: true},
-    item_price: {type: Number},
-    item_image: {type: String},
-    item_category: {type: String},
-    resto_id: {type: String}
+    itemname: {type: String, required: true},
+    itemdescription: {type: String, required: true},
+    itemprice: {type: Number},
+    itemimage: {type: String},
+    itemcategory: {type: String},
+    restoid: {type: String}
 },
 {
     versionKey: false

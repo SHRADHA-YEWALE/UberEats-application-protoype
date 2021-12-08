@@ -4,6 +4,9 @@ import { Redirect } from "react-router";
 import axios from "axios";
 import endPointObj from '../../endPointUrl.js';
 import "./Menu.css";
+import { addMenuMutation } from "../../mutation/mutation";
+import { graphql } from "react-apollo";
+import { flowRight as compose } from "lodash";
 
 class MenuItems extends Component {
     constructor(props) {
@@ -43,31 +46,23 @@ class MenuItems extends Component {
             });
     };
 
-    onSubmit = e => {
+    onSubmit = async e => {
         e.preventDefault();
-        const data = {
-            resto_id: localStorage.getItem("user_id"),
-            item_name: this.state.item_name,
-            item_description: this.state.item_description,
-            item_price: this.state.item_price,
-            item_category: this.state.menu_section_name || this.state.menu_sections[0].menu_section_name,
-            item_image: this.state.item_image
-        };
 
-        axios.post(endPointObj.url + "/menu/addMenu", data)
-            .then(response => {
-                console.log("Add menu response", response.data);
-                this.setState({
-                    item_id: response.data._id,
-                    message: 'MENU_ADDED'
-                });
-            })
-            .catch(err => {
-                if (err.response && err.response.data) {
-                    this.setState({
-                        message: err.response.data
-                    });
-                }
+        let mutationResponse = await this.props.addMenuMutation({
+            variables: {
+                restoid: localStorage.getItem("user_id"),
+                itemname: this.state.item_name,
+                itemdescription: this.state.item_description,
+                itemprice: this.state.item_price,
+                itemcategory: this.state.menu_section_name || this.state.menu_sections[0].menu_section_name,
+                itemimage: this.state.item_image
+            }
+          });
+          console.log("Menu Added:", mutationResponse);
+          this.setState({
+            // item_id: mutationResponse.data._id,
+            message: 'MENU_ADDED'
             });
     };
 
@@ -201,8 +196,8 @@ class MenuItems extends Component {
                             <Form.Group as={Row} controlId="item_section">
                                 <Form.Label column sm="3">Section:</Form.Label>
                                 <Col sm="4">
-                                    <Form.Control as="select" style={{ width: "15rem" }} onChange={this.onChange} name="menu_section_name" required>
-                                        {section_options}
+                                    <Form.Control type="text" style={{ width: "15rem" }} onChange={this.onChange} name="menu_section_name" required>
+                                        {/* {section_options} */}
                                     </Form.Control>
                                 </Col>
                             </Form.Group>
@@ -217,4 +212,6 @@ class MenuItems extends Component {
     }
 }
 
-export default MenuItems;
+export default compose(graphql(addMenuMutation, { name: "addMenuMutation" }))(
+    MenuItems
+  );

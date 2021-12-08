@@ -3,13 +3,13 @@ const Schema = mongoose.Schema;
 
 var restaurantSchema = new Schema({
     _id: {type: Schema.ObjectId, auto: true },
-    resto_name: {type: String, required: true},
-    email_id: {type: String, required: true},
+    name: {type: String, required: true},
+    email: {type: String, required: true},
     password: {type: String, required: true},
-    address: {type: String},
+    location: {type: String},
     zipcode: {type: String},
-    phone_number: {type: String},
-    resto_description: {type: String},
+    phonenumber: {type: String},
+    description: {type: String},
     timings: {type: String},
     res_image: {type: String},
     delivery: {type:String},

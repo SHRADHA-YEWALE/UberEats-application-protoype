@@ -3,8 +3,8 @@ const Schema = mongoose.Schema;
 
 var customerSchema = new Schema({
     _id: {type: Schema.ObjectId, auto: true },
-    cust_name: {type: String, required: true},
-    email_id: {type: String, required: true},
+    name: {type: String, required: true},
+    email: {type: String, required: true},
     password: {type: String, required: true},
     address: {type: String},
     phone_number: {type: String},

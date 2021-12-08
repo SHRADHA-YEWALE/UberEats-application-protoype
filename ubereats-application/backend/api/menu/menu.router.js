@@ -14,12 +14,12 @@ const {
 } = require("./menu.controller");
 
 router.post("/addMenu", addMenu);
-router.post("/addMenuSection", addMenuSection);
-router.get("/getMenuSections/:id", getMenuSections);
-router.get("/getMenuItems/:id", getMenuItems);
+//router.post("/addMenuSection", addMenuSection);
+//router.get("/getMenuSections/:id", getMenuSections);
+//router.get("/getMenuItems/:id", getMenuItems);
 router.post("/uploads/image", multer({ dest: 'temp/', limits: { fieldSize: 8 * 1024 * 1024 } }).single('image'), uploadMenuImage);
 router.get("/getMenuItem/:id", getMenuItem);
-router.post("/itemsupdate", updateMenuItem);
+//router.post("/itemsupdate", updateMenuItem);
 
 
 module.exports = router;
