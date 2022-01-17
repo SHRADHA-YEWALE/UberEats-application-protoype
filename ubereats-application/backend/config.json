@@ -1,11 +1,11 @@
 {
     "DB": {
-        "host": "sql-database-1.cxibvgtjdpev.us-east-2.rds.amazonaws.com",
-        "username": "admin",
-        "password": "shradha123",
+        "host": "",
+        "username": "",
+        "password": "",
         "port": 3306,
         "database": "uber_eats"
     },
     "secret": "mysqltest",
-    "frontEnd": "http://18.189.3.87:3000"
+    "frontEnd": "http://locahost:3000"
 }
